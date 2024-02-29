@@ -33,8 +33,7 @@ export default function Auth() {
         <p className="text-muted-foreground mb-4">
           The simplest way to keep track of your money.
         </p>
-        {mode === "sign-up" && <SignUpForm />}
-        {mode === "login" && <LogInForm />}
+        <LogInForm />
       </div>
     </main>
   );
