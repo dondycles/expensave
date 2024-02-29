@@ -1,4 +1,5 @@
 "use client";
+import { Suspense } from 'react'
 import { LogInForm } from "@/components/forms/log-in";
 import { SignUpForm } from "@/components/forms/sign-up";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,7 @@ export default function Auth() {
   const searchParams = useSearchParams();
   const mode = searchParams.get("mode") ?? "login";
   return (
+    <Suspense>
     <main className="w-full h-full flex flex-col  screen-padding">
       <nav className="flex justify-between">
         <Button variant={"outline"}>Home. </Button>
@@ -36,5 +38,6 @@ export default function Auth() {
         <LogInForm />
       </div>
     </main>
+      </Suspense>
   );
 }
