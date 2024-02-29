@@ -10,7 +10,7 @@ export default function Auth() {
   const searchParams = useSearchParams();
   const mode = searchParams.get("mode") ?? "login";
   return (
-    <Suspense>
+    <Suspense callback={<p>Loading...</p>}>
     <main className="w-full h-full flex flex-col  screen-padding">
       <nav className="flex justify-between">
         <Button variant={"outline"}>Home. </Button>
