@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { useDashboardState, useMoneyTotal } from "@/store";
 import { useQuery } from "@tanstack/react-query";
 import { Eye, EyeOff } from "lucide-react";
-import { useMemo } from "react";
+import { useEffect } from "react";
 import { FaPesoSign } from "react-icons/fa6";
 
 import AnimatedNumbers from "react-animated-numbers";
@@ -25,7 +25,7 @@ export default function Dashboard() {
   const moneys = data?.success?.flatMap((money) => money);
   const total = _.sum(data?.success?.flatMap((money) => Number(money.amount)));
 
-  useMemo(() => {
+  useEffect(() => {
     totalMoney.setTotal(total);
   }, [total]);
 
