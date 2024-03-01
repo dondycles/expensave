@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+
 declare global {
   type OptimisticAddMoney = {
     name: string | null;

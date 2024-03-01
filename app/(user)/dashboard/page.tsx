@@ -7,11 +7,11 @@ import { Eye, EyeOff } from "lucide-react";
 import { useEffect } from "react";
 import { FaPesoSign } from "react-icons/fa6";
 
-import AnimatedNumbers from "react-animated-numbers";
 import MoneyCard from "@/components/money-card/money";
 import MoneyCardOptimistic from "@/components/money-card/money-optimistic";
 import { Button } from "@/components/ui/button";
 import AsteriskNumber from "@/components/asterisk-value";
+import { usePhpPeso } from "@/lib/php-formatter";
 export default function Dashboard() {
   var _ = require("lodash");
 
@@ -21,6 +21,7 @@ export default function Dashboard() {
   const { data } = useQuery({
     queryKey: ["moneys"],
     queryFn: async () => await getmoneys(),
+    refetchOnWindowFocus: false,
   });
 
   const moneys = data?.success?.flatMap((money) => money);
@@ -40,19 +41,22 @@ export default function Dashboard() {
               {dashboardState.hideValues ? (
                 <AsteriskNumber number={totalMoney.total} />
               ) : (
-                <AnimatedNumbers
-                  includeComma
-                  transitions={(index) => ({
-                    type: "spring",
-                    duration: index / 5,
-                    bounce: 0,
-                  })}
-                  animateToNumber={totalMoney.total}
-                  fontStyle={{
-                    fontSize: "24px",
-                    fontWeight: "bold",
-                  }}
-                />
+                // <AnimatedNumbers
+                //   includeComma
+                //   transitions={(index) => ({
+                //     type: "spring",
+                //     duration: index / 5,
+                //     bounce: 0,
+                //   })}
+                //   animateToNumber={totalMoney.total}
+                //   fontStyle={{
+                //     fontSize: "24px",
+                //     fontWeight: "bold",
+                //   }}
+                // />
+                <p className="text-2xl font-black">
+                  {usePhpPeso(totalMoney.total)}
+                </p>
               )}
             </div>
             <Button
@@ -65,7 +69,6 @@ export default function Dashboard() {
           </CardTitle>
         </CardHeader>
       </Card>
-
       <MoneyCardOptimistic />
       {moneys?.map((money, index) => {
         return (
