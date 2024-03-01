@@ -6,37 +6,37 @@ export const moneysColors = [
   },
   {
     name: "red",
-    transparent: "#ef444430",
+    transparent: "#ef444420",
     opaque: "#ef4444",
   },
   {
     name: "orange",
-    transparent: "#f9731630",
+    transparent: "#f9731620",
     opaque: "#f97316",
   },
   {
     name: "yellow",
-    transparent: "#eab30830",
+    transparent: "#eab30820",
     opaque: "#eab308",
   },
   {
     name: "green",
-    transparent: "#22c55e30",
+    transparent: "#22c55e20",
     opaque: "#22c55e",
   },
   {
     name: "blue",
-    transparent: "#3b82f630",
+    transparent: "#3b82f620",
     opaque: "#3b82f6",
   },
   {
     name: "indigo",
-    transparent: "#6366f130",
+    transparent: "#6366f120",
     opaque: "#6366f1",
   },
   {
     name: "violet",
-    transparent: "#8b5cf630",
+    transparent: "#8b5cf620",
     opaque: "#8b5cf6",
   },
 ];
