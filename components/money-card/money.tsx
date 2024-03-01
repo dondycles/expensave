@@ -37,20 +37,19 @@ export default function MoneyCard({
     <ContextMenu onOpenChange={setOnOpenChange}>
       <ContextMenuTrigger>
         <div
-          key={money.id}
-          className={`rounded-[0.5rem] border p-2 flex justify-between scale-100 duration-150 ${
+          className={`rounded-[0.5rem] border p-2 scale-100 duration-150 grid grid-cols-2 xs:grid-cols-3 ${
             onOpenChange && "shadow-lg scale-[99%]"
           }`}
         >
-          <p>{money.name}</p>
-          <p className="flex items-center gap-1">
-            <FaPesoSign className="text-base" />
+          <p className=" truncate xs:col-span-2">{money.name}</p>
+          <div className="flex items-center gap-1 truncate">
+            <FaPesoSign className="text-base  min-w-fit" />
             {dashboardState.hideValues ? (
               <AsteriskNumber className="text-xs" number={money.amount} />
             ) : (
-              usePhpPeso(money.amount)
+              <p className="truncate">{usePhpPeso(money.amount)}</p>
             )}{" "}
-          </p>
+          </div>
         </div>
       </ContextMenuTrigger>
       <ContextMenuContent>

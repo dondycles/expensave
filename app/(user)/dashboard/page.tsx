@@ -6,15 +6,12 @@ import { useQuery } from "@tanstack/react-query";
 import { Eye, EyeOff } from "lucide-react";
 import { useEffect } from "react";
 import { FaPesoSign } from "react-icons/fa6";
-import dynamic from "next/dynamic";
-
-const AnimatedNumbers = dynamic(() => import("react-animated-numbers"), {
-  ssr: false,
-});
 import MoneyCard from "@/components/money-card/money";
 import MoneyCardOptimistic from "@/components/money-card/money-optimistic";
 import { Button } from "@/components/ui/button";
 import AsteriskNumber from "@/components/asterisk-value";
+import { usePhpPeso } from "@/lib/php-formatter";
+
 export default function Dashboard() {
   var _ = require("lodash");
 
@@ -38,35 +35,26 @@ export default function Dashboard() {
     <div className="w-full h-full flex-1 flex flex-col gap-4 screen-padding ">
       <Card className="bg-foreground text-background shadow-md">
         <CardHeader className="">
-          <CardTitle className="flex justify-between items-center">
-            <div className="flex flex-row gap-1 items-center">
-              <FaPesoSign className="text-2xl" />
+          <div className="grid grid-cols-3">
+            <div className="flex items-center w-full col-span-2">
+              <FaPesoSign className="text-2xl min-w-fit" />
               {dashboardState.hideValues ? (
                 <AsteriskNumber number={totalMoney.total} />
               ) : (
-                <AnimatedNumbers
-                  includeComma
-                  transitions={(index) => ({
-                    type: "spring",
-                    duration: index / 5,
-                    bounce: 0,
-                  })}
-                  animateToNumber={totalMoney.total}
-                  fontStyle={{
-                    fontSize: "24px",
-                    fontWeight: "bold",
-                  }}
-                />
+                <p className="text-2xl max-w-full  truncate font-bold">
+                  {usePhpPeso(totalMoney.total)}
+                </p>
               )}
             </div>
             <Button
               onClick={() => dashboardState.setState()}
               size={"icon"}
               variant={"ghost"}
+              className="w-fit h-fit my-auto ml-auto mr-0"
             >
               {dashboardState.hideValues ? <EyeOff /> : <Eye />}
             </Button>
-          </CardTitle>
+          </div>
         </CardHeader>
       </Card>
       <MoneyCardOptimistic />
