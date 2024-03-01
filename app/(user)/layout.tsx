@@ -3,9 +3,12 @@
 import Menu from "@/components/menu";
 import Nav from "@/components/nav";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { ReactNode } from "react";
 
-export default function UserLayout({ children }: { children: ReactNode }) {
+export default function UserLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <main className="w-full h-full flex flex-col">
       <Nav />

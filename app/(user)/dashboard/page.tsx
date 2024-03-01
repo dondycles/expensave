@@ -13,10 +13,11 @@ import MoneyCardOptimistic from "@/components/money-card/money-optimistic";
 import { Button } from "@/components/ui/button";
 import AsteriskNumber from "@/components/asterisk-value";
 export default function Dashboard() {
+  var _ = require("lodash");
+
   const totalMoney = useMoneyTotal();
   const dashboardState = useDashboardState();
 
-  var _ = require("lodash");
   const { data } = useQuery({
     queryKey: ["moneys"],
     queryFn: async () => await getmoneys(),

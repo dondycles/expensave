@@ -11,17 +11,20 @@ export async function middleware(req: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (user && req.nextUrl.pathname === "/auth") {
+  if (
+    (user && req.nextUrl.pathname === "/sign-up") ||
+    (user && req.nextUrl.pathname === "/log-in")
+  ) {
     return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
   if (!user && req.nextUrl.pathname === "/dashboard") {
-    return NextResponse.redirect(new URL("/auth", req.url));
+    return NextResponse.redirect(new URL("/log-in", req.url));
   }
 
   return res;
 }
 
 export const config = {
-  matcher: ["/", "/dashboard", "/auth"],
+  matcher: ["/", "/dashboard", "/sign-up", "/log-in"],
 };
