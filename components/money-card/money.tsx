@@ -10,7 +10,6 @@ import AsteriskNumber from "../asterisk-value";
 import { FaPesoSign } from "react-icons/fa6";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { delmoney } from "@/app/actions/delete-money";
-
 interface MoneyCard extends React.HTMLAttributes<HTMLDivElement> {
   money: any;
   dashboardState: DashboardState;

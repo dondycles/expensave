@@ -13,7 +13,12 @@ declare global {
   };
   type DashboardState = {
     hideValues: boolean;
-    setState: () => void;
+    sort: {
+      asc: string;
+      by: "created_at" | "amount";
+    };
+    setHideValues: () => void;
+    setSort: (asc: string, by: "created_at" | "amount") => void;
   };
 }
 
@@ -36,7 +41,12 @@ export const useDashboardState = create<DashboardState>()(
   persist(
     (set, get) => ({
       hideValues: false,
-      setState: () => set({ hideValues: !get().hideValues }),
+      setHideValues: () => set({ hideValues: !get().hideValues }),
+      sort: {
+        asc: "false",
+        by: "created_at",
+      },
+      setSort: (asc, by) => set((state) => ({ sort: { asc: asc, by: by } })),
     }),
     {
       name: "dashboard-state",
