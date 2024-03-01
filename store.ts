@@ -25,6 +25,11 @@ declare global {
     money: EditMoneyTypes | null;
     setMoney: (money: EditMoneyTypes | null) => void;
   };
+
+  type MoneysStyles = {
+    colors: { id: string; color: string }[];
+    setColor: (money: { color: string; id: string }) => void;
+  };
 }
 
 export const useOptimisticAddMoney = create<OptimisticAddMoney>()((set) => ({
@@ -66,3 +71,18 @@ export const useEditMoney = create<EditMoney>()((set) => ({
       money: money,
     })),
 }));
+
+export const useMoneysStyle = create<MoneysStyles>()(
+  persist(
+    (set) => ({
+      colors: [], // Initialize colors array with an empty array
+      setColor: (newColor: { id: string; color: string }) =>
+        set((state) => ({
+          colors: [...state.colors, newColor], // Add newColor to the existing colors array
+        })),
+    }),
+    {
+      name: "moneys-styles",
+    }
+  )
+);

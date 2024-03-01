@@ -3,6 +3,9 @@ import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { useState } from "react";
@@ -10,9 +13,10 @@ import AsteriskNumber from "../asterisk-value";
 import { FaPesoSign } from "react-icons/fa6";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { delmoney } from "@/app/actions/delete-money";
-import EditMoneyDrawer from "../drawers/editmoney-drawer";
 import { useEditMoney } from "@/store";
 import { Database } from "@/database.types";
+import { Circle } from "lucide-react";
+import { moneysColors as colors } from "@/lib/constants";
 interface MoneyCard extends React.HTMLAttributes<HTMLDivElement> {
   money: Database["public"]["Tables"]["moneys"]["Row"];
   dashboardState: DashboardState;
@@ -34,6 +38,7 @@ export default function MoneyCard({
       });
     },
   });
+  const moneysColors = colors;
 
   return (
     <ContextMenu onOpenChange={setOnOpenChange}>
@@ -69,6 +74,18 @@ export default function MoneyCard({
         <ContextMenuItem onClick={() => deleteMoney(money.id)}>
           Delete
         </ContextMenuItem>
+        <ContextMenuSub>
+          <ContextMenuSubTrigger>Set Color</ContextMenuSubTrigger>
+          <ContextMenuSubContent className="w-fit">
+            {moneysColors.map((color) => {
+              return (
+                <ContextMenuItem key={color.color} className="gap-2">
+                  <Circle className={`size-4 ${color.color}`} /> {color.name}
+                </ContextMenuItem>
+              );
+            })}
+          </ContextMenuSubContent>
+        </ContextMenuSub>
       </ContextMenuContent>
     </ContextMenu>
   );
