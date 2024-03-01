@@ -6,12 +6,15 @@ import { useQuery } from "@tanstack/react-query";
 import { Eye, EyeOff } from "lucide-react";
 import { useEffect } from "react";
 import { FaPesoSign } from "react-icons/fa6";
+import dynamic from "next/dynamic";
 
+const AnimatedNumbers = dynamic(() => import("react-animated-numbers"), {
+  ssr: false,
+});
 import MoneyCard from "@/components/money-card/money";
 import MoneyCardOptimistic from "@/components/money-card/money-optimistic";
 import { Button } from "@/components/ui/button";
 import AsteriskNumber from "@/components/asterisk-value";
-import { usePhpPeso } from "@/lib/php-formatter";
 export default function Dashboard() {
   var _ = require("lodash");
 
@@ -41,22 +44,19 @@ export default function Dashboard() {
               {dashboardState.hideValues ? (
                 <AsteriskNumber number={totalMoney.total} />
               ) : (
-                // <AnimatedNumbers
-                //   includeComma
-                //   transitions={(index) => ({
-                //     type: "spring",
-                //     duration: index / 5,
-                //     bounce: 0,
-                //   })}
-                //   animateToNumber={totalMoney.total}
-                //   fontStyle={{
-                //     fontSize: "24px",
-                //     fontWeight: "bold",
-                //   }}
-                // />
-                <p className="text-2xl font-black">
-                  {usePhpPeso(totalMoney.total)}
-                </p>
+                <AnimatedNumbers
+                  includeComma
+                  transitions={(index) => ({
+                    type: "spring",
+                    duration: index / 5,
+                    bounce: 0,
+                  })}
+                  animateToNumber={totalMoney.total}
+                  fontStyle={{
+                    fontSize: "24px",
+                    fontWeight: "bold",
+                  }}
+                />
               )}
             </div>
             <Button
