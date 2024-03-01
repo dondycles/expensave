@@ -10,8 +10,8 @@ const playfair = Sofia_Sans_Semi_Condensed({
 });
 
 export const metadata: Metadata = {
-  title: "expensave.",
-  description: "Track your money with simplicity.",
+  title: "pennylist.",
+  description: "List your savings with simplicity.",
 };
 
 export default function RootLayout({
