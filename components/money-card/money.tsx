@@ -15,8 +15,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { delmoney } from "@/app/actions/delete-money";
 import { useEditMoney, useMoneysStyle } from "@/store";
 import { Database } from "@/database.types";
-import { Circle } from "lucide-react";
+import { Circle, ExternalLink } from "lucide-react";
 import { moneysColors } from "@/lib/constants";
+import Link from "next/link";
 interface MoneyCard extends React.HTMLAttributes<HTMLDivElement> {
   money: Database["public"]["Tables"]["moneys"]["Row"];
   dashboardState: DashboardState;
@@ -109,6 +110,14 @@ export default function MoneyCard({
             })}
           </ContextMenuSubContent>
         </ContextMenuSub>
+        <ContextMenuItem disabled asChild>
+          <Link
+            href={"/money/" + money.id}
+            className="flex items-center justify-between"
+          >
+            Details <ExternalLink className="size-4" />
+          </Link>
+        </ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>
   );

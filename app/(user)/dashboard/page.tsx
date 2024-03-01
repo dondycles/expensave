@@ -7,7 +7,6 @@ import { Eye, EyeOff } from "lucide-react";
 import { useEffect } from "react";
 import { FaPesoSign } from "react-icons/fa6";
 import MoneyCard from "@/components/money-card/money";
-import { Button } from "@/components/ui/button";
 import AsteriskNumber from "@/components/asterisk-value";
 import { usePhpPeso } from "@/lib/php-formatter";
 import { TbSortAscending, TbSortDescending } from "react-icons/tb";
@@ -45,24 +44,32 @@ export default function Dashboard() {
       <Card className="bg-foreground text-background shadow-md">
         <CardHeader>
           <div className="grid grid-cols-3">
-            <div className="flex items-center w-full col-span-2">
-              <FaPesoSign className="text-2xl min-w-fit" />
-              {dashboardState.hideValues ? (
-                <AsteriskNumber number={totalMoney.total} />
-              ) : (
-                <p className="text-2xl max-w-full  truncate font-bold">
-                  {usePhpPeso(totalMoney.total)}
-                </p>
-              )}
+            <div className="w-full flex flex-col col-span-2">
+              <p className="text-muted-foreground text-sm truncate">
+                Total money
+              </p>
+              <div className="flex items-center w-full col-span-2">
+                <FaPesoSign className="text-2xl min-w-fit" />
+                {dashboardState.hideValues ? (
+                  <AsteriskNumber number={totalMoney.total} />
+                ) : (
+                  <p className="text-2xl max-w-full  truncate font-bold">
+                    {usePhpPeso(totalMoney.total)}
+                  </p>
+                )}
+              </div>
             </div>
-            <Button
-              onClick={() => dashboardState.setHideValues()}
-              size={"icon"}
-              variant={"ghost"}
+            <div
+              role="button"
+              tabIndex={0}
               className="w-fit h-fit my-auto ml-auto mr-0"
             >
-              {dashboardState.hideValues ? <EyeOff /> : <Eye />}
-            </Button>
+              {dashboardState.hideValues ? (
+                <EyeOff onClick={() => dashboardState.setHideValues()} />
+              ) : (
+                <Eye onClick={() => dashboardState.setHideValues()} />
+              )}
+            </div>
           </div>
         </CardHeader>
       </Card>
@@ -75,7 +82,7 @@ export default function Dashboard() {
             <TbSortDescending />
           )}
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuContent align="end">
           <DropdownMenuRadioGroup
             value={dashboardState.sort.asc}
             onValueChange={(e) => {
@@ -106,8 +113,6 @@ export default function Dashboard() {
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>
       </DropdownMenu>
-
-      {/* <MoneyCardOptimistic /> */}
       {moneys?.map((money, index) => {
         return (
           <MoneyCard

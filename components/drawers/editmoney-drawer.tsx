@@ -37,7 +37,7 @@ export default function EditMoneyDrawer() {
           mutated={() => setOnOpenChange(false)}
         >
           <DrawerClose className="flex-1">
-            <Button variant="destructive" className="w-full">
+            <Button variant="ghost" className="w-full">
               Cancel.
             </Button>
           </DrawerClose>
