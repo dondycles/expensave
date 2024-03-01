@@ -5,12 +5,12 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
-import { AddMoneyForm } from "./forms/add-money";
+import { AddMoneyForm } from "../forms/add-money";
 import { useState } from "react";
 
-export default function Menu() {
+export default function AddMoneyDrawer() {
   const [onOpenChange, setOnOpenChange] = useState(false);
   return (
     <Drawer onOpenChange={setOnOpenChange} open={onOpenChange}>

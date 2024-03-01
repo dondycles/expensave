@@ -4,7 +4,7 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { useDashboardState, useMoneyTotal } from "@/store";
 import { useQuery } from "@tanstack/react-query";
 import { Eye, EyeOff } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { FaPesoSign } from "react-icons/fa6";
 import MoneyCard from "@/components/money-card/money";
 import MoneyCardOptimistic from "@/components/money-card/money-optimistic";
@@ -28,24 +28,25 @@ export default function Dashboard() {
   const totalMoney = useMoneyTotal();
   const dashboardState = useDashboardState();
 
-  const { data, isFetched, refetch } = useQuery({
+  const { data } = useQuery({
     queryFn: async () => await getmoneys(dashboardState.sort),
     refetchOnWindowFocus: false,
-    staleTime: 10000,
+    staleTime: 0,
     queryKey: ["moneys", dashboardState.sort.asc, dashboardState.sort.by],
+    enabled: dashboardState ? true : false,
   });
 
   const moneys = data?.success?.flatMap((money) => money);
   const total = _.sum(data?.success?.flatMap((money) => Number(money.amount)));
 
-  useEffect(() => {
+  useMemo(() => {
     totalMoney.setTotal(total);
-  }, [isFetched]);
+  }, [total]);
 
   return (
     <div className="w-full h-full flex-1 flex flex-col gap-4 screen-padding ">
       <Card className="bg-foreground text-background shadow-md">
-        <CardHeader className="">
+        <CardHeader>
           <div className="grid grid-cols-3">
             <div className="flex items-center w-full col-span-2">
               <FaPesoSign className="text-2xl min-w-fit" />
@@ -68,7 +69,6 @@ export default function Dashboard() {
           </div>
         </CardHeader>
       </Card>
-
       <DropdownMenu>
         <DropdownMenuTrigger className="w-fit ml-auto mr-0 flex gap-1 items-center text-muted-foreground">
           <p className="text-sm">sort by {dashboardState.sort.by}</p>
@@ -110,7 +110,7 @@ export default function Dashboard() {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <MoneyCardOptimistic />
+      {/* <MoneyCardOptimistic /> */}
       {moneys?.map((money, index) => {
         return (
           <MoneyCard

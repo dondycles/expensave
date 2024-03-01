@@ -9,54 +9,51 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { addmoney } from "@/app/actions/add-money";
 import { ReactNode } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useDashboardState, useOptimisticAddMoney } from "@/store";
+import { editMoney } from "@/app/actions/edit-money";
+import { useDashboardState } from "@/store";
 
-const AddMoneySchema = z.object({
-  name: z.string().min(1),
-  amount: z.string().min(1),
+const EditMoneySchema = z.object({
+  name: z.string(),
+  amount: z.string(),
+  id: z.string(),
 });
 
-export type AddMoneyTypes = z.infer<typeof AddMoneySchema>;
+export type EditMoneyTypes = z.infer<typeof EditMoneySchema>;
 
-export function AddMoneyForm({
+export function EditMoneyForm({
   children,
   mutated,
+  money,
 }: {
   children: ReactNode;
   mutated: () => void;
+  money: EditMoneyTypes | null;
 }) {
   const queryClient = useQueryClient();
-  const optmisticAddMoney = useOptimisticAddMoney();
   const dashboardState = useDashboardState();
-
-  const form = useForm<z.infer<typeof AddMoneySchema>>({
-    resolver: zodResolver(AddMoneySchema),
+  const form = useForm<z.infer<typeof EditMoneySchema>>({
+    resolver: zodResolver(EditMoneySchema),
     defaultValues: {
-      name: "",
-      amount: "",
+      name: money?.name,
+      amount: money?.amount,
+      id: money?.id,
     },
   });
 
   const { mutate: mutateMoney, isPending } = useMutation({
-    mutationFn: async (values: z.infer<typeof AddMoneySchema>) =>
-      await addmoney(values),
-    onMutate: (variables) => {
-      const name = variables.name;
-      const amount = variables.amount;
-      optmisticAddMoney.setMoney(name, amount);
-    },
+    mutationFn: async (values: z.infer<typeof EditMoneySchema>) =>
+      await editMoney(values),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["moneys", dashboardState.sort.asc, dashboardState.sort.by],
       });
       form.reset();
-      optmisticAddMoney.setMoney(null, null);
       mutated();
     },
     onError: (error) => {
@@ -67,7 +64,7 @@ export function AddMoneyForm({
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit((values: z.infer<typeof AddMoneySchema>) =>
+        onSubmit={form.handleSubmit((values: z.infer<typeof EditMoneySchema>) =>
           mutateMoney(values)
         )}
         className="space-y-4"
@@ -77,6 +74,7 @@ export function AddMoneyForm({
           name="name"
           render={({ field }) => (
             <FormItem>
+              <FormLabel>Name</FormLabel>
               <FormControl>
                 <Input placeholder="name." {...field} />
               </FormControl>
@@ -89,6 +87,7 @@ export function AddMoneyForm({
           name="amount"
           render={({ field }) => (
             <FormItem>
+              <FormLabel>Amount</FormLabel>
               <FormControl>
                 <Input type="number" placeholder="amount." {...field} />
               </FormControl>
@@ -103,7 +102,7 @@ export function AddMoneyForm({
             type="submit"
             className={`flex-1 ${isPending && "animate-pulse"}`}
           >
-            {isPending ? "Adding..." : "Add."}
+            {isPending ? "Editing..." : "Edit."}
           </Button>
         </div>
       </form>

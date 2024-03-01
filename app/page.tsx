@@ -10,7 +10,7 @@ export default function Home() {
         </h1>
         <p>Track your expenses with simplicity.</p>
         <div className="flex flex-row gap-2 mt-4">
-          <Link href={"/auth"} className="flex-1">
+          <Link href={"/log-in"} className="flex-1">
             <Button className="w-full">Get Started.</Button>
           </Link>
           <Link href={"/learn-more"} className="flex-1">

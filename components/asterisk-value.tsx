@@ -14,8 +14,6 @@ export default function AsteriskNumber({
   const asteriskString = "*".repeat(numberString.length);
 
   return (
-    <p className={cn("font-bold text-4xl h-fit", className)}>
-      {asteriskString}
-    </p>
+    <p className={cn("font-bold text-2xl", className)}>{asteriskString}</p>
   );
 }

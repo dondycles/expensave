@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { EditMoneyTypes } from "./components/forms/edit-money";
 
 declare global {
   type OptimisticAddMoney = {
@@ -19,6 +20,10 @@ declare global {
     };
     setHideValues: () => void;
     setSort: (asc: string, by: "created_at" | "amount") => void;
+  };
+  type EditMoney = {
+    money: EditMoneyTypes | null;
+    setMoney: (money: EditMoneyTypes | null) => void;
   };
 }
 
@@ -53,3 +58,11 @@ export const useDashboardState = create<DashboardState>()(
     }
   )
 );
+
+export const useEditMoney = create<EditMoney>()((set) => ({
+  money: null,
+  setMoney: (money) =>
+    set((state) => ({
+      money: money,
+    })),
+}));

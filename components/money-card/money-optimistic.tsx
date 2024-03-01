@@ -7,7 +7,7 @@ export default function MoneyCardOptimistic() {
 
   return (
     <div
-      className={`rounded-[0.5rem] border p-2 opacity-25 animate-pulse ${
+      className={`rounded-[0.5rem] border p-2  animate-pulse ${
         isPendingMoney ? "flex justify-between" : "hidden"
       }`}
     >
