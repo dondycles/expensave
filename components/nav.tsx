@@ -1,4 +1,4 @@
-import { Plus, User, User2 } from "lucide-react";
+import { LogOut, Plus, User, User2 } from "lucide-react";
 import ModeToggle from "./theme-btn";
 import { Button } from "./ui/button";
 
@@ -9,7 +9,7 @@ export default function Nav() {
     "
     >
       <Button size="icon" variant={"ghost"}>
-        <User2 />
+        <LogOut />
       </Button>
       <ModeToggle />
     </header>
