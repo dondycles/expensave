@@ -8,15 +8,15 @@ import {
   ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import AsteriskNumber from "../asterisk-value";
 import { FaPesoSign } from "react-icons/fa6";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { delmoney } from "@/app/actions/delete-money";
-import { useEditMoney } from "@/store";
+import { useEditMoney, useMoneysStyle } from "@/store";
 import { Database } from "@/database.types";
 import { Circle } from "lucide-react";
-import { moneysColors as colors } from "@/lib/constants";
+import { moneysColors } from "@/lib/constants";
 interface MoneyCard extends React.HTMLAttributes<HTMLDivElement> {
   money: Database["public"]["Tables"]["moneys"]["Row"];
   dashboardState: DashboardState;
@@ -30,6 +30,7 @@ export default function MoneyCard({
   const queryClient = useQueryClient();
   const [onOpenChange, setOnOpenChange] = useState<boolean>(false);
   const editMoney = useEditMoney();
+  const moneysStyles = useMoneysStyle();
   const { mutate: deleteMoney, isPending: deletePending } = useMutation({
     mutationFn: async (id: string) => await delmoney(id),
     onSuccess: () => {
@@ -38,19 +39,25 @@ export default function MoneyCard({
       });
     },
   });
-  const moneysColors = colors;
 
+  const thisMoneyColors = moneysStyles.colors.filter(
+    (color: { id: string }) => color.id === money.id
+  )[0];
+  const focusMoney = Boolean(editMoney.money?.id === money.id || onOpenChange);
   return (
     <ContextMenu onOpenChange={setOnOpenChange}>
       <ContextMenuTrigger>
         <div
-          className={`rounded-[0.5rem] border p-2 scale-100 duration-150 grid grid-cols-2 xs:grid-cols-3 
-          ${onOpenChange && "shadow-lg scale-[99%] border-primary"}
-          ${deletePending && "opacity-80 border-destructive"}
-          ${
-            editMoney.money?.id === money.id &&
-            "shadow-lg scale-[99%] border-orange-400"
-          }
+          style={{
+            backgroundColor: thisMoneyColors?.color.transparent,
+            borderColor:
+              (deletePending && "hsl(var(--destructive))") ||
+              thisMoneyColors?.color.opaque,
+            color: thisMoneyColors?.color.opaque,
+          }}
+          className={`rounded-[0.5rem] border p-2 scale-100 duration-150 grid grid-cols-2 xs:grid-cols-3  font-bold 
+          ${focusMoney && "shadow-lg scale-[99%] border-[3px]"}
+          ${deletePending && "opacity-80  border-[3px]"}
           `}
         >
           <p className=" truncate xs:col-span-2">{money.name}</p>
@@ -79,8 +86,24 @@ export default function MoneyCard({
           <ContextMenuSubContent className="w-fit">
             {moneysColors.map((color) => {
               return (
-                <ContextMenuItem key={color.color} className="gap-2">
-                  <Circle className={`size-4 ${color.color}`} /> {color.name}
+                <ContextMenuItem
+                  onClick={() =>
+                    moneysStyles.setColor({
+                      color: {
+                        opaque: color.opaque,
+                        transparent: color.transparent,
+                      },
+                      id: money.id,
+                    })
+                  }
+                  key={color?.name}
+                  className="gap-2"
+                >
+                  <Circle
+                    className="size-4"
+                    style={{ fill: color.transparent, color: color.opaque }}
+                  />{" "}
+                  {color.name}
                 </ContextMenuItem>
               );
             })}

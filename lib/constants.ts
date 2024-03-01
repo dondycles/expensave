@@ -1,30 +1,42 @@
 export const moneysColors = [
   {
+    name: "default",
+    transparent: "",
+    opaque: "",
+  },
+  {
     name: "red",
-    color: "fill-red-500",
+    transparent: "#ef444430",
+    opaque: "#ef4444",
   },
   {
     name: "orange",
-    color: "fill-orange-500",
+    transparent: "#f9731630",
+    opaque: "#f97316",
   },
   {
     name: "yellow",
-    color: "fill-yellow-500",
+    transparent: "#eab30830",
+    opaque: "#eab308",
   },
   {
     name: "green",
-    color: "fill-green-500",
+    transparent: "#22c55e30",
+    opaque: "#22c55e",
   },
   {
     name: "blue",
-    color: "fill-blue-500",
+    transparent: "#3b82f630",
+    opaque: "#3b82f6",
   },
   {
     name: "indigo",
-    color: "fill-indigo-500",
+    transparent: "#6366f130",
+    opaque: "#6366f1",
   },
   {
     name: "violet",
-    color: "fill-violet-500",
+    transparent: "#8b5cf630",
+    opaque: "#8b5cf6",
   },
 ];
