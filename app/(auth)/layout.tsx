@@ -29,8 +29,8 @@ export default function AuthLayout({
       </nav>
       <div className="max-w-[420px] m-auto w-full text-center">
         <p className="text-6xl font-black">
-          {pathname === "/log-in" && "Log In"}
-          {pathname === "/sign-up" && "Sign Up"}
+          {pathname === "/log-in" && "Log In."}
+          {pathname === "/sign-up" && "Sign Up."}
         </p>
         <p className="text-muted-foreground mb-4">
           The simplest way to keep track of your money.
