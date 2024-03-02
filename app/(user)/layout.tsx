@@ -9,11 +9,11 @@ export default function UserLayout({
 }) {
   return (
     <main className="w-full h-full flex flex-col">
-      <Nav />
       <ScrollArea className="w-full h-full">
         {children}
         <ScrollBar />
       </ScrollArea>
+      <Nav />
     </main>
   );
 }
