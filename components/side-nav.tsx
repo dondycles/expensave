@@ -1,10 +1,10 @@
-import { LogOut, Plus, User, User2 } from "lucide-react";
-import ModeToggle from "./theme-btn";
-import { Button } from "./ui/button";
 import { logout } from "@/app/actions/auth/log-out";
 import { useRouter } from "next/navigation";
+import { Button } from "./ui/button";
+import { LogOut } from "lucide-react";
+import ModeToggle from "./theme-btn";
 
-export default function Nav() {
+export default function SideNav() {
   const route = useRouter();
   const logOut = async () => {
     const { error } = await logout();
@@ -12,10 +12,7 @@ export default function Nav() {
     route.push("/log-in");
   };
   return (
-    <header
-      className="sm:hidden flex justify-between fixed bottom-0 left-0 w-full nav-padding border-t-border border-t-[1px] bg-background h-fit
-    "
-    >
+    <aside className="p-4 hidden sm:flex flex-col w-fit border-r-border border-r-[1px]">
       <Button
         onClick={logOut}
         variant={"ghost"}
@@ -25,6 +22,6 @@ export default function Nav() {
         <p className="text-xs text-muted-foreground">Log Out</p>
       </Button>
       <ModeToggle />
-    </header>
+    </aside>
   );
 }
