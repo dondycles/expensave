@@ -13,7 +13,8 @@ export async function middleware(req: NextRequest) {
 
   if (
     (user && req.nextUrl.pathname === "/sign-up") ||
-    (user && req.nextUrl.pathname === "/log-in")
+    (user && req.nextUrl.pathname === "/log-in") ||
+    (user && req.nextUrl.pathname === "/")
   ) {
     return NextResponse.redirect(new URL("/dashboard", req.url));
   }

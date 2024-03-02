@@ -13,7 +13,9 @@ export default function AuthLayout({
   return (
     <main className="w-full h-full flex flex-col  screen-padding">
       <nav className="flex justify-between">
-        <Button variant={"outline"}>Home. </Button>
+        <Link href={"/"}>
+          <Button variant={"outline"}>Home. </Button>
+        </Link>
         <Link
           href={
             (pathname === "/log-in" && "/sign-up") ||
