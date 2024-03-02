@@ -22,8 +22,8 @@ export default function AuthLayout({
           }
         >
           <Button>
-            {pathname === "/log-in" && "Sign Up"}
-            {pathname === "/sign-up" && "Log In"}
+            {pathname === "/log-in" && "Sign Up."}
+            {pathname === "/sign-up" && "Log In."}
           </Button>
         </Link>
       </nav>
