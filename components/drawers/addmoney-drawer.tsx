@@ -17,7 +17,8 @@ export default function AddMoneyDrawer() {
       <Button
         asChild
         size={"icon"}
-        className="z-10 fixed bottom-4 left-1/2 -translate-x-1/2 rounded-full"
+        className="rounded-full"
+        variant={"outline"}
       >
         <DrawerTrigger>
           <Plus />

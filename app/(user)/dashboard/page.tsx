@@ -3,7 +3,7 @@ import { getmoneys } from "@/app/actions/get-moneys";
 import { Card, CardHeader } from "@/components/ui/card";
 import { useDashboardState, useMoneyTotal } from "@/store";
 import { useQuery } from "@tanstack/react-query";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Plus } from "lucide-react";
 import { useEffect } from "react";
 import { FaPesoSign } from "react-icons/fa6";
 import MoneyCard from "@/components/money-card/money";
@@ -18,6 +18,9 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
 } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import AddMoneyDrawer from "@/components/drawers/addmoney-drawer";
+import EditMoneyDrawer from "@/components/drawers/editmoney-drawer";
 
 export default function Dashboard() {
   var _ = require("lodash");
@@ -41,13 +44,26 @@ export default function Dashboard() {
 
   return (
     <div className="w-full h-full flex-1 flex flex-col gap-4 screen-padding ">
-      <Card className="bg-foreground text-background shadow-md">
+      <Card className="bg-foreground  shadow-md">
         <CardHeader>
-          <div className="grid grid-cols-3">
-            <div className="w-full flex flex-col col-span-2">
-              <p className="text-muted-foreground text-sm truncate">
-                Total money
-              </p>
+          <div className="grid grid-cols-3 ">
+            <div className="w-full flex flex-col col-span-2 text-background">
+              <div className="text-muted-foreground text-sm w-fit flex gap-2 items-center ">
+                <p className="line-clamp-1 w-fit">Total money</p>
+                <button className="w-fit h-fit my-auto ml-auto mr-0">
+                  {dashboardState.hideValues ? (
+                    <EyeOff
+                      className="size-5"
+                      onClick={() => dashboardState.setHideValues()}
+                    />
+                  ) : (
+                    <Eye
+                      className="size-5"
+                      onClick={() => dashboardState.setHideValues()}
+                    />
+                  )}
+                </button>
+              </div>
               <div className="flex items-center w-full col-span-2">
                 <FaPesoSign className="text-2xl min-w-fit" />
                 {dashboardState.hideValues ? (
@@ -59,16 +75,8 @@ export default function Dashboard() {
                 )}
               </div>
             </div>
-            <div
-              role="button"
-              tabIndex={0}
-              className="w-fit h-fit my-auto ml-auto mr-0"
-            >
-              {dashboardState.hideValues ? (
-                <EyeOff onClick={() => dashboardState.setHideValues()} />
-              ) : (
-                <Eye onClick={() => dashboardState.setHideValues()} />
-              )}
+            <div className="my-auto ml-auto mr-0 ">
+              <AddMoneyDrawer />
             </div>
           </div>
         </CardHeader>
@@ -124,6 +132,7 @@ export default function Dashboard() {
       })}
       <br />
       <br />
+      <EditMoneyDrawer />
     </div>
   );
 }

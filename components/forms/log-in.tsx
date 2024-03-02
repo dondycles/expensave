@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { login } from "@/app/actions/auth/login";
+import { useRouter } from "next/navigation";
 
 const LogInSchema = z.object({
   username: z.string().min(2).max(50),
@@ -22,6 +23,7 @@ const LogInSchema = z.object({
 export type LogInFormTypes = z.infer<typeof LogInSchema>;
 
 export function LogInForm() {
+  const route = useRouter();
   const form = useForm<z.infer<typeof LogInSchema>>({
     resolver: zodResolver(LogInSchema),
     defaultValues: {
@@ -33,7 +35,7 @@ export function LogInForm() {
   async function onSubmit(values: z.infer<typeof LogInSchema>) {
     const { success, error } = await login(values);
     if (error) return form.setError("password", { message: error.message });
-    form.reset();
+    route.push("/dashboard");
   }
 
   return (
@@ -64,7 +66,11 @@ export function LogInForm() {
           )}
         />
 
-        <Button type="submit" className="w-full">
+        <Button
+          disabled={form.formState.isSubmitting}
+          type="submit"
+          className="w-full"
+        >
           Log In.
         </Button>
       </form>

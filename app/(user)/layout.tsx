@@ -1,7 +1,4 @@
 "use client";
-
-import AddMoneyDrawer from "@/components/drawers/addmoney-drawer";
-import EditMoneyDrawer from "@/components/drawers/editmoney-drawer";
 import Nav from "@/components/nav";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
@@ -17,8 +14,6 @@ export default function UserLayout({
         {children}
         <ScrollBar />
       </ScrollArea>
-      <AddMoneyDrawer />
-      <EditMoneyDrawer />
     </main>
   );
 }
