@@ -11,21 +11,21 @@ export async function middleware(req: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // if (user && req.nextUrl.pathname === "/log-in") {
-  //   return NextResponse.redirect(new URL("/dashboard", req.url));
-  // }
+  if (user && req.nextUrl.pathname === "/log-in") {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
+  }
 
-  // if (user && req.nextUrl.pathname === "/sign-up") {
-  //   return NextResponse.redirect(new URL("/dashboard", req.url));
-  // }
+  if (user && req.nextUrl.pathname === "/sign-up") {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
+  }
 
-  // if (user && req.nextUrl.pathname === "/") {
-  //   return NextResponse.redirect(new URL("/dashboard", req.url));
-  // }
+  if (user && req.nextUrl.pathname === "/") {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
+  }
 
-  // if (!user && req.nextUrl.pathname === "/dashboard") {
-  //   return NextResponse.redirect(new URL("/log-in", req.url));
-  // }
+  if (!user && req.nextUrl.pathname === "/dashboard") {
+    return NextResponse.redirect(new URL("/log-in", req.url));
+  }
 
   return res;
 }
