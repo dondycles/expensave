@@ -3,7 +3,7 @@ import { getmoneys } from "@/app/actions/get-moneys";
 import { Card, CardHeader } from "@/components/ui/card";
 import { useDashboardState, useMoneyTotal } from "@/store";
 import { useQuery } from "@tanstack/react-query";
-import { Eye, EyeOff, Plus } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { useEffect } from "react";
 import { FaPesoSign } from "react-icons/fa6";
 import MoneyCard from "@/components/money-card/money";
@@ -18,25 +18,33 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
 import AddMoneyDrawer from "@/components/drawers/addmoney-drawer";
 import EditMoneyDrawer from "@/components/drawers/editmoney-drawer";
+import { Skeleton } from "@/components/ui/skeleton";
+import { getsession } from "@/app/actions/get-session";
 
 export default function Dashboard() {
   var _ = require("lodash");
   const totalMoney = useMoneyTotal();
   const dashboardState = useDashboardState();
 
-  const { data } = useQuery({
+  const { data: session } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => await getsession(),
+  });
+
+  const { data: moneysData, isLoading: moneysLoading } = useQuery({
     queryFn: async () => await getmoneys(dashboardState.sort),
     refetchOnWindowFocus: false,
     staleTime: 0,
     queryKey: ["moneys", dashboardState.sort.asc, dashboardState.sort.by],
-    enabled: dashboardState ? true : false,
+    enabled: session?.success ? true : false,
   });
 
-  const moneys = data?.success?.flatMap((money) => money);
-  const total = _.sum(data?.success?.flatMap((money) => Number(money.amount)));
+  const moneys = moneysData?.success?.flatMap((money) => money);
+  const total = _.sum(
+    moneysData?.success?.flatMap((money) => Number(money.amount))
+  );
 
   useEffect(() => {
     totalMoney.setTotal(total);
@@ -66,7 +74,9 @@ export default function Dashboard() {
               </div>
               <div className="flex items-center w-full col-span-2">
                 <FaPesoSign className="text-2xl min-w-fit" />
-                {dashboardState.hideValues ? (
+                {moneysLoading ? (
+                  <Skeleton className="w-24 h-8 invert ml-1" />
+                ) : dashboardState.hideValues ? (
                   <AsteriskNumber number={totalMoney.total} />
                 ) : (
                   <p className="text-2xl max-w-full  truncate font-bold">
@@ -121,15 +131,19 @@ export default function Dashboard() {
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>
       </DropdownMenu>
-      {moneys?.map((money, index) => {
-        return (
-          <MoneyCard
-            key={money.id}
-            money={money}
-            dashboardState={dashboardState}
-          />
-        );
-      })}
+      {moneysLoading
+        ? Array.from({ length: 4 }, (_, i) => {
+            return <Skeleton key={i} className="w-full h-10" />;
+          })
+        : moneys?.map((money, index) => {
+            return (
+              <MoneyCard
+                key={money.id}
+                money={money}
+                dashboardState={dashboardState}
+              />
+            );
+          })}
       <br />
       <br />
       <EditMoneyDrawer />
