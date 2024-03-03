@@ -28,17 +28,14 @@ export default function Dashboard() {
   const totalMoney = useMoneyTotal();
   const dashboardState = useDashboardState();
 
-  const { data: session } = useQuery({
-    queryKey: ["user"],
-    queryFn: async () => await getsession(),
-  });
-
-  const { data: moneysData, isLoading: moneysLoading } = useQuery({
+  const {
+    data: moneysData,
+    isLoading: moneysLoading,
+    error: moneysError,
+  } = useQuery({
     queryFn: async () => await getmoneys(dashboardState.sort),
     refetchOnWindowFocus: false,
-    staleTime: 0,
     queryKey: ["moneys", dashboardState.sort.asc, dashboardState.sort.by],
-    enabled: session?.success ? true : false,
   });
 
   const moneys = moneysData?.success?.flatMap((money) => money);
@@ -49,6 +46,15 @@ export default function Dashboard() {
   useEffect(() => {
     totalMoney.setTotal(total);
   }, [total]);
+
+  if (moneysData?.error || moneysError)
+    return (
+      <div className="w-full h-full flex-1 flex flex-col gap-4 screen-padding ">
+        <p className="text-destructive font-bold text-2xl">
+          Error: {moneysData?.error?.toString() || moneysError?.message}
+        </p>
+      </div>
+    );
 
   return (
     <div className="w-full h-full flex-1 flex flex-col gap-4 screen-padding ">
