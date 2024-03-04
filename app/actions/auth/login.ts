@@ -2,6 +2,7 @@
 import { LogInFormTypes } from "@/components/forms/log-in";
 import { spServer } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const login = async (data: LogInFormTypes) => {
   const supabase = spServer(cookies());
@@ -12,20 +13,14 @@ export const login = async (data: LogInFormTypes) => {
       email,
       password,
     });
-  if (authError) return { error: authError };
+  if (authError) return { authError };
 
-  const { data: dbUser, error: dbError } = await supabase
+  const { error: dbError } = await supabase
     .from("users")
     .select("*")
     .eq("id", authUser.user.id)
     .single();
+  if (dbError) return { dbError };
 
-  if (dbError) return { error: dbError };
-
-  const userFinalData = {
-    username: dbUser.username,
-    id: authUser.user?.id,
-  };
-
-  return { success: userFinalData };
+  redirect("/dashboard");
 };

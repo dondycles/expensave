@@ -21,7 +21,6 @@ import {
 import AddMoneyDrawer from "@/components/drawers/addmoney-drawer";
 import EditMoneyDrawer from "@/components/drawers/editmoney-drawer";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getsession } from "@/app/actions/get-session";
 export default function Dashboard() {
   var _ = require("lodash");
   const totalMoney = useMoneyTotal();
@@ -49,7 +48,7 @@ export default function Dashboard() {
   if (moneysData?.error || moneysError)
     return (
       <div className="w-full h-full flex-1 flex flex-col gap-4 screen-padding ">
-        <p className="text-destructive font-bold text-2xl">
+        <p className="text-destructive font-bold">
           Error: {moneysData?.error?.toString() || moneysError?.message}
         </p>
       </div>

@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { signup } from "@/app/actions/auth/sign-up";
-import { useRouter } from "next/navigation";
 
 const SignUpSchema = z
   .object({
@@ -29,7 +28,6 @@ const SignUpSchema = z
 export type SignUpFormTypes = z.infer<typeof SignUpSchema>;
 
 export function SignUpForm() {
-  const route = useRouter();
   const form = useForm<z.infer<typeof SignUpSchema>>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
@@ -40,9 +38,15 @@ export function SignUpForm() {
   });
 
   async function onSubmit(values: z.infer<typeof SignUpSchema>) {
-    const { error } = await signup(values);
-    if (error) return form.setError("cpassword", { message: error.message });
-    route.push("/dashboard");
+    const response = await signup(values);
+    if (response?.authError)
+      return form.setError("cpassword", {
+        message: response?.authError.message,
+      });
+    if (response?.dbError)
+      return form.setError("cpassword", {
+        message: response?.dbError.message,
+      });
   }
 
   return (

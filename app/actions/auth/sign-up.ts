@@ -2,29 +2,24 @@
 import { SignUpFormTypes } from "../../../components/forms/sign-up";
 import { spServer } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const signup = async (data: SignUpFormTypes) => {
   const supabase = spServer(cookies());
   const email = `${data.username}@expensave.com`;
   const password = data.password;
 
-  const { data: authUser, error: authError } = await supabase.auth.signUp({
+  const { error: authError } = await supabase.auth.signUp({
     email,
     password,
   });
-  if (authError) return { error: authError };
+  if (authError) return { authError };
 
-  const { data: dbUser, error: dbError } = await supabase
+  const { error: dbError } = await supabase
     .from("users")
-    .insert({ username: data.username })
-    .select()
-    .single();
-  if (dbError) return { error: dbError };
+    .insert({ username: data.username });
 
-  const userFinalData = {
-    username: dbUser.username,
-    id: authUser.user?.id,
-  };
+  if (dbError) return { dbError };
 
-  return { success: userFinalData };
+  redirect("/dashboard");
 };

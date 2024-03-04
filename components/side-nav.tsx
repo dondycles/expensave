@@ -6,16 +6,10 @@ import { LogOut } from "lucide-react";
 import ModeToggle from "./theme-btn";
 
 export default function SideNav() {
-  const route = useRouter();
-  const logOut = async () => {
-    const { error } = await logout();
-    if (error) return;
-    route.push("/log-in");
-  };
   return (
     <aside className="p-4 hidden sm:flex flex-col w-fit border-r-border border-r-[1px]">
       <Button
-        onClick={logOut}
+        onClick={() => logout()}
         variant={"ghost"}
         className="flex flex-col justify-center gap-1 h-fit w-fit p-3"
       >
