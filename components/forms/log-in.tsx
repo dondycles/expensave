@@ -33,7 +33,7 @@ export function LogInForm() {
   });
 
   async function onSubmit(values: z.infer<typeof LogInSchema>) {
-    const { success, error } = await login(values);
+    const { error } = await login(values);
     if (error) return form.setError("password", { message: error.message });
     route.push("/dashboard");
   }

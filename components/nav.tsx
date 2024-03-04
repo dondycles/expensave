@@ -1,4 +1,5 @@
-import { LogOut, Plus, User, User2 } from "lucide-react";
+"use client";
+import { LogOut } from "lucide-react";
 import ModeToggle from "./theme-btn";
 import { Button } from "./ui/button";
 import { logout } from "@/app/actions/auth/log-out";

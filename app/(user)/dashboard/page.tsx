@@ -22,7 +22,6 @@ import AddMoneyDrawer from "@/components/drawers/addmoney-drawer";
 import EditMoneyDrawer from "@/components/drawers/editmoney-drawer";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getsession } from "@/app/actions/get-session";
-
 export default function Dashboard() {
   var _ = require("lodash");
   const totalMoney = useMoneyTotal();

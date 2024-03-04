@@ -40,7 +40,7 @@ export function SignUpForm() {
   });
 
   async function onSubmit(values: z.infer<typeof SignUpSchema>) {
-    const { error, success } = await signup(values);
+    const { error } = await signup(values);
     if (error) return form.setError("cpassword", { message: error.message });
     route.push("/dashboard");
   }

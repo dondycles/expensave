@@ -1,3 +1,4 @@
+"use client";
 import { logout } from "@/app/actions/auth/log-out";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
