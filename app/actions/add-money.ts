@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 export const addmoney = async (data: AddMoneyTypes) => {
   const supabase = spServer(cookies());
   const name = data.name;
-  const amount = data.amount;
+  const amount = Number(data.amount);
 
   const { data: session } = await supabase.auth.getSession();
   if (!session.session) return redirect("/log-in");

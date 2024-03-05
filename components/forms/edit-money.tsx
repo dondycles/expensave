@@ -16,11 +16,11 @@ import { Input } from "@/components/ui/input";
 import { ReactNode } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { editMoney } from "@/app/actions/edit-money";
-import { useDashboardState } from "@/store";
+import { useListState } from "@/store";
 
 const EditMoneySchema = z.object({
   name: z.string(),
-  amount: z.string(),
+  amount: z.any(),
   id: z.string(),
 });
 
@@ -35,9 +35,13 @@ export function EditMoneyForm({
   mutated: () => void;
   money: EditMoneyTypes | null;
 }) {
-  const lastValues = { amount: money?.amount!, name: money?.name! };
+  const lastValues = {
+    amount: money?.amount!,
+    name: money?.name!,
+    id: money?.id!,
+  };
   const queryClient = useQueryClient();
-  const dashboardState = useDashboardState();
+  const listState = useListState();
   const form = useForm<z.infer<typeof EditMoneySchema>>({
     resolver: zodResolver(EditMoneySchema),
     defaultValues: {
@@ -55,7 +59,7 @@ export function EditMoneyForm({
         return error;
       }
       queryClient.invalidateQueries({
-        queryKey: ["moneys", dashboardState.sort.asc, dashboardState.sort.by],
+        queryKey: ["moneys", listState.sort.asc, listState.sort.by],
       });
       form.reset();
       mutated();

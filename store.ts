@@ -12,7 +12,7 @@ declare global {
     total: number;
     setTotal: (total: number) => void;
   };
-  type DashboardState = {
+  type ListState = {
     hideValues: boolean;
     sort: {
       asc: string;
@@ -50,7 +50,7 @@ export const useMoneyTotal = create<MoneyTotal>()((set) => ({
   setTotal: (total) => set((state) => ({ total: total })),
 }));
 
-export const useDashboardState = create<DashboardState>()(
+export const useListState = create<ListState>()(
   persist(
     (set, get) => ({
       hideValues: false,
@@ -62,7 +62,7 @@ export const useDashboardState = create<DashboardState>()(
       setSort: (asc, by) => set((state) => ({ sort: { asc: asc, by: by } })),
     }),
     {
-      name: "dashboard-state",
+      name: "list-state",
     }
   )
 );

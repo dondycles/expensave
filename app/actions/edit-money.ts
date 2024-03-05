@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 
 export const editMoney = async (
   money: EditMoneyTypes,
-  lastValues: { amount: string; name: string }
+  lastValues: { amount: number; name: string; id: string }
 ) => {
   const supabase = spServer(cookies());
 
@@ -25,6 +25,7 @@ export const editMoney = async (
   const { error: logError } = await supabase.from("logs").insert({
     action: "edit_money",
     money: moneyData.id,
+    last_data: lastValues,
   });
 
   if (logError) {

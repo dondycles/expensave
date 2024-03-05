@@ -1,14 +1,5 @@
 "use client";
-import {
-  FileClock,
-  List,
-  LogOut,
-  LucideLogOut,
-  Moon,
-  Settings2,
-  Sun,
-} from "lucide-react";
-import ModeToggle from "./theme-btn";
+import { Activity, List, LogOut, Moon, Settings2, Sun } from "lucide-react";
 import { Button } from "./ui/button";
 import { logout } from "@/app/actions/auth/log-out";
 import {
@@ -18,7 +9,6 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { useTheme } from "next-themes";
-import { TbDashboard } from "react-icons/tb";
 import Link from "next/link";
 
 export default function Nav() {
@@ -29,22 +19,22 @@ export default function Nav() {
       className="sm:hidden grid grid-cols-3 fixed bottom-0 left-0 w-full nav-padding border-t-border border-t-[1px] bg-background h-fit
     "
     >
-      <Link href={"/dashboard"} className="flex-1">
+      <Link href={"/list"} className="flex-1">
         <Button
           variant={"ghost"}
           className="flex flex-col justify-center gap-1 h-16 w-full"
         >
           <List className="size-5" />
-          <span className="text-xs text-muted-foreground">Dashboard</span>
+          <span className="text-xs text-muted-foreground">List</span>
         </Button>
       </Link>
-      <Link href={"/logs"} className="flex-1">
+      <Link href={"/activity"} className="flex-1">
         <Button
           variant={"ghost"}
           className="flex flex-col justify-center gap-1 h-16 w-full"
         >
-          <FileClock className="size-5" />
-          <span className="text-xs text-muted-foreground">Logs</span>
+          <Activity className="size-5" />
+          <span className="text-xs text-muted-foreground">Activity</span>
         </Button>
       </Link>
       <DropdownMenu>

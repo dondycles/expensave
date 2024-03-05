@@ -20,14 +20,10 @@ import { moneysColors } from "@/lib/constants";
 import Link from "next/link";
 interface MoneyCard extends React.HTMLAttributes<HTMLDivElement> {
   money: Database["public"]["Tables"]["moneys"]["Row"];
-  dashboardState: DashboardState;
+  listState: ListState;
 }
 
-export default function MoneyCard({
-  money,
-  dashboardState,
-  ...props
-}: MoneyCard) {
+export default function MoneyCard({ money, listState, ...props }: MoneyCard) {
   const queryClient = useQueryClient();
   const [onOpenChange, setOnOpenChange] = useState<boolean>(false);
   const editMoney = useEditMoney();
@@ -36,7 +32,7 @@ export default function MoneyCard({
     mutationFn: async (id: string) => await delmoney(id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["moneys", dashboardState.sort.asc, dashboardState.sort.by],
+        queryKey: ["moneys", listState.sort.asc, listState.sort.by],
       });
     },
   });
@@ -64,7 +60,7 @@ export default function MoneyCard({
           <p className=" truncate xs:col-span-2">{money.name}</p>
           <div className="flex items-center gap-1 truncate">
             <FaPesoSign className="text-base  min-w-fit" />
-            {dashboardState.hideValues ? (
+            {listState.hideValues ? (
               <AsteriskNumber
                 className="text-xs"
                 number={Number(money.amount)}

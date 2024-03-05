@@ -22,5 +22,5 @@ export const login = async (data: LogInFormTypes) => {
     .single();
   if (dbError) return { dbError };
 
-  redirect("/dashboard");
+  redirect("/list");
 };

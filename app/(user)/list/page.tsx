@@ -1,7 +1,7 @@
 "use client";
 import { getmoneys } from "@/app/actions/get-moneys";
 import { Card, CardHeader } from "@/components/ui/card";
-import { useDashboardState, useMoneyTotal } from "@/store";
+import { useMoneyTotal, useListState } from "@/store";
 import { useQuery } from "@tanstack/react-query";
 import { Eye, EyeOff } from "lucide-react";
 import { useEffect } from "react";
@@ -21,19 +21,19 @@ import {
 import AddMoneyDrawer from "@/components/drawers/addmoney-drawer";
 import EditMoneyDrawer from "@/components/drawers/editmoney-drawer";
 import { Skeleton } from "@/components/ui/skeleton";
-export default function Dashboard() {
+export default function List() {
   var _ = require("lodash");
   const totalMoney = useMoneyTotal();
-  const dashboardState = useDashboardState();
+  const listState = useListState();
 
   const {
     data: moneysData,
     isLoading: moneysLoading,
     error: moneysError,
   } = useQuery({
-    queryFn: async () => await getmoneys(dashboardState.sort),
+    queryFn: async () => await getmoneys(listState.sort),
     refetchOnWindowFocus: false,
-    queryKey: ["moneys", dashboardState.sort.asc, dashboardState.sort.by],
+    queryKey: ["moneys", listState.sort.asc, listState.sort.by],
   });
 
   const moneys = moneysData?.success?.flatMap((money) => money);
@@ -63,15 +63,15 @@ export default function Dashboard() {
               <div className="text-muted-foreground text-sm w-fit flex gap-2 items-center ">
                 <p className="line-clamp-1 w-fit">Total money</p>
                 <button className="w-fit h-fit my-auto ml-auto mr-0">
-                  {dashboardState.hideValues ? (
+                  {listState.hideValues ? (
                     <EyeOff
                       className="size-5"
-                      onClick={() => dashboardState.setHideValues()}
+                      onClick={() => listState.setHideValues()}
                     />
                   ) : (
                     <Eye
                       className="size-5"
-                      onClick={() => dashboardState.setHideValues()}
+                      onClick={() => listState.setHideValues()}
                     />
                   )}
                 </button>
@@ -80,7 +80,7 @@ export default function Dashboard() {
                 <FaPesoSign className="text-2xl min-w-fit" />
                 {moneysLoading ? (
                   <Skeleton className="w-24 h-8 invert ml-1" />
-                ) : dashboardState.hideValues ? (
+                ) : listState.hideValues ? (
                   <AsteriskNumber number={totalMoney.total} />
                 ) : (
                   <p className="text-2xl max-w-full  truncate font-bold">
@@ -97,8 +97,8 @@ export default function Dashboard() {
       </Card>
       <DropdownMenu>
         <DropdownMenuTrigger className="w-fit ml-auto mr-0 flex gap-1 items-center text-muted-foreground">
-          <p className="text-sm">sort by {dashboardState.sort.by}</p>
-          {dashboardState.sort.asc === "true" ? (
+          <p className="text-sm">sort by {listState.sort.by}</p>
+          {listState.sort.asc === "true" ? (
             <TbSortAscending />
           ) : (
             <TbSortDescending />
@@ -106,9 +106,9 @@ export default function Dashboard() {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuRadioGroup
-            value={dashboardState.sort.asc}
+            value={listState.sort.asc}
             onValueChange={(e) => {
-              dashboardState.setSort(e, dashboardState.sort.by);
+              listState.setSort(e, listState.sort.by);
             }}
           >
             <DropdownMenuRadioItem value="true">
@@ -120,11 +120,11 @@ export default function Dashboard() {
           </DropdownMenuRadioGroup>
           <DropdownMenuSeparator />
           <DropdownMenuRadioGroup
-            value={dashboardState.sort.by}
+            value={listState.sort.by}
             onValueChange={(e) => {
-              dashboardState.setSort(
-                dashboardState.sort.asc,
-                e as typeof dashboardState.sort.by
+              listState.setSort(
+                listState.sort.asc,
+                e as typeof listState.sort.by
               );
             }}
           >
@@ -141,11 +141,7 @@ export default function Dashboard() {
           })
         : moneys?.map((money, index) => {
             return (
-              <MoneyCard
-                key={money.id}
-                money={money}
-                dashboardState={dashboardState}
-              />
+              <MoneyCard key={money.id} money={money} listState={listState} />
             );
           })}
       <br />

@@ -9,7 +9,7 @@ export default async function AuthLayout({
 }) {
   const { success: session } = await getsession();
 
-  if (session) return redirect("/dashboard");
+  if (session) return redirect("/list");
 
   return (
     <main className="w-full h-full flex flex-col  screen-padding">

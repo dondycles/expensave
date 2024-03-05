@@ -21,5 +21,5 @@ export const signup = async (data: SignUpFormTypes) => {
 
   if (dbError) return { dbError };
 
-  redirect("/dashboard");
+  redirect("/list");
 };
