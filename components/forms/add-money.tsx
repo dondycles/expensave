@@ -38,8 +38,8 @@ export function AddMoneyForm({
   const form = useForm<z.infer<typeof AddMoneySchema>>({
     resolver: zodResolver(AddMoneySchema),
     defaultValues: {
-      name: "",
-      amount: "",
+      name: undefined,
+      amount: undefined,
     },
   });
 
@@ -60,7 +60,7 @@ export function AddMoneyForm({
     },
     onMutate: (variables) => {
       const name = variables.name;
-      const amount = variables.amount;
+      const amount = Number(variables.amount);
       optmisticAddMoney.setMoney(name, amount);
     },
   });

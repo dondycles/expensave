@@ -20,7 +20,7 @@ import { useListState } from "@/store";
 
 const EditMoneySchema = z.object({
   name: z.string(),
-  amount: z.any(),
+  amount: z.number(),
   id: z.string(),
 });
 

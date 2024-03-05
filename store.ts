@@ -5,8 +5,8 @@ import { EditMoneyTypes } from "./components/forms/edit-money";
 declare global {
   type OptimisticAddMoney = {
     name: string | null;
-    amount: string | null;
-    setMoney: (name: string | null, amount: string | null) => void;
+    amount: number | null;
+    setMoney: (name: string | null, amount: number | null) => void;
   };
   type MoneyTotal = {
     total: number;
