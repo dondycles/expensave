@@ -15,10 +15,7 @@ export default async function UserLayout({
   return (
     <main className="w-full h-full sm:flex flex-row">
       <SideNav />
-      <ScrollArea className="w-full h-full">
-        {children}
-        <ScrollBar />
-      </ScrollArea>
+      <ScrollArea className="w-full h-full">{children}</ScrollArea>
       <Nav />
     </main>
   );

@@ -44,23 +44,24 @@ export function AddMoneyForm({
   });
 
   const { mutate: mutateMoney, isPending } = useMutation({
-    mutationFn: async (values: z.infer<typeof AddMoneySchema>) =>
-      await addmoney(values),
-    onMutate: (variables) => {
-      const name = variables.name;
-      const amount = variables.amount;
-      optmisticAddMoney.setMoney(name, amount);
-    },
-    onSuccess: () => {
+    mutationFn: async (values: z.infer<typeof AddMoneySchema>) => {
+      const { error, success } = await addmoney(values);
+      if (error) {
+        form.setError("amount", { message: error });
+        return error;
+      }
       queryClient.invalidateQueries({
         queryKey: ["moneys", dashboardState.sort.asc, dashboardState.sort.by],
       });
       form.reset();
       optmisticAddMoney.setMoney(null, null);
       mutated();
+      return success;
     },
-    onError: (error) => {
-      form.setError("amount", { message: error.message });
+    onMutate: (variables) => {
+      const name = variables.name;
+      const amount = variables.amount;
+      optmisticAddMoney.setMoney(name, amount);
     },
   });
 

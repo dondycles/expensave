@@ -35,6 +35,7 @@ export function EditMoneyForm({
   mutated: () => void;
   money: EditMoneyTypes | null;
 }) {
+  const lastValues = { amount: money?.amount!, name: money?.name! };
   const queryClient = useQueryClient();
   const dashboardState = useDashboardState();
   const form = useForm<z.infer<typeof EditMoneySchema>>({
@@ -47,17 +48,18 @@ export function EditMoneyForm({
   });
 
   const { mutate: mutateMoney, isPending } = useMutation({
-    mutationFn: async (values: z.infer<typeof EditMoneySchema>) =>
-      await editMoney(values),
-    onSuccess: () => {
+    mutationFn: async (values: z.infer<typeof EditMoneySchema>) => {
+      const { error, success } = await editMoney(values, lastValues);
+      if (error) {
+        form.setError("amount", { message: error });
+        return error;
+      }
       queryClient.invalidateQueries({
         queryKey: ["moneys", dashboardState.sort.asc, dashboardState.sort.by],
       });
       form.reset();
       mutated();
-    },
-    onError: (error) => {
-      form.setError("amount", { message: error.message });
+      return success;
     },
   });
 

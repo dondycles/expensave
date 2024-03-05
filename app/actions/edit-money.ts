@@ -4,17 +4,33 @@ import { spServer } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-export const editMoney = async (money: EditMoneyTypes) => {
+export const editMoney = async (
+  money: EditMoneyTypes,
+  lastValues: { amount: string; name: string }
+) => {
   const supabase = spServer(cookies());
 
   const { data: session } = await supabase.auth.getSession();
   if (!session.session) return redirect("/log-in");
 
-  const { error } = await supabase
+  const { error: moneyError, data: moneyData } = await supabase
     .from("moneys")
     .update(money)
-    .eq("id", money.id);
+    .eq("id", money.id)
+    .select("id")
+    .single();
 
-  if (error) return { error: error };
-  return { success: "ok" };
+  if (moneyError) return { error: moneyError.message };
+
+  const { error: logError } = await supabase.from("logs").insert({
+    action: "edit_money",
+    money: moneyData.id,
+  });
+
+  if (logError) {
+    await supabase.from("moneys").update(lastValues).eq("id", moneyData.id);
+    return { error: "Logging failed." };
+  }
+
+  return { success: "Money Edited." };
 };

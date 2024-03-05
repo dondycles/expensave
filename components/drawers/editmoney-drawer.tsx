@@ -7,7 +7,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "../ui/button";
-import { EditMoneyForm, EditMoneyTypes } from "../forms/edit-money";
+import { EditMoneyForm } from "../forms/edit-money";
 import { useEffect, useState } from "react";
 import { useEditMoney } from "@/store";
 
