@@ -130,7 +130,12 @@ export default function Activity() {
                           </>
                         ) : null}
                       </TableCell>
-                      <TableCell>{log.current_total_money}</TableCell>
+                      <TableCell>
+                        <div className="flex items-center">
+                          <FaPesoSign className="text-xs min-w-fit" />
+                          {log.current_total_money}
+                        </div>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
