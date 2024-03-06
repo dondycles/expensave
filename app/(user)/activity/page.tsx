@@ -4,17 +4,24 @@ import { useQuery } from "@tanstack/react-query";
 import {
   Table,
   TableBody,
+  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { usePhpPeso } from "@/lib/php-formatter";
 import { FaPesoSign } from "react-icons/fa6";
-import { ArrowBigRightDash, ArrowRight } from "lucide-react";
+import { ArrowBigRightDash, ArrowRight, Circle } from "lucide-react";
 type MoneyJSONData = {
   amount: number;
   name: string;
@@ -34,28 +41,17 @@ export default function Activity() {
   const logs = logsData?.success?.flatMap((log) => log);
 
   const action = (action: string | null) => {
-    switch (action) {
-      case "add_money":
-        return (
-          <Badge className="bg-green-500 text-background dark:text-foreground hover:bg-green-600 w-full">
-            Add
-          </Badge>
-        );
-
-      case "edit_money":
-        return (
-          <Badge className="bg-yellow-500 text-background dark:text-foreground hover:bg-yellow-600 w-full">
-            Edit
-          </Badge>
-        );
-
-      case "del_money":
-        return (
-          <Badge className="bg-red-500 text-background dark:text-foreground hover:bg-red-600 w-full">
-            Del
-          </Badge>
-        );
-    }
+    return (
+      <Circle
+        className={` text-background dark:text-foreground  stroke-none size-3 m-auto
+            ${action === "add_money" && "fill-green-500 hover:fill-green-600"}
+            ${
+              action === "edit_money" && "fill-yellow-500 hover:fill-yellow-600"
+            }
+            ${action === "del_money" && "fill-red-500 hover:fill-red-600"}
+            `}
+      />
+    );
   };
 
   return (
@@ -69,7 +65,7 @@ export default function Activity() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-14">Action</TableHead>
+                  <TableHead />
                   <TableHead>Name</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead>Changes (if edit)</TableHead>
@@ -100,7 +96,7 @@ export default function Activity() {
                                   )}{" "}
                                 </span>
                                 <ArrowBigRightDash
-                                  className={`${
+                                  className={`m-auto ${
                                     (log.last_data as MoneyJSONData).amount >=
                                     (log.latest_data as MoneyJSONData).amount
                                       ? "text-red-500"
@@ -121,7 +117,7 @@ export default function Activity() {
                                 <span>
                                   {(log.last_data as MoneyJSONData).name}{" "}
                                 </span>
-                                <ArrowBigRightDash />
+                                <ArrowBigRightDash className="m-auto" />
                                 <span>
                                   {(log.latest_data as MoneyJSONData).name}
                                 </span>
@@ -140,6 +136,22 @@ export default function Activity() {
                   );
                 })}
               </TableBody>
+              <TableCaption>
+                <div className="grid grid-cols-2 w-fit">
+                  <>
+                    {action("add_money")}
+                    <p className="text-left">Add money</p>
+                  </>
+                  <>
+                    {action("edit_money")}
+                    <p className="text-left">Edit money</p>
+                  </>
+                  <>
+                    {action("del_money")}
+                    <p className="text-left">Delete money</p>
+                  </>
+                </div>
+              </TableCaption>
             </Table>
             <ScrollBar orientation="horizontal" />
           </ScrollArea>
