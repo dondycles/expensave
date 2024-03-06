@@ -60,7 +60,7 @@ export default function Activity() {
         <CardHeader>
           <CardTitle className="text-2xl">Logs</CardTitle>
         </CardHeader>
-        <CardContent className="grid max-h-[500px]">
+        <CardContent className="grid">
           <ScrollArea>
             <Table>
               <TableHeader>
@@ -83,32 +83,34 @@ export default function Activity() {
                       <TableCell>
                         {new Date(log.created_at).toLocaleString()}
                       </TableCell>
-                      <TableCell className="grid grid-cols-3 min-w-[144px]">
+                      <TableCell className="grid">
                         {log.action === "edit_money" && log.last_data ? (
-                          <>
+                          <div className="grid grid-cols-3">
                             {(log.last_data as MoneyJSONData).amount !==
                             (log.latest_data as MoneyJSONData).amount ? (
                               <>
-                                <span className="flex items-center">
+                                <div className="flex items-center min-w-fit">
                                   <FaPesoSign className="text-xs min-w-fit" />
                                   {usePhpPeso(
                                     (log.last_data as MoneyJSONData).amount
                                   )}{" "}
-                                </span>
-                                <ArrowBigRightDash
-                                  className={`m-auto ${
-                                    (log.last_data as MoneyJSONData).amount >=
-                                    (log.latest_data as MoneyJSONData).amount
-                                      ? "text-red-500"
-                                      : "text-green-500"
-                                  } `}
-                                />
-                                <span className="flex items-center">
+                                </div>
+                                <div>
+                                  <ArrowBigRightDash
+                                    className={`m-auto ${
+                                      (log.last_data as MoneyJSONData).amount >=
+                                      (log.latest_data as MoneyJSONData).amount
+                                        ? "text-red-500"
+                                        : "text-green-500"
+                                    } `}
+                                  />
+                                </div>
+                                <div className="flex items-center">
                                   <FaPesoSign className="text-xs min-w-fit" />{" "}
                                   {usePhpPeso(
                                     (log.latest_data as MoneyJSONData).amount
                                   )}
-                                </span>
+                                </div>
                               </>
                             ) : null}
                             {(log.last_data as MoneyJSONData).name !==
@@ -123,7 +125,7 @@ export default function Activity() {
                                 </span>
                               </>
                             ) : null}
-                          </>
+                          </div>
                         ) : null}
                       </TableCell>
                       <TableCell>
