@@ -53,6 +53,9 @@ export function AddMoneyForm({
       queryClient.invalidateQueries({
         queryKey: ["moneys", listState.sort.asc, listState.sort.by],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["total"],
+      });
       form.reset();
       optmisticAddMoney.setMoney(null, null);
       mutated();

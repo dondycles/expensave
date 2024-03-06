@@ -73,6 +73,7 @@ export default function Activity() {
                   <TableHead>Name</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead>Changes (if edit)</TableHead>
+                  <TableHead>Total Money</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -129,6 +130,7 @@ export default function Activity() {
                           </>
                         ) : null}
                       </TableCell>
+                      <TableCell>{log.current_total_money}</TableCell>
                     </TableRow>
                   );
                 })}

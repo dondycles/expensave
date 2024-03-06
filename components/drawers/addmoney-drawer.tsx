@@ -24,7 +24,6 @@ export default function AddMoneyDrawer() {
           <Plus />
         </DrawerTrigger>
       </Button>
-
       <DrawerContent className="space-y-4 screen-padding">
         <DrawerTitle className="font-black text-xl text-center">
           Add Money Form

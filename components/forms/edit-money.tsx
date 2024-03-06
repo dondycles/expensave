@@ -61,6 +61,9 @@ export function EditMoneyForm({
       queryClient.invalidateQueries({
         queryKey: ["moneys", listState.sort.asc, listState.sort.by],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["total"],
+      });
       form.reset();
       mutated();
       return success;

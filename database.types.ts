@@ -9,10 +9,40 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      daily_total: {
+        Row: {
+          created_at: string
+          id: string
+          total: number | null
+          user: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          total?: number | null
+          user?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          total?: number | null
+          user?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_daily_total_user_fkey"
+            columns: ["user"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       logs: {
         Row: {
           action: string | null
           created_at: string
+          current_total_money: number | null
           id: string
           last_data: Json | null
           latest_data: Json | null
@@ -22,6 +52,7 @@ export type Database = {
         Insert: {
           action?: string | null
           created_at?: string
+          current_total_money?: number | null
           id?: string
           last_data?: Json | null
           latest_data?: Json | null
@@ -31,6 +62,7 @@ export type Database = {
         Update: {
           action?: string | null
           created_at?: string
+          current_total_money?: number | null
           id?: string
           last_data?: Json | null
           latest_data?: Json | null
@@ -109,7 +141,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_total: {
+        Args: Record<PropertyKey, never>
+        Returns: number
+      }
     }
     Enums: {
       [_ in never]: never

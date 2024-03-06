@@ -1,10 +1,9 @@
 "use client";
 import { getmoneys } from "@/app/actions/get-moneys";
 import { Card, CardHeader } from "@/components/ui/card";
-import { useMoneyTotal, useListState } from "@/store";
+import { useListState } from "@/store";
 import { useQuery } from "@tanstack/react-query";
 import { Eye, EyeOff } from "lucide-react";
-import { useEffect } from "react";
 import { FaPesoSign } from "react-icons/fa6";
 import MoneyCard from "@/components/money-card/money";
 import AsteriskNumber from "@/components/asterisk-value";
@@ -21,10 +20,15 @@ import {
 import AddMoneyDrawer from "@/components/drawers/addmoney-drawer";
 import EditMoneyDrawer from "@/components/drawers/editmoney-drawer";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getTotalMoney } from "@/app/actions/get-total-money";
 export default function List() {
   var _ = require("lodash");
-  const totalMoney = useMoneyTotal();
   const listState = useListState();
+
+  const { data: totalMoney, isLoading: totalLoading } = useQuery({
+    queryKey: ["total"],
+    queryFn: async () => await getTotalMoney(),
+  });
 
   const {
     data: moneysData,
@@ -36,14 +40,10 @@ export default function List() {
     queryKey: ["moneys", listState.sort.asc, listState.sort.by],
   });
 
-  const moneys = moneysData?.success?.flatMap((money) => money);
-  const total = _.sum(
-    moneysData?.success?.flatMap((money) => Number(money.amount))
-  );
+  const fetching = totalLoading || moneysLoading;
 
-  useEffect(() => {
-    totalMoney.setTotal(total);
-  }, [total]);
+  const moneys = moneysData?.success?.flatMap((money) => money);
+  const total = totalMoney?.data?.total;
 
   if (moneysData?.error || moneysError)
     return (
@@ -78,13 +78,13 @@ export default function List() {
               </div>
               <div className="flex items-center w-full col-span-2">
                 <FaPesoSign className="text-2xl min-w-fit" />
-                {moneysLoading ? (
+                {fetching ? (
                   <Skeleton className="w-24 h-8 invert ml-1" />
                 ) : listState.hideValues ? (
-                  <AsteriskNumber number={totalMoney.total} />
+                  <AsteriskNumber number={total as number} />
                 ) : (
                   <p className="text-2xl max-w-full  truncate font-bold">
-                    {usePhpPeso(totalMoney.total)}
+                    {usePhpPeso(total)}
                   </p>
                 )}
               </div>
@@ -135,7 +135,7 @@ export default function List() {
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>
       </DropdownMenu>
-      {moneysLoading
+      {fetching
         ? Array.from({ length: 4 }, (_, i) => {
             return <Skeleton key={i} className="w-full h-10" />;
           })

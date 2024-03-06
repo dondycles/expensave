@@ -34,6 +34,9 @@ export default function MoneyCard({ money, listState, ...props }: MoneyCard) {
       queryClient.invalidateQueries({
         queryKey: ["moneys", listState.sort.asc, listState.sort.by],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["total"],
+      });
     },
   });
 

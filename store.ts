@@ -8,10 +8,6 @@ declare global {
     amount: number | null;
     setMoney: (name: string | null, amount: number | null) => void;
   };
-  type MoneyTotal = {
-    total: number;
-    setTotal: (total: number) => void;
-  };
   type ListState = {
     hideValues: boolean;
     sort: {
@@ -43,11 +39,6 @@ export const useOptimisticAddMoney = create<OptimisticAddMoney>()((set) => ({
       amount: amount,
       name: name,
     })),
-}));
-
-export const useMoneyTotal = create<MoneyTotal>()((set) => ({
-  total: 0,
-  setTotal: (total) => set((state) => ({ total: total })),
 }));
 
 export const useListState = create<ListState>()(
