@@ -29,7 +29,7 @@ export default function MoneyCard({ money, listState, ...props }: MoneyCard) {
   const editMoney = useEditMoney();
   const moneysStyles = useMoneysStyle();
   const { mutate: deleteMoney, isPending: deletePending } = useMutation({
-    mutationFn: async (id: string) => await delmoney(id),
+    mutationFn: async (id: string) => await delmoney(id, money),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["moneys", listState.sort.asc, listState.sort.by],

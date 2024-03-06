@@ -17,7 +17,7 @@ export const editMoney = async (
     .from("moneys")
     .update(money)
     .eq("id", money.id)
-    .select("id")
+    .select("id, amount, name")
     .single();
 
   if (moneyError) return { error: moneyError.message };
@@ -26,6 +26,7 @@ export const editMoney = async (
     action: "edit_money",
     money: moneyData.id,
     last_data: lastValues,
+    latest_data: moneyData,
   });
 
   if (logError) {

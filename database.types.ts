@@ -15,6 +15,7 @@ export type Database = {
           created_at: string
           id: string
           last_data: Json | null
+          latest_data: Json | null
           money: string | null
           user: string
         }
@@ -23,6 +24,7 @@ export type Database = {
           created_at?: string
           id?: string
           last_data?: Json | null
+          latest_data?: Json | null
           money?: string | null
           user?: string
         }
@@ -31,6 +33,7 @@ export type Database = {
           created_at?: string
           id?: string
           last_data?: Json | null
+          latest_data?: Json | null
           money?: string | null
           user?: string
         }

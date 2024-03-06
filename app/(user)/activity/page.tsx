@@ -13,8 +13,10 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { usePhpPeso } from "@/lib/php-formatter";
-type LastData = {
-  amount: string;
+import { FaPesoSign } from "react-icons/fa6";
+import { ArrowBigRightDash, ArrowRight } from "lucide-react";
+type MoneyJSONData = {
+  amount: number;
   name: string;
   id: string;
 };
@@ -46,6 +48,13 @@ export default function Activity() {
             Edit
           </Badge>
         );
+
+      case "del_money":
+        return (
+          <Badge className="bg-red-500 text-background dark:text-foreground hover:bg-red-600">
+            Del
+          </Badge>
+        );
     }
   };
 
@@ -53,9 +62,9 @@ export default function Activity() {
     <div className="w-full h-full gap-4 screen-padding">
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl font-black">Logs</CardTitle>
+          <CardTitle className="text-2xl">Logs</CardTitle>
         </CardHeader>
-        <CardContent className="grid ">
+        <CardContent className="grid max-h-[500px]">
           <ScrollArea>
             <Table>
               <TableHeader>
@@ -74,20 +83,40 @@ export default function Activity() {
                         {new Date(log.created_at).toLocaleString()}
                       </TableCell>
                       <TableCell className="flex flex-col">
-                        {log.last_data ? (
+                        {log.action === "edit_money" && log.last_data ? (
                           <>
-                            {Number((log.last_data as LastData).amount) !==
-                            log.moneys?.amount ? (
-                              <span>
-                                {usePhpPeso((log.last_data as LastData).amount)}{" "}
-                                to {usePhpPeso(log.moneys?.amount)}
-                              </span>
+                            {Number((log.last_data as MoneyJSONData).amount) !==
+                            Number(
+                              (log.latest_data as MoneyJSONData).amount
+                            ) ? (
+                              <div className="flex items-center gap-2">
+                                <span className="flex items-center">
+                                  <FaPesoSign className="text-xs min-w-fit" />
+                                  {usePhpPeso(
+                                    (log.last_data as MoneyJSONData).amount
+                                  )}{" "}
+                                </span>
+                                <ArrowBigRightDash
+                                  className={`${
+                                    (log.last_data as MoneyJSONData).amount >=
+                                    (log.latest_data as MoneyJSONData).amount
+                                      ? "text-red-500"
+                                      : "text-green-500"
+                                  } `}
+                                />
+                                <span className="flex items-center">
+                                  <FaPesoSign className="text-xs min-w-fit" />{" "}
+                                  {usePhpPeso(
+                                    (log.latest_data as MoneyJSONData).amount
+                                  )}
+                                </span>
+                              </div>
                             ) : null}
-                            {(log.last_data as LastData).name !==
-                            log.moneys?.name ? (
+                            {(log.last_data as MoneyJSONData).name !==
+                            (log.latest_data as MoneyJSONData).name ? (
                               <span>
-                                {(log.last_data as LastData).name} to{" "}
-                                {log.moneys?.name}
+                                {(log.last_data as MoneyJSONData).name} to{" "}
+                                {(log.latest_data as MoneyJSONData).name}
                               </span>
                             ) : null}
                           </>

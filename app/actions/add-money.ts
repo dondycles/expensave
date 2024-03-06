@@ -22,6 +22,7 @@ export const addmoney = async (data: AddMoneyTypes) => {
   const { error: logError } = await supabase.from("logs").insert({
     action: "add_money",
     money: moneyData.id,
+    latest_data: moneyData,
   });
 
   if (logError) {

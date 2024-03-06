@@ -20,7 +20,7 @@ import { useListState } from "@/store";
 
 const EditMoneySchema = z.object({
   name: z.string(),
-  amount: z.number(),
+  amount: z.any(),
   id: z.string(),
 });
 
@@ -36,7 +36,7 @@ export function EditMoneyForm({
   money: EditMoneyTypes | null;
 }) {
   const lastValues = {
-    amount: money?.amount!,
+    amount: Number(money?.amount!),
     name: money?.name!,
     id: money?.id!,
   };
@@ -46,7 +46,7 @@ export function EditMoneyForm({
     resolver: zodResolver(EditMoneySchema),
     defaultValues: {
       name: money?.name,
-      amount: money?.amount,
+      amount: String(money?.amount),
       id: money?.id,
     },
   });
