@@ -37,21 +37,21 @@ export default function Activity() {
     switch (action) {
       case "add_money":
         return (
-          <Badge className="bg-green-500 text-background dark:text-foreground hover:bg-green-600">
+          <Badge className="bg-green-500 text-background dark:text-foreground hover:bg-green-600 w-full">
             Add
           </Badge>
         );
 
       case "edit_money":
         return (
-          <Badge className="bg-yellow-500 text-background dark:text-foreground hover:bg-yellow-600">
+          <Badge className="bg-yellow-500 text-background dark:text-foreground hover:bg-yellow-600 w-full">
             Edit
           </Badge>
         );
 
       case "del_money":
         return (
-          <Badge className="bg-red-500 text-background dark:text-foreground hover:bg-red-600">
+          <Badge className="bg-red-500 text-background dark:text-foreground hover:bg-red-600 w-full">
             Del
           </Badge>
         );
@@ -69,7 +69,8 @@ export default function Activity() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Action</TableHead>
+                  <TableHead className="w-14">Action</TableHead>
+                  <TableHead>Name</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead>Changes (if edit)</TableHead>
                 </TableRow>
@@ -80,16 +81,17 @@ export default function Activity() {
                     <TableRow key={log.id}>
                       <TableCell>{action(log.action)}</TableCell>
                       <TableCell>
+                        {(log.latest_data as MoneyJSONData)?.name}
+                      </TableCell>
+                      <TableCell>
                         {new Date(log.created_at).toLocaleString()}
                       </TableCell>
-                      <TableCell className="flex flex-col">
+                      <TableCell className="grid grid-cols-3 min-w-[144px]">
                         {log.action === "edit_money" && log.last_data ? (
                           <>
-                            {Number((log.last_data as MoneyJSONData).amount) !==
-                            Number(
-                              (log.latest_data as MoneyJSONData).amount
-                            ) ? (
-                              <div className="flex items-center gap-2">
+                            {(log.last_data as MoneyJSONData).amount !==
+                            (log.latest_data as MoneyJSONData).amount ? (
+                              <>
                                 <span className="flex items-center">
                                   <FaPesoSign className="text-xs min-w-fit" />
                                   {usePhpPeso(
@@ -110,14 +112,19 @@ export default function Activity() {
                                     (log.latest_data as MoneyJSONData).amount
                                   )}
                                 </span>
-                              </div>
+                              </>
                             ) : null}
                             {(log.last_data as MoneyJSONData).name !==
                             (log.latest_data as MoneyJSONData).name ? (
-                              <span>
-                                {(log.last_data as MoneyJSONData).name} to{" "}
-                                {(log.latest_data as MoneyJSONData).name}
-                              </span>
+                              <>
+                                <span>
+                                  {(log.last_data as MoneyJSONData).name}{" "}
+                                </span>
+                                <ArrowBigRightDash />
+                                <span>
+                                  {(log.latest_data as MoneyJSONData).name}
+                                </span>
+                              </>
                             ) : null}
                           </>
                         ) : null}
