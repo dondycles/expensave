@@ -63,88 +63,89 @@ export default function Activity() {
         <CardHeader>
           <CardTitle className="text-2xl">Logs</CardTitle>
         </CardHeader>
-        <ScrollArea className="">
-          <CardContent className="grid  overflow-auto">
-            <ScrollArea>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead />
-                    <TableHead>Name</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Changes</TableHead>
-                    <TableHead>Total Money</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {logs?.map((log) => {
-                    return (
-                      <TableRow key={log.id}>
-                        <TableCell>{action(log.action)}</TableCell>
-                        <TableCell>
+        <CardContent className="grid  overflow-auto">
+          <ScrollArea>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead />
+                  <TableHead>Name</TableHead>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Changes</TableHead>
+                  <TableHead>Total Money</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {logs?.map((log) => {
+                  return (
+                    <TableRow key={log.id}>
+                      <TableCell>{action(log.action)}</TableCell>
+                      <TableCell>
+                        <p className="text-nowrap">
                           {(log.latest_data as MoneyJSONData)?.name}
-                        </TableCell>
-                        <TableCell className="-text-nowrap">
+                        </p>
+                      </TableCell>
+                      <TableCell>
+                        <p className="text-nowrap">
                           {new Date(log.created_at).toLocaleString()}
-                        </TableCell>
-                        <TableCell className="truncate">
-                          {log.action === "edit_money" && log.last_data ? (
-                            <Table>
-                              <TableBody>
-                                {(log.last_data as MoneyJSONData).amount !==
-                                (log.latest_data as MoneyJSONData).amount ? (
-                                  <TableRow>
-                                    <TableCell className="pl-0">
-                                      <div className="flex items-center">
-                                        <FaPesoSign className="text-xs min-w-fit" />
-                                        {usePhpPeso(
-                                          (log.last_data as MoneyJSONData)
-                                            .amount
-                                        )}{" "}
-                                      </div>
-                                    </TableCell>
-                                    <TableCell className="">
-                                      <div className="flex items-center">
-                                        <FaPesoSign className="text-xs min-w-fit" />{" "}
-                                        {usePhpPeso(
-                                          (log.latest_data as MoneyJSONData)
-                                            .amount
-                                        )}
-                                      </div>
-                                    </TableCell>
-                                  </TableRow>
-                                ) : null}
-                                {(log.last_data as MoneyJSONData).name !==
-                                (log.latest_data as MoneyJSONData).name ? (
-                                  <TableRow>
-                                    <TableCell className="pl-0">
-                                      {(log.last_data as MoneyJSONData).name}{" "}
-                                    </TableCell>
+                        </p>
+                      </TableCell>
+                      <TableCell className="truncate">
+                        {log.action === "edit_money" && log.last_data ? (
+                          <Table>
+                            <TableBody>
+                              {(log.last_data as MoneyJSONData).amount !==
+                              (log.latest_data as MoneyJSONData).amount ? (
+                                <TableRow>
+                                  <TableCell className="pl-0">
+                                    <div className="flex items-center">
+                                      <FaPesoSign className="text-xs min-w-fit" />
+                                      {usePhpPeso(
+                                        (log.last_data as MoneyJSONData).amount
+                                      )}{" "}
+                                    </div>
+                                  </TableCell>
+                                  <TableCell className="">
+                                    <div className="flex items-center">
+                                      <FaPesoSign className="text-xs min-w-fit" />{" "}
+                                      {usePhpPeso(
+                                        (log.latest_data as MoneyJSONData)
+                                          .amount
+                                      )}
+                                    </div>
+                                  </TableCell>
+                                </TableRow>
+                              ) : null}
+                              {(log.last_data as MoneyJSONData).name !==
+                              (log.latest_data as MoneyJSONData).name ? (
+                                <TableRow>
+                                  <TableCell className="pl-0">
+                                    {(log.last_data as MoneyJSONData).name}{" "}
+                                  </TableCell>
 
-                                    <TableCell className="">
-                                      {(log.latest_data as MoneyJSONData).name}
-                                    </TableCell>
-                                  </TableRow>
-                                ) : null}
-                              </TableBody>
-                            </Table>
-                          ) : null}
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center">
-                            <FaPesoSign className="text-xs min-w-fit" />
-                            {usePhpPeso(log.current_total_money)}
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-              <ScrollBar orientation="horizontal" />
-            </ScrollArea>
-          </CardContent>
-        </ScrollArea>
+                                  <TableCell className="">
+                                    {(log.latest_data as MoneyJSONData).name}
+                                  </TableCell>
+                                </TableRow>
+                              ) : null}
+                            </TableBody>
+                          </Table>
+                        ) : null}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center">
+                          <FaPesoSign className="text-xs min-w-fit" />
+                          {usePhpPeso(log.current_total_money)}
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
+        </CardContent>
         <CardFooter className="flex gap-4 justify-end">
           <Button variant={"outline"}>Previous</Button>
           <Button variant={"outline"}>Next</Button>
