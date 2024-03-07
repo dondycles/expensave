@@ -3,12 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { Database } from "@/database.types";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowBigDown, ArrowBigUp, ArrowUpDown } from "lucide-react";
 import { Badge } from "../ui/badge";
-import { Suspense } from "react";
 import { usePhpPesoWSign } from "@/lib/php-formatter";
 
-const action = (action: String) => {
+const getAction = (action: String) => {
   let modifiedActon;
   let color;
   switch (action) {
@@ -41,20 +40,36 @@ const action = (action: String) => {
 };
 
 const getChanges = (lastData: MoneyJSONData, latestData: MoneyJSONData) => {
-  let nameChanged = false,
-    amountChanged = false;
+  if (!lastData && !latestData)
+    return <p className="pl-4 text-muted-foreground">None</p>;
 
-  if (Number(lastData.amount) != Number(latestData.amount))
-    amountChanged = true;
-  if (lastData.name != latestData.name) nameChanged = true;
+  const isAmountChanged =
+    Number(lastData?.amount) !== Number(latestData?.amount);
+  const isNameChanged = lastData?.name !== latestData?.name;
 
-  const nameStatement = `${lastData.name} to ${latestData.name}`;
-  const valueStatement = `${lastData.amount} to ${latestData.amount}`;
+  const isAmountIncreased = latestData.amount >= lastData.amount;
+
+  const nameStatement = (
+    <p>
+      {lastData?.name} to {latestData?.name}
+    </p>
+  );
+  const amountStatement = (
+    <p className="flex items-center gap-1">
+      <span>{usePhpPesoWSign(lastData?.amount)}</span> <span>to</span>
+      <span>{usePhpPesoWSign(latestData?.amount)}</span>
+      {isAmountIncreased ? (
+        <ArrowBigUp className="text-green-500 size-5" />
+      ) : (
+        <ArrowBigDown className="text-red-500 size-5" />
+      )}{" "}
+    </p>
+  );
 
   return (
-    <div>
-      {nameChanged ? nameStatement : null}{" "}
-      {amountChanged ? valueStatement : null}
+    <div className="pl-4 flex flex-col gap-1">
+      {isNameChanged ? nameStatement : null}
+      {isAmountChanged ? amountStatement : null}
     </div>
   );
 };
@@ -76,7 +91,7 @@ export const logsDataColumns: ColumnDef<
       );
     },
     cell: ({ row }) => {
-      return <div className="pl-4">{action(row.getValue("action"))}</div>;
+      return <div className="pl-4">{getAction(row.getValue("action"))}</div>;
     },
   },
   {
@@ -122,11 +137,11 @@ export const logsDataColumns: ColumnDef<
     header: "Changes",
     cell: ({ row }) => {
       const changes = row.getValue("changes") as {
-        last: MoneyJSONData;
-        latest: MoneyJSONData;
+        lastData: MoneyJSONData;
+        latestData: MoneyJSONData;
       };
 
-      return <div className="pl-4">{changes.last.name}</div>;
+      return getChanges(changes?.lastData, changes?.latestData);
     },
   },
   {

@@ -17,10 +17,13 @@ export default function Activity() {
     const data = success?.map((log) => ({
       ...log,
       name: (log.latest_data as MoneyJSONData)?.name,
-      changes: {
-        last: log.last_data as MoneyJSONData,
-        latest: log.latest_data as MoneyJSONData,
-      },
+      changes:
+        log.action === "edit_money"
+          ? {
+              lastData: log.last_data as MoneyJSONData,
+              latestData: log.latest_data as MoneyJSONData,
+            }
+          : null,
     }));
     return data;
   };
