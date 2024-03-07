@@ -21,6 +21,7 @@ import { Badge } from "@/components/ui/badge";
 import { usePhpPeso } from "@/lib/php-formatter";
 import { FaPesoSign } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
+import { ArrowBigRight } from "lucide-react";
 type MoneyJSONData = {
   amount: number;
   name: string;
@@ -90,14 +91,14 @@ export default function Activity() {
                           {new Date(log.created_at).toLocaleString()}
                         </p>
                       </TableCell>
-                      <TableCell className="truncate">
+                      <TableCell>
                         {log.action === "edit_money" && log.last_data ? (
                           <Table>
                             <TableBody>
                               {(log.last_data as MoneyJSONData).amount !==
                               (log.latest_data as MoneyJSONData).amount ? (
                                 <TableRow>
-                                  <TableCell className="pl-0">
+                                  <TableCell>
                                     <div className="flex items-center">
                                       <FaPesoSign className="text-xs min-w-fit" />
                                       {usePhpPeso(
@@ -105,7 +106,11 @@ export default function Activity() {
                                       )}{" "}
                                     </div>
                                   </TableCell>
-                                  <TableCell className="">
+                                  <TableCell>
+                                    <ArrowBigRight className="m-auto" />
+                                  </TableCell>
+
+                                  <TableCell>
                                     <div className="flex items-center">
                                       <FaPesoSign className="text-xs min-w-fit" />{" "}
                                       {usePhpPeso(
@@ -119,11 +124,14 @@ export default function Activity() {
                               {(log.last_data as MoneyJSONData).name !==
                               (log.latest_data as MoneyJSONData).name ? (
                                 <TableRow>
-                                  <TableCell className="pl-0">
+                                  <TableCell>
                                     {(log.last_data as MoneyJSONData).name}{" "}
                                   </TableCell>
+                                  <TableCell>
+                                    <ArrowBigRight className="m-auto" />
+                                  </TableCell>
 
-                                  <TableCell className="">
+                                  <TableCell>
                                     {(log.latest_data as MoneyJSONData).name}
                                   </TableCell>
                                 </TableRow>
