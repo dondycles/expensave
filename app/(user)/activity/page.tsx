@@ -1,9 +1,10 @@
 "use client";
 
 import { getlogs } from "@/app/actions/get-logs";
-import { columns } from "@/components/logs/column";
-import { LogDataTable } from "@/components/logs/table";
+import { logsDataColumns } from "@/components/logs-table/data-column";
+import { LogDataTable } from "@/components/logs-table/table";
 import { Database } from "@/database.types";
+import { usePhpPesoWSign } from "@/lib/php-formatter";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Activity() {
@@ -16,6 +17,10 @@ export default function Activity() {
     const data = success?.map((log) => ({
       ...log,
       name: (log.latest_data as MoneyJSONData)?.name,
+      changes: {
+        last: log.last_data as MoneyJSONData,
+        latest: log.latest_data as MoneyJSONData,
+      },
     }));
     return data;
   };
@@ -27,7 +32,7 @@ export default function Activity() {
   if (!logsData) return;
   return (
     <div className="w-full h-full gap-4 screen-padding">
-      <LogDataTable data={logsData} columns={columns} />
+      <LogDataTable data={logsData} columns={logsDataColumns} />
     </div>
   );
 }
