@@ -10,10 +10,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { usePhpPeso } from "@/lib/php-formatter";
 import { FaPesoSign } from "react-icons/fa6";
+import { Button } from "@/components/ui/button";
 type MoneyJSONData = {
   amount: number;
   name: string;
@@ -33,29 +40,22 @@ export default function Activity() {
   const logs = logsData?.success?.flatMap((log) => log);
 
   const action = (action: string | null) => {
-    switch (action) {
-      case "add_money":
-        return (
-          <Badge className="bg-green-500 text-background dark:text-foreground hover:bg-green-600 w-full">
-            Add
-          </Badge>
-        );
-
-      case "edit_money":
-        return (
-          <Badge className="bg-yellow-500 text-background dark:text-foreground hover:bg-yellow-600 w-full">
-            Edit
-          </Badge>
-        );
-
-      case "del_money":
-        return (
-          <Badge className="bg-red-500 text-background dark:text-foreground hover:bg-red-600 w-full">
-            Del
-          </Badge>
-        );
-    }
+    return (
+      <Badge
+        className={` text-background dark:text-foreground  w-[40px]
+            ${action === "add_money" && "bg-green-500 hover:bg-green-600"}
+            ${action === "edit_money" && "bg-yellow-500 hover:bg-yellow-600"}
+            ${action === "del_money" && "bg-red-500 hover:bg-red-600"}
+            `}
+      >
+        {action === "add_money" && "Add"}
+        {action === "edit_money" && "Edit"}
+        {action === "del_money" && "Del"}
+      </Badge>
+    );
   };
+
+  if (logsLoading) return;
 
   return (
     <div className="w-full h-full gap-4 screen-padding">
@@ -63,8 +63,8 @@ export default function Activity() {
         <CardHeader>
           <CardTitle className="text-2xl">Logs</CardTitle>
         </CardHeader>
-        <ScrollArea>
-          <CardContent className="grid max-h-[500px] overflow-auto">
+        <ScrollArea className="">
+          <CardContent className="grid  overflow-auto">
             <ScrollArea>
               <Table>
                 <TableHeader>
@@ -90,29 +90,27 @@ export default function Activity() {
                         <TableCell className="truncate">
                           {log.action === "edit_money" && log.last_data ? (
                             <Table>
-                              <TableHeader>
-                                <TableRow>
-                                  <TableHead className="pl-0">From</TableHead>
-                                  <TableHead>To</TableHead>
-                                </TableRow>
-                              </TableHeader>
                               <TableBody>
                                 {(log.last_data as MoneyJSONData).amount !==
                                 (log.latest_data as MoneyJSONData).amount ? (
                                   <TableRow>
                                     <TableCell className="pl-0">
-                                      <FaPesoSign className="text-xs min-w-fit" />
-                                      {usePhpPeso(
-                                        (log.last_data as MoneyJSONData).amount
-                                      )}{" "}
+                                      <div className="flex items-center">
+                                        <FaPesoSign className="text-xs min-w-fit" />
+                                        {usePhpPeso(
+                                          (log.last_data as MoneyJSONData)
+                                            .amount
+                                        )}{" "}
+                                      </div>
                                     </TableCell>
-
-                                    <TableCell>
-                                      <FaPesoSign className="text-xs min-w-fit" />{" "}
-                                      {usePhpPeso(
-                                        (log.latest_data as MoneyJSONData)
-                                          .amount
-                                      )}
+                                    <TableCell className="">
+                                      <div className="flex items-center">
+                                        <FaPesoSign className="text-xs min-w-fit" />{" "}
+                                        {usePhpPeso(
+                                          (log.latest_data as MoneyJSONData)
+                                            .amount
+                                        )}
+                                      </div>
                                     </TableCell>
                                   </TableRow>
                                 ) : null}
@@ -147,6 +145,10 @@ export default function Activity() {
             </ScrollArea>
           </CardContent>
         </ScrollArea>
+        <CardFooter className="flex gap-4 justify-end">
+          <Button variant={"outline"}>Previous</Button>
+          <Button variant={"outline"}>Next</Button>
+        </CardFooter>
       </Card>
       <br />
       <br />
