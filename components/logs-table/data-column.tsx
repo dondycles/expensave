@@ -121,9 +121,12 @@ export const logsDataColumns: ColumnDef<
     accessorKey: "changes",
     header: "Changes",
     cell: ({ row }) => {
-      const changes = parseFloat(row.getValue("changes"));
+      const changes = row.getValue("changes") as {
+        last: MoneyJSONData;
+        latest: MoneyJSONData;
+      };
 
-      return <div className="pl-4">{changes}</div>;
+      return <div className="pl-4">{changes.last.name}</div>;
     },
   },
   {
