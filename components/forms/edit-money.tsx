@@ -24,7 +24,9 @@ const EditMoneySchema = z.object({
   id: z.string(),
 });
 
-export type EditMoneyTypes = z.infer<typeof EditMoneySchema>;
+declare global {
+  type EditMoneyTypes = z.infer<typeof EditMoneySchema>;
+}
 
 export function EditMoneyForm({
   children,

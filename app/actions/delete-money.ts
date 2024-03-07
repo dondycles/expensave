@@ -18,6 +18,7 @@ export const delmoney = async (
 
   const { error: logError } = await supabase.from("logs").insert({
     action: "del_money",
+    latest_data: money,
     last_data: money,
   });
 

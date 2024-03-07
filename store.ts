@@ -1,35 +1,5 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { EditMoneyTypes } from "./components/forms/edit-money";
-
-declare global {
-  type OptimisticAddMoney = {
-    name: string | null;
-    amount: number | null;
-    setMoney: (name: string | null, amount: number | null) => void;
-  };
-  type ListState = {
-    hideValues: boolean;
-    sort: {
-      asc: string;
-      by: "created_at" | "amount";
-    };
-    setHideValues: () => void;
-    setSort: (asc: string, by: "created_at" | "amount") => void;
-  };
-  type EditMoney = {
-    money: EditMoneyTypes | null;
-    setMoney: (money: EditMoneyTypes | null) => void;
-  };
-
-  type MoneysStyles = {
-    colors: { id: string; color: { transparent: string; opaque: string } }[];
-    setColor: (money: {
-      color: { transparent: string; opaque: string };
-      id: string;
-    }) => void;
-  };
-}
 
 export const useOptimisticAddMoney = create<OptimisticAddMoney>()((set) => ({
   amount: null,

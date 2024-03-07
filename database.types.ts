@@ -4,156 +4,156 @@ export type Json =
   | boolean
   | null
   | { [key: string]: Json | undefined }
-  | Json[]
+  | Json[];
 
 export type Database = {
   public: {
     Tables: {
       daily_total: {
         Row: {
-          created_at: string
-          id: string
-          total: number | null
-          user: string
-        }
+          created_at: string;
+          id: string;
+          total: number | null;
+          user: string;
+        };
         Insert: {
-          created_at?: string
-          id?: string
-          total?: number | null
-          user?: string
-        }
+          created_at?: string;
+          id?: string;
+          total?: number | null;
+          user?: string;
+        };
         Update: {
-          created_at?: string
-          id?: string
-          total?: number | null
-          user?: string
-        }
+          created_at?: string;
+          id?: string;
+          total?: number | null;
+          user?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "public_daily_total_user_fkey"
-            columns: ["user"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
+            foreignKeyName: "public_daily_total_user_fkey";
+            columns: ["user"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
           }
-        ]
-      }
+        ];
+      };
       logs: {
         Row: {
-          action: string | null
-          created_at: string
-          current_total_money: number | null
-          id: string
-          last_data: Json | null
-          latest_data: Json | null
-          money: string | null
-          user: string
-        }
+          action: string | null;
+          created_at: string;
+          current_total_money: number | null;
+          id: string;
+          last_data: Json | null;
+          latest_data: Json | null;
+          money: string | null;
+          user: string;
+        };
         Insert: {
-          action?: string | null
-          created_at?: string
-          current_total_money?: number | null
-          id?: string
-          last_data?: Json | null
-          latest_data?: Json | null
-          money?: string | null
-          user?: string
-        }
+          action?: string | null;
+          created_at?: string;
+          current_total_money?: number | null;
+          id?: string;
+          last_data?: Json | null;
+          latest_data?: Json | null;
+          money?: string | null;
+          user?: string;
+        };
         Update: {
-          action?: string | null
-          created_at?: string
-          current_total_money?: number | null
-          id?: string
-          last_data?: Json | null
-          latest_data?: Json | null
-          money?: string | null
-          user?: string
-        }
+          action?: string | null;
+          created_at?: string;
+          current_total_money?: number | null;
+          id?: string;
+          last_data?: Json | null;
+          latest_data?: Json | null;
+          money?: string | null;
+          user?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "public_logs_money_fkey"
-            columns: ["money"]
-            isOneToOne: false
-            referencedRelation: "moneys"
-            referencedColumns: ["id"]
+            foreignKeyName: "public_logs_money_fkey";
+            columns: ["money"];
+            isOneToOne: false;
+            referencedRelation: "moneys";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "public_logs_user_fkey"
-            columns: ["user"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
+            foreignKeyName: "public_logs_user_fkey";
+            columns: ["user"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
           }
-        ]
-      }
+        ];
+      };
       moneys: {
         Row: {
-          amount: number
-          created_at: string
-          id: string
-          name: string
-          user: string
-        }
+          amount: number;
+          created_at: string;
+          id: string;
+          name: string;
+          user: string;
+        };
         Insert: {
-          amount: number
-          created_at?: string
-          id?: string
-          name: string
-          user?: string
-        }
+          amount: number;
+          created_at?: string;
+          id?: string;
+          name: string;
+          user?: string;
+        };
         Update: {
-          amount?: number
-          created_at?: string
-          id?: string
-          name?: string
-          user?: string
-        }
+          amount?: number;
+          created_at?: string;
+          id?: string;
+          name?: string;
+          user?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "public_moneys_user_fkey"
-            columns: ["user"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
+            foreignKeyName: "public_moneys_user_fkey";
+            columns: ["user"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
           }
-        ]
-      }
+        ];
+      };
       users: {
         Row: {
-          created_at: string
-          id: string
-          username: string
-        }
+          created_at: string;
+          id: string;
+          username: string;
+        };
         Insert: {
-          created_at?: string
-          id?: string
-          username: string
-        }
+          created_at?: string;
+          id?: string;
+          username: string;
+        };
         Update: {
-          created_at?: string
-          id?: string
-          username?: string
-        }
-        Relationships: []
-      }
-    }
+          created_at?: string;
+          id?: string;
+          username?: string;
+        };
+        Relationships: [];
+      };
+    };
     Views: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Functions: {
       get_total: {
-        Args: Record<PropertyKey, never>
-        Returns: number
-      }
-    }
+        Args: Record<PropertyKey, never>;
+        Returns: number;
+      };
+    };
     Enums: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     CompositeTypes: {
-      [_ in never]: never
-    }
-  }
-}
+      [_ in never]: never;
+    };
+  };
+};
 
 export type Tables<
   PublicTableNameOrOptions extends
@@ -166,7 +166,7 @@ export type Tables<
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
       Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
-      Row: infer R
+      Row: infer R;
     }
     ? R
     : never
@@ -174,11 +174,11 @@ export type Tables<
       Database["public"]["Views"])
   ? (Database["public"]["Tables"] &
       Database["public"]["Views"])[PublicTableNameOrOptions] extends {
-      Row: infer R
+      Row: infer R;
     }
     ? R
     : never
-  : never
+  : never;
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
@@ -189,17 +189,17 @@ export type TablesInsert<
     : never = never
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Insert: infer I
+      Insert: infer I;
     }
     ? I
     : never
   : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
   ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Insert: infer I
+      Insert: infer I;
     }
     ? I
     : never
-  : never
+  : never;
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
@@ -210,17 +210,17 @@ export type TablesUpdate<
     : never = never
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Update: infer U
+      Update: infer U;
     }
     ? U
     : never
   : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
   ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Update: infer U
+      Update: infer U;
     }
     ? U
     : never
-  : never
+  : never;
 
 export type Enums<
   PublicEnumNameOrOptions extends
@@ -233,4 +233,38 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
   ? Database["public"]["Enums"][PublicEnumNameOrOptions]
-  : never
+  : never;
+
+declare global {
+  type OptimisticAddMoney = {
+    name: string | null;
+    amount: number | null;
+    setMoney: (name: string | null, amount: number | null) => void;
+  };
+  type ListState = {
+    hideValues: boolean;
+    sort: {
+      asc: string;
+      by: "created_at" | "amount";
+    };
+    setHideValues: () => void;
+    setSort: (asc: string, by: "created_at" | "amount") => void;
+  };
+  type EditMoney = {
+    money: EditMoneyTypes | null;
+    setMoney: (money: EditMoneyTypes | null) => void;
+  };
+
+  type MoneysStyles = {
+    colors: { id: string; color: { transparent: string; opaque: string } }[];
+    setColor: (money: {
+      color: { transparent: string; opaque: string };
+      id: string;
+    }) => void;
+  };
+  type MoneyJSONData = {
+    amount: number;
+    name: string;
+    id: string;
+  };
+}
