@@ -34,7 +34,7 @@ export default function Activity() {
   });
   if (!logsData) return;
   return (
-    <div className="w-full h-full gap-4 screen-padding">
+    <div className="w-full h-full screen-padding">
       <LogDataTable data={logsData} columns={logsDataColumns} />
     </div>
   );

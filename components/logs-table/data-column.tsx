@@ -41,7 +41,7 @@ const getAction = (action: String) => {
 
 const getChanges = (lastData: MoneyJSONData, latestData: MoneyJSONData) => {
   if (!lastData && !latestData)
-    return <p className="pl-4 text-muted-foreground">None</p>;
+    return <span className="text-muted-foreground">None</span>;
 
   const isAmountChanged =
     Number(lastData?.amount) !== Number(latestData?.amount);
@@ -67,7 +67,7 @@ const getChanges = (lastData: MoneyJSONData, latestData: MoneyJSONData) => {
   );
 
   return (
-    <div className="pl-4 flex flex-col gap-1">
+    <div className="flex flex-col gap-1">
       {isNameChanged ? nameStatement : null}
       {isAmountChanged ? amountStatement : null}
     </div>
@@ -79,16 +79,8 @@ export const logsDataColumns: ColumnDef<
 >[] = [
   {
     accessorKey: "action",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Action
-          <ArrowUpDown className="size-3 ml-1" />
-        </Button>
-      );
+    header: () => {
+      return <div className="pl-4">Action</div>;
     },
     cell: ({ row }) => {
       return <div className="pl-4">{getAction(row.getValue("action"))}</div>;

@@ -97,7 +97,7 @@ export function LogDataTable<TData, TValue>({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md border grid">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
