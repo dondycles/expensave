@@ -15,7 +15,7 @@ export const addmoney = async (data: AddMoneyTypes) => {
   const { error: moneyError, data: moneyData } = await supabase
     .from("moneys")
     .insert({ name, amount })
-    .select("id")
+    .select("id, amount, name")
     .single();
   if (moneyError) return { error: moneyError.message };
 

@@ -107,7 +107,7 @@ export default function Activity() {
                                     </div>
                                   </TableCell>
                                   <TableCell>
-                                    <ArrowBigRight className="m-auto" />
+                                    <ArrowBigRight className="m-auto size-5 text-muted-foreground" />
                                   </TableCell>
 
                                   <TableCell>
@@ -128,7 +128,7 @@ export default function Activity() {
                                     {(log.last_data as MoneyJSONData).name}{" "}
                                   </TableCell>
                                   <TableCell>
-                                    <ArrowBigRight className="m-auto" />
+                                    <ArrowBigRight className="m-auto size-5 text-muted-foreground" />
                                   </TableCell>
 
                                   <TableCell>
@@ -138,7 +138,9 @@ export default function Activity() {
                               ) : null}
                             </TableBody>
                           </Table>
-                        ) : null}
+                        ) : (
+                          <p className="text-muted-foreground">No Changes</p>
+                        )}
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center">
