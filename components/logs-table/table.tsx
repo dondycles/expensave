@@ -61,7 +61,7 @@ export function LogDataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center pb-4 space-x-4">
+      <div className="flex items-center pb-4 gap-4 w-full ">
         <Input
           placeholder="Filter by name..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -72,7 +72,7 @@ export function LogDataTable<TData, TValue>({
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto" size={"sm"}>
+            <Button variant="outline" className="ml-auto mr-0" size={"sm"}>
               Columns
             </Button>
           </DropdownMenuTrigger>
@@ -84,13 +84,16 @@ export function LogDataTable<TData, TValue>({
                 return (
                   <DropdownMenuCheckboxItem
                     key={column.id}
-                    className="capitalize"
                     checked={column.getIsVisible()}
                     onCheckedChange={(value) =>
                       column.toggleVisibility(!!value)
                     }
                   >
-                    {column.id}
+                    {column.id === "action" && "Action"}
+                    {column.id === "name" && "Name"}
+                    {column.id === "created_at" && "Date"}
+                    {column.id === "changes" && "Changes"}
+                    {column.id === "current_total_money" && "Total Money"}
                   </DropdownMenuCheckboxItem>
                 );
               })}
