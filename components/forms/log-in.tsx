@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { login } from "@/app/actions/auth/login";
-import { useRouter } from "next/navigation";
 
 const LogInSchema = z.object({
   username: z.string().min(2).max(50),

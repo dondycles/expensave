@@ -1,5 +1,5 @@
 import Nav from "@/components/nav";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import SideNav from "@/components/side-nav";
 import { getsession } from "../actions/get-session";
 import { redirect } from "next/navigation";

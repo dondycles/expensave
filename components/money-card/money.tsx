@@ -75,7 +75,12 @@ export default function MoneyCard({ money, listState }: MoneyCard) {
         </div>
       </ContextMenuTrigger>
       <ContextMenuContent>
-        <ContextMenuItem onClick={() => editMoney.setMoney(money)}>
+        <ContextMenuItem
+          onClick={() => {
+            editMoney.setMoney(money);
+            editMoney.setOpenModal(true);
+          }}
+        >
           Edit
         </ContextMenuItem>
         <ContextMenuItem onClick={() => deleteMoney(money.id)}>

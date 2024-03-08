@@ -35,12 +35,12 @@ export function EditMoneyForm({
 }: {
   children: ReactNode;
   mutated: () => void;
-  money: EditMoneyTypes | null;
+  money: EditMoneyTypes;
 }) {
   const lastValues = {
-    amount: Number(money?.amount!),
-    name: money?.name!,
-    id: money?.id!,
+    amount: Number(money?.amount),
+    name: money.name,
+    id: money.id,
   };
   const queryClient = useQueryClient();
   const listState = useListState();

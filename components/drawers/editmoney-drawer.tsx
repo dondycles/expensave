@@ -16,13 +16,15 @@ export default function EditMoneyDrawer() {
   const editMoney = useEditMoney();
 
   useEffect(() => {
-    setOnOpenChange(Boolean(editMoney.money));
-  }, [editMoney.money]);
+    setOnOpenChange(editMoney.openModal);
+  }, [editMoney.money, editMoney.openModal]);
 
   useEffect(() => {
     if (!onOpenChange) {
-      editMoney.setMoney(null);
+      editMoney.setOpenModal(false);
+      editMoney.setMoney({ id: "", name: "", amount: 0 });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onOpenChange]);
 
   return (

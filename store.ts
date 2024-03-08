@@ -5,7 +5,7 @@ export const useOptimisticAddMoney = create<OptimisticAddMoney>()((set) => ({
   amount: null,
   name: null,
   setMoney: (name, amount) =>
-    set((state) => ({
+    set(() => ({
       amount: amount,
       name: name,
     })),
@@ -20,7 +20,7 @@ export const useListState = create<ListState>()(
         asc: "false",
         by: "created_at",
       },
-      setSort: (asc, by) => set((state) => ({ sort: { asc: asc, by: by } })),
+      setSort: (asc, by) => set(() => ({ sort: { asc: asc, by: by } })),
     }),
     {
       name: "list-state",
@@ -29,9 +29,15 @@ export const useListState = create<ListState>()(
 );
 
 export const useEditMoney = create<EditMoney>()((set) => ({
-  money: null,
+  money: {
+    id: "",
+    name: "",
+    amount: 0,
+  },
+  openModal: false,
+  setOpenModal: (status) => set(() => ({ openModal: status })),
   setMoney: (money) =>
-    set((state) => ({
+    set(() => ({
       money: money,
     })),
 }));

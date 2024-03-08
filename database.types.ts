@@ -251,8 +251,10 @@ declare global {
     setSort: (asc: string, by: "created_at" | "amount") => void;
   };
   type EditMoney = {
-    money: EditMoneyTypes | null;
-    setMoney: (money: EditMoneyTypes | null) => void;
+    money: EditMoneyTypes;
+    setMoney: (money: EditMoneyTypes) => void;
+    openModal: boolean;
+    setOpenModal: (status: boolean) => void;
   };
 
   type MoneysStyles = {
