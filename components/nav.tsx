@@ -27,7 +27,6 @@ export default function Nav() {
             <Button
               variant={pathname === path.link ? "outline" : "ghost"}
               className={`flex flex-col justify-center gap-1 h-16 w-full rounded-[--radius] 
-              ${pathname === path.link && "shadow"}
               `}
             >
               {path.icon}
