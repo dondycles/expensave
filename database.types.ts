@@ -9,7 +9,7 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      daily_total: {
+      current_total: {
         Row: {
           created_at: string;
           id: string;
@@ -234,7 +234,6 @@ export type Enums<
   : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
   ? Database["public"]["Enums"][PublicEnumNameOrOptions]
   : never;
-
 declare global {
   type OptimisticAddMoney = {
     name: string | null;
