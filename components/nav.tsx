@@ -18,14 +18,14 @@ export default function Nav() {
   const pathname = usePathname();
   return (
     <nav
-      className="sm:hidden grid grid-cols-3 fixed bottom-0 left-0 w-full nav-padding border-t-border border-t-[1px] bg-background h-fit
+      className="sm:hidden grid grid-cols-3 fixed bottom-0 left-0 w-full nav-padding bg-background/70 backdrop-blur h-fit
     "
     >
       {pathnames.map((path) => {
         return (
           <Link key={path.name} href={path.link} className="flex-1">
             <Button
-              variant={pathname === path.link ? "default" : "ghost"}
+              variant={pathname === path.link ? "outline" : "ghost"}
               className="flex flex-col justify-center gap-1 h-16 w-full rounded-[--radius]"
             >
               {path.icon}

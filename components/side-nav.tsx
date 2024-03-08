@@ -16,7 +16,7 @@ export default function SideNav() {
         return (
           <Link key={path.name} href={path.link}>
             <Button
-              variant={pathname === path.link ? "default" : "ghost"}
+              variant={pathname === path.link ? "outline" : "ghost"}
               className="flex flex-col justify-center gap-1 size-16  rounded-[--radius]"
             >
               {path.icon}
