@@ -7,7 +7,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { FaPesoSign } from "react-icons/fa6";
 import MoneyCard from "@/components/money-card/money";
 import AsteriskNumber from "@/components/asterisk-value";
-import { usePhpPeso } from "@/lib/php-formatter";
+import { UsePhpPeso } from "@/lib/php-formatter";
 import { TbSortAscending, TbSortDescending } from "react-icons/tb";
 import {
   DropdownMenu,
@@ -22,7 +22,6 @@ import EditMoneyDrawer from "@/components/drawers/editmoney-drawer";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getTotalMoney } from "@/app/actions/get-total-money";
 export default function List() {
-  var _ = require("lodash");
   const listState = useListState();
 
   const { data: totalMoney, isLoading: totalLoading } = useQuery({
@@ -84,7 +83,7 @@ export default function List() {
                   <AsteriskNumber number={total as number} />
                 ) : (
                   <p className="text-2xl max-w-full  truncate font-bold">
-                    {usePhpPeso(total)}
+                    {UsePhpPeso(Number(total))}
                   </p>
                 )}
               </div>
@@ -139,7 +138,7 @@ export default function List() {
         ? Array.from({ length: 4 }, (_, i) => {
             return <Skeleton key={i} className="w-full h-10" />;
           })
-        : moneys?.map((money, index) => {
+        : moneys?.map((money) => {
             return (
               <MoneyCard key={money.id} money={money} listState={listState} />
             );

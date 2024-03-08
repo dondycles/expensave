@@ -1,4 +1,4 @@
-import { usePhpPeso } from "@/lib/php-formatter";
+import { UsePhpPeso } from "@/lib/php-formatter";
 import {
   ContextMenu,
   ContextMenuContent,
@@ -8,7 +8,7 @@ import {
   ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import AsteriskNumber from "../asterisk-value";
 import { FaPesoSign } from "react-icons/fa6";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -23,7 +23,7 @@ interface MoneyCard extends React.HTMLAttributes<HTMLDivElement> {
   listState: ListState;
 }
 
-export default function MoneyCard({ money, listState, ...props }: MoneyCard) {
+export default function MoneyCard({ money, listState }: MoneyCard) {
   const queryClient = useQueryClient();
   const [onOpenChange, setOnOpenChange] = useState<boolean>(false);
   const editMoney = useEditMoney();
@@ -69,7 +69,7 @@ export default function MoneyCard({ money, listState, ...props }: MoneyCard) {
                 number={Number(money.amount)}
               />
             ) : (
-              <p className="truncate">{usePhpPeso(Number(money.amount))}</p>
+              <p className="truncate">{UsePhpPeso(Number(money.amount))}</p>
             )}{" "}
           </div>
         </div>

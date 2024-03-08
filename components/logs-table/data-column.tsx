@@ -3,11 +3,17 @@
 import { Button } from "@/components/ui/button";
 import { Database } from "@/database.types";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowBigDown, ArrowBigUp, ArrowUpDown } from "lucide-react";
+import { ArrowBigDown, ArrowBigUp } from "lucide-react";
 import { Badge } from "../ui/badge";
-import { usePhpPesoWSign } from "@/lib/php-formatter";
+import { UsePhpPesoWSign } from "@/lib/php-formatter";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
-const getAction = (action: String) => {
+const getAction = (action: string) => {
   let modifiedActon;
   let color;
   switch (action) {
@@ -56,8 +62,8 @@ const getChanges = (lastData: MoneyJSONData, latestData: MoneyJSONData) => {
   );
   const amountStatement = (
     <p className="flex items-center gap-1">
-      <span>{usePhpPesoWSign(lastData?.amount)}</span> <span>to</span>
-      <span>{usePhpPesoWSign(latestData?.amount)}</span>
+      <span>{UsePhpPesoWSign(lastData?.amount)}</span> <span>to</span>
+      <span>{UsePhpPesoWSign(latestData?.amount)}</span>
       {isAmountIncreased ? (
         <ArrowBigUp className="text-green-500 size-5" />
       ) : (
@@ -90,13 +96,36 @@ export const logsDataColumns: ColumnDef<
     accessorKey: "name",
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Name
-          <ArrowUpDown className="size-3 ml-1" />
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost">
+              Name
+              {column.getIsSorted() === "desc" && (
+                <ArrowBigDown className="size-3 ml-1" />
+              )}
+              {column.getIsSorted() === "asc" && (
+                <ArrowBigUp className="size-3 ml-1" />
+              )}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start">
+            <DropdownMenuItem
+              className="justify-between"
+              onClick={() => column.toggleSorting(false)}
+            >
+              Ascending <ArrowBigUp className="size-3 ml-1" />
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="justify-between"
+              onClick={() => column.toggleSorting(true)}
+            >
+              Descending <ArrowBigDown className="size-3 ml-1" />
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => column.clearSorting()}>
+              Unsort
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       );
     },
     cell: ({ row }) => {
@@ -107,13 +136,36 @@ export const logsDataColumns: ColumnDef<
     accessorKey: "created_at",
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Date
-          <ArrowUpDown className="size-3 ml-1" />
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost">
+              Date
+              {column.getIsSorted() === "desc" && (
+                <ArrowBigDown className="size-3 ml-1" />
+              )}
+              {column.getIsSorted() === "asc" && (
+                <ArrowBigUp className="size-3 ml-1" />
+              )}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start">
+            <DropdownMenuItem
+              className="justify-between"
+              onClick={() => column.toggleSorting(false)}
+            >
+              Ascending <ArrowBigUp className="size-3 ml-1" />
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="justify-between"
+              onClick={() => column.toggleSorting(true)}
+            >
+              Descending <ArrowBigDown className="size-3 ml-1" />
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => column.clearSorting()}>
+              Unsort
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       );
     },
     cell: ({ row }) => {
@@ -140,13 +192,36 @@ export const logsDataColumns: ColumnDef<
     accessorKey: "current_total_money",
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Total money
-          <ArrowUpDown className="size-3 ml-1" />
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost">
+              Total Money
+              {column.getIsSorted() === "desc" && (
+                <ArrowBigDown className="size-3 ml-1" />
+              )}
+              {column.getIsSorted() === "asc" && (
+                <ArrowBigUp className="size-3 ml-1" />
+              )}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start">
+            <DropdownMenuItem
+              className="justify-between"
+              onClick={() => column.toggleSorting(false)}
+            >
+              Ascending <ArrowBigUp className="size-3 ml-1" />
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="justify-between"
+              onClick={() => column.toggleSorting(true)}
+            >
+              Descending <ArrowBigDown className="size-3 ml-1" />
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => column.clearSorting()}>
+              Unsort
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       );
     },
     cell: ({ row }) => {
@@ -154,7 +229,7 @@ export const logsDataColumns: ColumnDef<
         row.getValue("current_total_money")
       );
 
-      return <div className="pl-4">{usePhpPesoWSign(current_total_money)}</div>;
+      return <div className="pl-4">{UsePhpPesoWSign(current_total_money)}</div>;
     },
   },
 ];

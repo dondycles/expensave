@@ -1,6 +1,6 @@
-let PHPeso = new Intl.NumberFormat("en-US");
+const PHPeso = new Intl.NumberFormat("en-US");
 
-export const usePhpPeso = (number: any) => {
+export const UsePhpPeso = (number: string | number) => {
   return PHPeso.format(Number(number));
 };
 
@@ -9,6 +9,6 @@ const formatted = new Intl.NumberFormat("en-US", {
   currency: "PHP",
 });
 
-export const usePhpPesoWSign = (number: any) => {
-  return formatted.format(number);
+export const UsePhpPesoWSign = (number: string | number) => {
+  return formatted.format(Number(number));
 };

@@ -14,6 +14,7 @@ import {
 import {
   Table,
   TableBody,
+  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -60,8 +61,9 @@ export function LogDataTable<TData, TValue>({
   });
 
   return (
-    <div>
-      <div className="flex items-center pb-4 gap-4 w-full ">
+    <div className="flex flex-col gap-4">
+      <p className="font-bold text-2xl">Logs</p>
+      <div className="flex items-center gap-4 w-full ">
         <Input
           placeholder="Filter by name..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -73,7 +75,7 @@ export function LogDataTable<TData, TValue>({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto mr-0" size={"sm"}>
-              Columns
+              Shown columns
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -100,7 +102,7 @@ export function LogDataTable<TData, TValue>({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-md border grid p-2">
+      <div className="rounded-[--radius] border grid p-1 ">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -148,9 +150,10 @@ export function LogDataTable<TData, TValue>({
               </TableRow>
             )}
           </TableBody>
+          <TableCaption>Showing last 100 log</TableCaption>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
+      <div className="flex items-center justify-end gap-4">
         <Button
           variant="outline"
           size="sm"

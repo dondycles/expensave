@@ -2,16 +2,16 @@
 
 import { getlogs } from "@/app/actions/get-logs";
 import { logsDataColumns } from "@/components/logs-table/data-column";
+import LogTableSkeleton from "@/components/logs-table/skeleton";
 import { LogDataTable } from "@/components/logs-table/table";
 import { Database } from "@/database.types";
-import { usePhpPesoWSign } from "@/lib/php-formatter";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Activity() {
   const getLogsData = async (): Promise<
     Database["public"]["Tables"]["logs"]["Row"][]
   > => {
-    const { success, error } = await getlogs(0);
+    const { success, error } = await getlogs();
     if (error) return [];
 
     const data = success?.map((log) => ({
@@ -32,10 +32,13 @@ export default function Activity() {
     queryFn: getLogsData,
     queryKey: ["logs"],
   });
-  if (!logsData) return;
   return (
     <div className="w-full h-full screen-padding">
-      <LogDataTable data={logsData} columns={logsDataColumns} />
+      {logsDataLoading ? (
+        <LogTableSkeleton />
+      ) : (
+        <LogDataTable data={logsData ?? []} columns={logsDataColumns} />
+      )}
     </div>
   );
 }
