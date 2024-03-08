@@ -1,26 +1,14 @@
 "use client";
 import { getmoneys } from "@/app/actions/get-moneys";
-import { Card, CardHeader } from "@/components/ui/card";
 import { useListState } from "@/store";
 import { useQuery } from "@tanstack/react-query";
-import { Eye, EyeOff } from "lucide-react";
-import { FaPesoSign } from "react-icons/fa6";
 import MoneyCard from "@/components/money-card/money";
-import AsteriskNumber from "@/components/asterisk-value";
-import { UsePhpPeso } from "@/lib/php-formatter";
-import { TbSortAscending, TbSortDescending } from "react-icons/tb";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-} from "@/components/ui/dropdown-menu";
-import AddMoneyDrawer from "@/components/drawers/addmoney-drawer";
+
 import EditMoneyDrawer from "@/components/drawers/editmoney-drawer";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getTotalMoney } from "@/app/actions/get-total-money";
+import ListTotalCard from "@/components/list-page/total-card";
+import ListSorter from "@/components/list-page/sorter";
 export default function List() {
   const listState = useListState();
 
@@ -55,85 +43,8 @@ export default function List() {
 
   return (
     <div className="w-full h-full flex-1 flex flex-col gap-4 screen-padding ">
-      <Card className="bg-foreground  shadow-md">
-        <CardHeader>
-          <div className="grid grid-cols-3 ">
-            <div className="w-full flex flex-col col-span-2 text-background">
-              <div className="text-muted-foreground text-sm w-fit flex gap-2 items-center ">
-                <p className="line-clamp-1 w-fit">Total money</p>
-                <button className="w-fit h-fit my-auto ml-auto mr-0">
-                  {listState.hideValues ? (
-                    <EyeOff
-                      className="size-5"
-                      onClick={() => listState.setHideValues()}
-                    />
-                  ) : (
-                    <Eye
-                      className="size-5"
-                      onClick={() => listState.setHideValues()}
-                    />
-                  )}
-                </button>
-              </div>
-              <div className="flex items-center w-full col-span-2">
-                <FaPesoSign className="text-2xl min-w-fit" />
-                {fetching ? (
-                  <Skeleton className="w-24 h-8 invert ml-1" />
-                ) : listState.hideValues ? (
-                  <AsteriskNumber number={total as number} />
-                ) : (
-                  <p className="text-2xl max-w-full  truncate font-bold">
-                    {UsePhpPeso(Number(total))}
-                  </p>
-                )}
-              </div>
-            </div>
-            <div className="my-auto ml-auto mr-0 ">
-              <AddMoneyDrawer />
-            </div>
-          </div>
-        </CardHeader>
-      </Card>
-      <DropdownMenu>
-        <DropdownMenuTrigger className="w-fit ml-auto mr-0 flex gap-1 items-center text-muted-foreground">
-          <p className="text-sm">sort by {listState.sort.by}</p>
-          {listState.sort.asc === "true" ? (
-            <TbSortAscending />
-          ) : (
-            <TbSortDescending />
-          )}
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuRadioGroup
-            value={listState.sort.asc}
-            onValueChange={(e) => {
-              listState.setSort(e, listState.sort.by);
-            }}
-          >
-            <DropdownMenuRadioItem value="true">
-              Ascending
-            </DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="false">
-              Descending
-            </DropdownMenuRadioItem>
-          </DropdownMenuRadioGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuRadioGroup
-            value={listState.sort.by}
-            onValueChange={(e) => {
-              listState.setSort(
-                listState.sort.asc,
-                e as typeof listState.sort.by
-              );
-            }}
-          >
-            <DropdownMenuRadioItem value="created_at">
-              Date Created
-            </DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="amount">Amount</DropdownMenuRadioItem>
-          </DropdownMenuRadioGroup>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <ListTotalCard fetching={fetching} total={total as number} />
+      <ListSorter />
       {fetching
         ? Array.from({ length: 4 }, (_, i) => {
             return <Skeleton key={i} className="w-full h-10" />;
