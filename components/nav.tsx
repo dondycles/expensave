@@ -1,7 +1,8 @@
 "use client";
-import { Activity, List, LogOut, Moon, Settings2, Sun } from "lucide-react";
+import { LogOut, Moon, Settings2, Sun } from "lucide-react";
 import { Button } from "./ui/button";
 import { logout } from "@/app/actions/auth/log-out";
+import { pathnames } from "@/lib/constants";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,33 +11,35 @@ import {
 } from "./ui/dropdown-menu";
 import { useTheme } from "next-themes";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Nav() {
   const { setTheme, theme } = useTheme();
-
+  const pathname = usePathname();
   return (
     <nav
       className="sm:hidden grid grid-cols-3 fixed bottom-0 left-0 w-full nav-padding border-t-border border-t-[1px] bg-background h-fit
     "
     >
-      <Link href={"/list"} className="flex-1">
-        <Button
-          variant={"ghost"}
-          className="flex flex-col justify-center gap-1 h-16 w-full"
-        >
-          <List className="size-5" />
-          <span className="text-xs text-muted-foreground">List</span>
-        </Button>
-      </Link>
-      <Link href={"/activity"} className="flex-1">
-        <Button
-          variant={"ghost"}
-          className="flex flex-col justify-center gap-1 h-16 w-full"
-        >
-          <Activity className="size-5" />
-          <span className="text-xs text-muted-foreground">Activity</span>
-        </Button>
-      </Link>
+      {pathnames.map((path) => {
+        return (
+          <Link key={path.name} href={path.link} className="flex-1">
+            <Button
+              variant={pathname === path.link ? "default" : "ghost"}
+              className="flex flex-col justify-center gap-1 h-16 w-full rounded-[--radius]"
+            >
+              {path.icon}
+              <span
+                className={`text-xs ${
+                  pathname !== path.link && "text-muted-foreground"
+                }`}
+              >
+                {path.name}
+              </span>
+            </Button>
+          </Link>
+        );
+      })}
       <DropdownMenu>
         <Button
           className="flex flex-col justify-center gap-1 h-16"
