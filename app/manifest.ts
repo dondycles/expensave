@@ -29,9 +29,5 @@ export default function manifest(): MetadataRoute.Manifest {
         purpose: "any",
       },
     ],
-    serviceworker: {
-      src: "/sw.js",
-      scope: "/",
-    },
   };
 }

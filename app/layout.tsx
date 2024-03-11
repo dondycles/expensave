@@ -12,7 +12,6 @@ const playfair = Sofia_Sans_Semi_Condensed({
 export const metadata: Metadata = {
   title: "pennylist.",
   description: "List your savings with simplicity.",
-  manifest: "/manifest.webmanifest",
 };
 
 export const viewport: Viewport = {
