@@ -10,10 +10,16 @@ export const getTotalMoney = async () => {
 
   const { error, data } = await supabase
     .from("daily_total")
-    .select("total, created_at")
+    .select("total, created_at, id")
     .single();
 
   if (error) return { error };
+
+  await supabase.from("daily_total").update(
+    {
+      date : new Date()
+    }).eq("id",data.id);
+
 
   return { data };
 };
