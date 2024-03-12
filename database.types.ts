@@ -9,7 +9,7 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      current_total: {
+      daily_total: {
         Row: {
           created_at: string
           id: string
@@ -27,41 +27,6 @@ export type Database = {
           id?: string
           total?: number | null
           user?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "public_daily_total_user_fkey"
-            columns: ["user"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      daily_total: {
-        Row: {
-          created_at: string
-          date: string
-          id: number
-          total: number
-          user: string
-          user_and_date: string
-        }
-        Insert: {
-          created_at?: string
-          date: string
-          id?: number
-          total?: number
-          user?: string
-          user_and_date: string
-        }
-        Update: {
-          created_at?: string
-          date?: string
-          id?: number
-          total?: number
-          user?: string
-          user_and_date?: string
         }
         Relationships: [
           {
@@ -176,7 +141,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      get_total: {
+      total_money: {
         Args: Record<PropertyKey, never>
         Returns: number
       }
