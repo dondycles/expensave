@@ -30,7 +30,7 @@ export default function List() {
   const fetching = totalLoading || moneysLoading;
 
   const moneys = moneysData?.success?.flatMap((money) => money);
-  const total = totalMoney?.data?.total;
+  const total = totalMoney?.data?.total || 0;
 
   if (moneysData?.error || moneysError)
     return (
