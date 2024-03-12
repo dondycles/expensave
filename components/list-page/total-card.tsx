@@ -41,7 +41,7 @@ export default function ListTotalCard({
               {fetching ? (
                 <Skeleton className="w-24 h-8 invert ml-1" />
               ) : listState.hideValues ? (
-                <AsteriskNumber number={total as number} />
+                <AsteriskNumber number={Number(total)} />
               ) : (
                 <p className="text-2xl max-w-full  truncate font-bold">
                   {UsePhpPeso(Number(total))}
