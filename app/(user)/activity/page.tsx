@@ -56,8 +56,8 @@ export default function Activity() {
         <div
           className="p-4 rounded-[--radius] border bg-background font-bold"
           style={{
-            borderColor: payload[0].payload.color.opaque,
-            color: payload[0].payload.color.opaque,
+            borderColor: payload[0]?.payload?.color?.opaque,
+            color: payload[0]?.payload?.color?.opaque,
           }}
         >
           <p className="flex flex-row gap-1 items-center  ">
