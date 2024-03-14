@@ -64,17 +64,9 @@ export function LogDataTable<TData, TValue>({
     <div className="flex flex-col gap-4">
       <p className="font-bold text-2xl">Logs</p>
       <div className="flex items-center gap-4 w-full ">
-        <Input
-          placeholder="Filter by name..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm border-input"
-        />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto mr-0" size={"sm"}>
+            <Button variant="outline" className="ml-0 mr-auto" size={"sm"}>
               Shown columns
             </Button>
           </DropdownMenuTrigger>
@@ -101,6 +93,14 @@ export function LogDataTable<TData, TValue>({
               })}
           </DropdownMenuContent>
         </DropdownMenu>
+        <Input
+          placeholder="Filter by name..."
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("name")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm border-input shadown-none"
+        />
       </div>
       <div className="rounded-[--radius] border grid p-1 ">
         <Table>

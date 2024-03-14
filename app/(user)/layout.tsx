@@ -10,7 +10,6 @@ export default async function UserLayout({
   children: React.ReactNode;
 }) {
   const { success: session } = await getsession();
-
   if (!session) return redirect("/log-in");
   return (
     <main className="w-full h-full sm:flex flex-row">

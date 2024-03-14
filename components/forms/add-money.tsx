@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { addmoney } from "@/app/actions/add-money";
 import { ReactNode } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useListState, useOptimisticAddMoney } from "@/store";
+import { useListState } from "@/store";
 
 const AddMoneySchema = z.object({
   name: z.string().min(1),
@@ -32,7 +32,6 @@ export function AddMoneyForm({
   mutated: () => void;
 }) {
   const queryClient = useQueryClient();
-  const optmisticAddMoney = useOptimisticAddMoney();
   const listState = useListState();
 
   const form = useForm<z.infer<typeof AddMoneySchema>>({
@@ -57,14 +56,12 @@ export function AddMoneyForm({
         queryKey: ["total"],
       });
       form.reset();
-      optmisticAddMoney.setMoney(null, null);
       mutated();
       return success;
     },
     onMutate: (variables) => {
       const name = variables.name;
       const amount = Number(variables.amount);
-      optmisticAddMoney.setMoney(name, amount);
     },
   });
 

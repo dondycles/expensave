@@ -12,18 +12,21 @@ export type Database = {
       daily_total: {
         Row: {
           created_at: string
+          date: string
           id: string
           total: number | null
           user: string
         }
         Insert: {
           created_at?: string
+          date?: string
           id?: string
           total?: number | null
           user?: string
         }
         Update: {
           created_at?: string
+          date?: string
           id?: string
           total?: number | null
           user?: string
@@ -89,6 +92,7 @@ export type Database = {
       moneys: {
         Row: {
           amount: number
+          color: Json | null
           created_at: string
           id: string
           name: string
@@ -96,6 +100,7 @@ export type Database = {
         }
         Insert: {
           amount: number
+          color?: Json | null
           created_at?: string
           id?: string
           name: string
@@ -103,6 +108,7 @@ export type Database = {
         }
         Update: {
           amount?: number
+          color?: Json | null
           created_at?: string
           id?: string
           name?: string
@@ -141,6 +147,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      manila_date: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
       total_money: {
         Args: Record<PropertyKey, never>
         Returns: number

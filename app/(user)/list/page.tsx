@@ -11,7 +11,6 @@ import ListTotalCard from "@/components/list-page/total-card";
 import ListSorter from "@/components/list-page/sorter";
 export default function List() {
   const listState = useListState();
-
   const { data: totalMoney, isLoading: totalLoading } = useQuery({
     queryKey: ["total"],
     queryFn: async () => await getTotalMoney(),
@@ -27,10 +26,9 @@ export default function List() {
     queryKey: ["moneys", listState.sort.asc, listState.sort.by],
   });
 
-  const fetching = totalLoading || moneysLoading;
-
   const moneys = moneysData?.success?.flatMap((money) => money);
-  const total = totalMoney ? totalMoney?.data?.total : 0;
+
+  const fetching = totalLoading || moneysLoading;
 
   if (moneysData?.error || moneysError)
     return (
@@ -43,7 +41,7 @@ export default function List() {
 
   return (
     <div className="w-full h-full flex-1 flex flex-col gap-4 screen-padding ">
-      <ListTotalCard fetching={fetching} total={total as number} />
+      <ListTotalCard fetching={fetching} total={totalMoney ?? 0} />
       <ListSorter />
       {fetching
         ? Array.from({ length: 4 }, (_, i) => {

@@ -94,3 +94,8 @@
 .user-layout-padding {
   @apply p-4;
 }
+
+.recharts-tooltip-cursor {
+  fill: hsl(var(--muted));
+  border-radius: 5rem;
+}

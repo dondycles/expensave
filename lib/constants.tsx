@@ -40,6 +40,8 @@ export const moneysColors = [
     opaque: "#8b5cf6",
   },
 ];
+
+export type MoneyColor = (typeof moneysColors)[0];
 import { Activity, List } from "lucide-react";
 
 export const pathnames = [

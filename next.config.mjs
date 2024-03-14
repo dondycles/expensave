@@ -11,3 +11,4 @@ const withSerwist = withSerwistInit({
   cacheOnFrontEndNav: true,
 });
 export default withSerwist(nextConfig);
+// export default nextConfig;

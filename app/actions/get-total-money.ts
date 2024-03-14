@@ -7,12 +7,7 @@ export const getTotalMoney = async () => {
   const { data: session } = await supabase.auth.getSession();
   if (!session.session) return redirect("/log-in");
 
-  const { error, data } = await supabase
-    .from("daily_total")
-    .select("total, created_at, id")
-    .single();
+  const { data } = await supabase.from("daily_total").select("total").single();
 
-  if (error) return { error };
-
-  return { data };
+  return data ? (data.total ? data.total : 0) : 0;
 };

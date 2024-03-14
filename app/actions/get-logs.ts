@@ -15,5 +15,18 @@ export const getlogs = async () => {
     .limit(100);
 
   if (error) return { error: error };
-  return { success: data };
+
+  const modifiedData = data?.map((log) => ({
+    ...log,
+    name: (log.latest_data as MoneyJSONData)?.name,
+    changes:
+      log.action === "edit_money"
+        ? {
+            lastData: log.last_data as MoneyJSONData,
+            latestData: log.latest_data as MoneyJSONData,
+          }
+        : null,
+  }));
+
+  return { success: modifiedData };
 };
