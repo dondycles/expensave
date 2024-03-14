@@ -33,7 +33,6 @@ export function AddMoneyForm({
 }) {
   const queryClient = useQueryClient();
   const listState = useListState();
-
   const form = useForm<z.infer<typeof AddMoneySchema>>({
     resolver: zodResolver(AddMoneySchema),
     defaultValues: {
@@ -41,7 +40,6 @@ export function AddMoneyForm({
       amount: undefined,
     },
   });
-
   const { mutate: mutateMoney, isPending } = useMutation({
     mutationFn: async (values: z.infer<typeof AddMoneySchema>) => {
       const { error, success } = await addmoney(values);
@@ -58,10 +56,6 @@ export function AddMoneyForm({
       form.reset();
       mutated();
       return success;
-    },
-    onMutate: (variables) => {
-      const name = variables.name;
-      const amount = Number(variables.amount);
     },
   });
 
