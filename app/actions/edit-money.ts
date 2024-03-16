@@ -2,6 +2,7 @@
 import { spServer } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { logTotalMoney } from "./log-total-money";
 
 export const editMoney = async (
   money: EditMoneyTypes,
@@ -32,6 +33,7 @@ export const editMoney = async (
     await supabase.from("moneys").update(lastValues).eq("id", moneyData.id);
     return { error: "Logging failed." };
   }
+  await logTotalMoney();
 
   return { success: "Money Edited." };
 };

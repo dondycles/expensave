@@ -3,6 +3,7 @@ import { Database } from "@/database.types";
 import { spServer } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { logTotalMoney } from "./log-total-money";
 
 export const delmoney = async (
   id: string,
@@ -13,8 +14,11 @@ export const delmoney = async (
   const { data: session } = await supabase.auth.getSession();
   if (!session.session) return redirect("/log-in");
 
-  const { error } = await supabase.from("moneys").delete().eq("id", id);
-  if (error) return { error: error };
+  const { error: moneyError } = await supabase
+    .from("moneys")
+    .delete()
+    .eq("id", id);
+  if (moneyError) return { error: moneyError };
 
   const { error: logError } = await supabase.from("logs").insert({
     action: "del_money",
@@ -27,6 +31,7 @@ export const delmoney = async (
     await supabase.from("moneys").delete().eq("id", id);
     return { error: "Logging failed." };
   }
+  await logTotalMoney();
 
   return { success: "ok" };
 };

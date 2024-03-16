@@ -3,6 +3,7 @@ import { AddMoneyTypes } from "@/components/forms/add-money";
 import { spServer } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { logTotalMoney } from "./log-total-money";
 
 export const addmoney = async (data: AddMoneyTypes) => {
   const supabase = spServer(cookies());
@@ -30,6 +31,8 @@ export const addmoney = async (data: AddMoneyTypes) => {
     await supabase.from("moneys").delete().eq("id", moneyData.id);
     return { error: "Logging failed." };
   }
+
+  await logTotalMoney();
 
   return { success: "Money Added." };
 };

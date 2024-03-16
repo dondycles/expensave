@@ -10,7 +10,7 @@ export default function AuthPage({ children }: { children: React.ReactNode }) {
     <>
       <nav className="flex justify-between">
         <Link href={"/"}>
-          <Button variant={"outline"}>Home. </Button>
+          <Button variant={"outline"}>Home</Button>
         </Link>
         <Link
           href={
@@ -20,8 +20,8 @@ export default function AuthPage({ children }: { children: React.ReactNode }) {
           }
         >
           <Button>
-            {pathname === "/log-in" && "Sign Up."}
-            {pathname === "/sign-up" && "Log In."}
+            {pathname === "/log-in" && "Sign Up"}
+            {pathname === "/sign-up" && "Log In"}
           </Button>
         </Link>
       </nav>

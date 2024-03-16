@@ -11,11 +11,11 @@ export default function Home() {
         <p>List your savings with simplicity.</p>
         <div className="flex flex-row gap-2 mt-4">
           <Link href={"/log-in"} className="flex-1">
-            <Button className="w-full">Get Started.</Button>
+            <Button className="w-full">Get Started</Button>
           </Link>
           <Link href={"/learn-more"} className="flex-1">
             <Button variant={"outline"} className="w-full">
-              Learn More.
+              Learn More
             </Button>
           </Link>
         </div>

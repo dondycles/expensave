@@ -51,7 +51,7 @@ export function LogInForm() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="username." {...field} />
+                <Input placeholder="username" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -63,7 +63,7 @@ export function LogInForm() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input type="password" placeholder="password." {...field} />
+                <Input type="password" placeholder="password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -75,7 +75,7 @@ export function LogInForm() {
           type="submit"
           className="w-full"
         >
-          Log In.
+          Log In
         </Button>
       </form>
     </Form>

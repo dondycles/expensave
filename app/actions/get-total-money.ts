@@ -7,7 +7,7 @@ export const getTotalMoney = async () => {
   const { data: session } = await supabase.auth.getSession();
   if (!session.session) return redirect("/log-in");
 
-  const { data } = await supabase.from("daily_total").select("total").single();
+  const { data } = await supabase.rpc("total_money");
 
-  return data ? (data.total ? data.total : 0) : 0;
+  return data ? (data ? data : 0) : 0;
 };

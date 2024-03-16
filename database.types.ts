@@ -9,31 +9,31 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      daily_total: {
+      daily_total_money: {
         Row: {
           created_at: string
           date: string
-          id: string
+          id: number
           total: number | null
-          user: string
+          user: string | null
         }
         Insert: {
           created_at?: string
-          date?: string
-          id?: string
+          date: string
+          id?: number
           total?: number | null
-          user?: string
+          user?: string | null
         }
         Update: {
           created_at?: string
           date?: string
-          id?: string
+          id?: number
           total?: number | null
-          user?: string
+          user?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "public_daily_total_user_fkey"
+            foreignKeyName: "public_daily_total_money_user_fkey"
             columns: ["user"]
             isOneToOne: false
             referencedRelation: "users"
@@ -128,16 +128,19 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          isPremium: boolean | null
           username: string
         }
         Insert: {
           created_at?: string
           id?: string
+          isPremium?: boolean | null
           username: string
         }
         Update: {
           created_at?: string
           id?: string
+          isPremium?: boolean | null
           username?: string
         }
         Relationships: []

@@ -58,7 +58,7 @@ export function SignUpForm() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="username." {...field} />
+                <Input placeholder="username" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -70,7 +70,7 @@ export function SignUpForm() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input type="password" placeholder="password." {...field} />
+                <Input type="password" placeholder="password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -85,7 +85,7 @@ export function SignUpForm() {
               <FormControl>
                 <Input
                   type="password"
-                  placeholder="confirm password."
+                  placeholder="confirm password"
                   {...field}
                 />
               </FormControl>
@@ -98,7 +98,7 @@ export function SignUpForm() {
           type="submit"
           className="w-full"
         >
-          Sign Up.
+          Sign Up
         </Button>
       </form>
     </Form>
