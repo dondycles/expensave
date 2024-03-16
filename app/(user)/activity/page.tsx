@@ -52,13 +52,34 @@ export default function Activity() {
 
     return (
       <g>
-        <text x={cx} y={cy} dy={-16} textAnchor="middle" fill={fill}>
+        <text
+          x={cx}
+          y={cy}
+          dy={-16}
+          textAnchor="middle"
+          fill={fill}
+          style={{ fontWeight: "bold" }}
+        >
           {payload.name}
         </text>
-        <text x={cx} y={cy} dy={0} textAnchor="middle" fill="#333">
+        <text
+          x={cx}
+          y={cy}
+          dy={0}
+          textAnchor="middle"
+          fill="#333"
+          style={{ fontSize: "0.8rem" }}
+        >
           {UsePhpPesoWSign(value)}
         </text>
-        <text x={cx} y={cy} dy={16} textAnchor="middle" fill="#999">
+        <text
+          x={cx}
+          y={cy}
+          dy={16}
+          textAnchor="middle"
+          fill="#999"
+          style={{ fontSize: "0.8rem" }}
+        >
           {`(${(percent * 100).toFixed(2)}%)`}
         </text>
         <Sector
