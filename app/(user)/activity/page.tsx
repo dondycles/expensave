@@ -114,34 +114,8 @@ export default function Activity() {
             {/* <BarSorter /> */}
             <Card className="rounded-[--radius] shadow-none p-4 w-full aspect-square max-h-[500px]">
               <ResponsiveContainer width="100%" height={"100%"}>
-                {/* <BarChart data={moneys}>
-                  <Tooltip content={<CustomTooltip />} />
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <Bar dataKey="amount">
-                    {moneys?.map((money, i) => (
-                      <Cell
-                        key={money.id}
-                        fill={
-                          (money.color as MoneyColor)?.opaque ??
-                          "hsl(var(--foreground))"
-                        }
-                        radius={5}
-                      />
-                    ))}
-                  </Bar>
-                  <XAxis
-                    className="text-xs"
-                    dataKey="name"
-                    style={{ fill: "hsl(var(--muted-foreground))" }}
-                  />
-                  <YAxis
-                    className="text-xs"
-                    style={{ fill: "hsl(var(--muted-foreground))" }}
-                    tickFormatter={(value, i) => `Php ${value}`}
-                  />
-                </BarChart> */}
-
                 <PieChart>
+                  <Tooltip content={<CustomTooltip />} />
                   <Pie
                     data={moneys}
                     dataKey="amount"
@@ -158,10 +132,15 @@ export default function Activity() {
                           (money.color as MoneyColor)?.opaque ??
                           "hsl(var(--muted-foreground))"
                         }
+                        style={{
+                          outlineColor:
+                            (money.color as MoneyColor)?.opaque ??
+                            "hsl(var(--muted-foreground))",
+                          outlineWidth: "1px",
+                        }}
                       />
                     ))}
                   </Pie>
-                  <Tooltip content={<CustomTooltip />} />
                 </PieChart>
               </ResponsiveContainer>
             </Card>
