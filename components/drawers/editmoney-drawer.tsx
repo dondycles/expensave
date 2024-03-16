@@ -24,7 +24,6 @@ export default function EditMoneyDrawer() {
       editMoney.setOpenModal(false);
       editMoney.setMoney({ id: "", name: "", amount: 0 });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onOpenChange]);
 
   return (
