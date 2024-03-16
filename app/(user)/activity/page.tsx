@@ -51,13 +51,20 @@ export default function Activity() {
 
   const moneys = moneysData?.success?.flatMap((money) => money);
 
-  const dailyTotalDataLength = dailyTotalData?.length ?? 0;
+  const finalizedDailyTotalData = () => {
+    const dailyTotalDataLength = dailyTotalData?.length ?? 0;
 
-  const filledDailyTotalData = Array(30 - dailyTotalDataLength).fill(null);
-  const modifiedDailyTotalData = [
-    ...filledDailyTotalData,
-    ...(dailyTotalData ?? []),
-  ];
+    const filledDailyTotalData = Array(30 - dailyTotalDataLength).fill({
+      total: 0,
+      date: "",
+    });
+    const modifiedDailyTotalData = [
+      ...filledDailyTotalData,
+      ...(dailyTotalData ?? []),
+    ];
+
+    return modifiedDailyTotalData;
+  };
 
   const fetching = logsDataLoading || moneysLoading || dailyTotalLoading;
 
@@ -76,7 +83,11 @@ export default function Activity() {
             <p className="text-2xl font-bold">Daily Total</p>
             <Card className="p-4 w-full h-[500px]">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart width={150} height={40} data={modifiedDailyTotalData}>
+                <BarChart
+                  width={150}
+                  height={40}
+                  data={finalizedDailyTotalData()}
+                >
                   <XAxis
                     dataKey="date"
                     tickFormatter={(value) =>
