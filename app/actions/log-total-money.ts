@@ -9,7 +9,7 @@ export const logTotalMoney = async () => {
 
   const { error } = await supabase.from("daily_total_money").upsert(
     {
-      date: date.toLocaleDateString(),
+      date: date.toISOString(),
       total: total,
     },
     { onConflict: "date" }

@@ -13,6 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { Cell, Tooltip, ResponsiveContainer, PieChart, Pie } from "recharts";
 import { FaPesoSign } from "react-icons/fa6";
+import { UsePhpPesoWSign } from "@/lib/php-formatter";
 
 export default function Activity() {
   const listState = useListState();
@@ -66,6 +67,7 @@ export default function Activity() {
     innerRadius,
     outerRadius,
     name,
+    value,
   }: // eslint-disable-next-line @typescript-eslint/no-explicit-any
   any) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -73,18 +75,27 @@ export default function Activity() {
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
     return (
-      <text
-        x={x}
-        y={y}
-        fill="white"
-        textAnchor={x > cx ? "start" : "end"}
-        dominantBaseline="central"
-        style={{
-          fontSize: "0.8rem",
-        }}
-      >
-        {name}
-      </text>
+      <>
+        <text
+          x={x}
+          y={y - 10}
+          fill="hsl(var(--background))"
+          textAnchor={x > cx ? "start" : "end"}
+          dominantBaseline="central"
+          style={{ fontSize: "0.8rem" }}
+        >
+          {name}
+        </text>
+        <text
+          x={x}
+          y={y + 10}
+          fill="hsl(var(--background))"
+          textAnchor={x > cx ? "start" : "end"}
+          dominantBaseline="central"
+        >
+          {UsePhpPesoWSign(value)}
+        </text>
+      </>
     );
   };
 
@@ -136,8 +147,8 @@ export default function Activity() {
                     cx="50%"
                     cy="50%"
                     label={CustomLabel}
-                    outerRadius="100%"
                     labelLine={false}
+                    outerRadius="100%"
                   >
                     {moneys?.map((money) => (
                       <Cell

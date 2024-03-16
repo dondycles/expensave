@@ -33,7 +33,8 @@ export const editMoney = async (
     await supabase.from("moneys").update(lastValues).eq("id", moneyData.id);
     return { error: "Logging failed." };
   }
-  await logTotalMoney();
+  const { error: logTotalMoneyError } = await logTotalMoney();
+  if (logTotalMoneyError) return { error: "Logging total money failed." };
 
   return { success: "Money Edited." };
 };

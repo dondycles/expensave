@@ -27,11 +27,12 @@ export const delmoney = async (
   });
 
   if (logError) {
-    console.log("🚀 ~ logError:", logError);
     await supabase.from("moneys").delete().eq("id", id);
     return { error: "Logging failed." };
   }
-  await logTotalMoney();
+
+  const { error: logTotalMoneyError } = await logTotalMoney();
+  if (logTotalMoneyError) return { error: "Logging total money failed." };
 
   return { success: "ok" };
 };
