@@ -20,6 +20,7 @@ import {
   YAxis,
 } from "recharts";
 import { Card } from "@/components/ui/card";
+import { UsePhpPesoWSign } from "@/lib/php-formatter";
 
 export default function Activity() {
   const listState = useListState();
@@ -81,10 +82,20 @@ export default function Activity() {
                     tickFormatter={(value) =>
                       value ? new Date(value).toLocaleDateString() : ""
                     }
+                    style={{
+                      fontSize: "0.75rem",
+                      fill: "hsl(var(--muted-foreground))",
+                    }}
                   />
-                  <YAxis />
+                  <YAxis
+                    style={{
+                      fontSize: "0.75rem",
+                      fill: "hsl(var(--muted-foreground))",
+                    }}
+                    tickFormatter={(value) => UsePhpPesoWSign(value)}
+                  />
                   <Tooltip />
-                  <Bar dataKey="total" fill="#8884d8" />
+                  <Bar dataKey="total" fill="hsl(var(--muted-foreground))" />
                 </BarChart>
               </ResponsiveContainer>
             </Card>
