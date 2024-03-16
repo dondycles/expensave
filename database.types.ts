@@ -13,6 +13,7 @@ export type Database = {
         Row: {
           created_at: string
           date: string
+          date_and_user: string
           id: number
           total: number | null
           user: string | null
@@ -20,6 +21,7 @@ export type Database = {
         Insert: {
           created_at?: string
           date: string
+          date_and_user: string
           id?: number
           total?: number | null
           user?: string | null
@@ -27,6 +29,7 @@ export type Database = {
         Update: {
           created_at?: string
           date?: string
+          date_and_user?: string
           id?: number
           total?: number | null
           user?: string | null
