@@ -82,9 +82,9 @@ export default function Activity() {
           fill="hsl(var(--background))"
           textAnchor={x > cx ? "start" : "end"}
           dominantBaseline="central"
-          style={{ fontSize: "0.8rem" }}
+          style={{ fontSize: "0.75rem" }}
         >
-          {name}
+          {name.length > 11 ? `${name.slice(0, 8)}...` : name}
         </text>
         <text
           x={x}
@@ -92,6 +92,7 @@ export default function Activity() {
           fill="hsl(var(--background))"
           textAnchor={x > cx ? "start" : "end"}
           dominantBaseline="central"
+          style={{ fontSize: "0.75rem" }}
         >
           {UsePhpPesoWSign(value)}
         </text>
