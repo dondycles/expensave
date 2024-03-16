@@ -112,8 +112,8 @@ export default function Activity() {
           <div className="flex flex-col gap-4">
             <p className="font-bold text-2xl">Total Money Breakdown</p>
             {/* <BarSorter /> */}
-            <Card className="rounded-[--radius] shadow-none p-4 w-full aspect-square max-h-[500px]">
-              <ResponsiveContainer width="100%" height={"100%"}>
+            <div className="rounded-[--radius] w-full aspect-square max-h-[500px]">
+              <ResponsiveContainer c width="100%" height={"100%"}>
                 <PieChart>
                   <Tooltip content={<CustomTooltip />} />
                   <Pie
@@ -143,7 +143,7 @@ export default function Activity() {
                   </Pie>
                 </PieChart>
               </ResponsiveContainer>
-            </Card>
+            </div>
           </div>
           <br />
           <br />
