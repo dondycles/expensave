@@ -9,9 +9,8 @@ import { LogDataTable } from "@/components/activity-page/logs-table";
 import { MoneyColor } from "@/lib/constants";
 import { useListState } from "@/store";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
-import { Cell, Tooltip, ResponsiveContainer, PieChart, Pie } from "recharts";
-import { FaPesoSign } from "react-icons/fa6";
+import React, { useState } from "react";
+import { Cell, ResponsiveContainer, PieChart, Pie, Sector } from "recharts";
 import { UsePhpPesoWSign } from "@/lib/php-formatter";
 
 export default function Activity() {
@@ -37,68 +36,54 @@ export default function Activity() {
   const fetching = logsDataLoading || moneysLoading;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const CustomTooltip = ({ active, payload }: any) => {
-    if (active && payload && payload.length) {
-      return (
-        <div
-          className="p-4 rounded-[--radius] border bg-background font-bold"
-          style={{
-            borderColor: payload[0]?.payload?.color?.opaque,
-            color: payload[0]?.payload?.color?.opaque,
-          }}
-        >
-          <p className="flex flex-row gap-1 items-center  ">
-            {payload[0].name} :
-            <FaPesoSign className="text-base min-w-fit" />
-            {payload[0].value}
-          </p>
-        </div>
-      );
-    }
-
-    return null;
-  };
-  const RADIAN = Math.PI / 180;
-  const CustomLabel = ({
-    cx,
-    cy,
-    midAngle,
-    innerRadius,
-    outerRadius,
-    name,
-    value,
-  }: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  any) => {
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+  const renderActiveShape = (props: any) => {
+    const {
+      cx,
+      cy,
+      innerRadius,
+      outerRadius,
+      startAngle,
+      endAngle,
+      fill,
+      payload,
+      percent,
+      value,
+    } = props;
 
     return (
-      <>
-        <text
-          x={x}
-          y={y - 10}
-          fill="hsl(var(--background))"
-          textAnchor={x > cx ? "start" : "end"}
-          dominantBaseline="central"
-          style={{ fontSize: "0.75rem" }}
-        >
-          {name.length > 11 ? `${name.slice(0, 8)}...` : name}
+      <g>
+        <text x={cx} y={cy} dy={-16} textAnchor="middle" fill={fill}>
+          {payload.name}
         </text>
-        <text
-          x={x}
-          y={y + 10}
-          fill="hsl(var(--background))"
-          textAnchor={x > cx ? "start" : "end"}
-          dominantBaseline="central"
-          style={{ fontSize: "0.75rem" }}
-        >
+        <text x={cx} y={cy} dy={0} textAnchor="middle" fill="#333">
           {UsePhpPesoWSign(value)}
         </text>
-      </>
+        <text x={cx} y={cy} dy={16} textAnchor="middle" fill="#999">
+          {`(${(percent * 100).toFixed(2)}%)`}
+        </text>
+        <Sector
+          cx={cx}
+          cy={cy}
+          innerRadius={innerRadius}
+          outerRadius={outerRadius}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          fill={fill}
+        />
+        <Sector
+          cx={cx}
+          cy={cy}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          innerRadius={outerRadius + 6}
+          outerRadius={outerRadius + 10}
+          fill={fill}
+        />
+      </g>
     );
   };
 
+  const [activeIndex, setActiveIndex] = useState(0);
   return (
     <div className="w-full h-full screen-padding space-y-8">
       {fetching ? (
@@ -114,15 +99,18 @@ export default function Activity() {
             <div className="rounded-[--radius] w-full aspect-square max-h-[500px]">
               <ResponsiveContainer width="100%" height={"100%"}>
                 <PieChart>
-                  <Tooltip content={<CustomTooltip />} />
                   <Pie
+                    activeIndex={activeIndex}
+                    activeShape={renderActiveShape}
                     data={moneys}
-                    dataKey="amount"
                     cx="50%"
                     cy="50%"
-                    label={CustomLabel}
-                    labelLine={false}
-                    outerRadius="100%"
+                    innerRadius="60%"
+                    fill="#8884d8"
+                    dataKey="amount"
+                    onMouseEnter={(_, i) => {
+                      setActiveIndex(i);
+                    }}
                   >
                     {moneys?.map((money) => (
                       <Cell
