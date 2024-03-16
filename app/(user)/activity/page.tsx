@@ -6,7 +6,6 @@ import { getmoneys } from "@/app/actions/get-moneys";
 import { logsDataColumns } from "@/components/activity-page/logs-table-data-column";
 import LogTableSkeleton from "@/components/activity-page/logs-table-skeleton";
 import { LogDataTable } from "@/components/activity-page/logs-table";
-import { Card } from "@/components/ui/card";
 import { MoneyColor } from "@/lib/constants";
 import { useListState } from "@/store";
 import { useQuery } from "@tanstack/react-query";
