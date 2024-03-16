@@ -112,7 +112,7 @@ export default function Activity() {
             <p className="font-bold text-2xl">Total Money Breakdown</p>
             {/* <BarSorter /> */}
             <div className="rounded-[--radius] w-full aspect-square max-h-[500px]">
-              <ResponsiveContainer c width="100%" height={"100%"}>
+              <ResponsiveContainer width="100%" height={"100%"}>
                 <PieChart>
                   <Tooltip content={<CustomTooltip />} />
                   <Pie
