@@ -98,6 +98,7 @@ export default function List() {
           })}
       <br />
       <br />
+      <br />
       <EditMoneyDrawer />
       <ColorPickerDrawer />
     </div>
