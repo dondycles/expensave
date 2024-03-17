@@ -20,7 +20,7 @@ import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { setMoneyColor } from "@/app/actions/set-money-color";
 import { HexColorPicker } from "react-colorful";
-import { useDebounce } from "@/lib/utils";
+import { useDebounce } from "@/lib/useDebouce";
 interface MoneyCard extends React.HTMLAttributes<HTMLDivElement> {
   money: Database["public"]["Tables"]["moneys"]["Row"];
   listPageState: ListPageState;
