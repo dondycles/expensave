@@ -112,7 +112,7 @@ export default function MoneyCard({ money, listPageState }: MoneyCard) {
           Delete
         </ContextMenuItem>
         <ContextMenuSub>
-          <ContextMenuSubTrigger>Set Color</ContextMenuSubTrigger>
+          <ContextMenuSubTrigger>Set color</ContextMenuSubTrigger>
           <ContextMenuSubContent className="w-fit">
             <HexColorPicker
               color={(selectedColor as MoneyColor)?.opaque}
