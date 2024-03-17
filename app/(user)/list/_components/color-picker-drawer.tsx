@@ -69,7 +69,11 @@ export default function ColorPickerDrawer() {
   }, [debouncedSelectedColor]);
 
   return (
-    <Drawer onOpenChange={handleOnOpenChange} open={editMoney.openColorPicker}>
+    <Drawer
+      dismissible={false}
+      onOpenChange={handleOnOpenChange}
+      open={editMoney.openColorPicker}
+    >
       <DrawerTrigger hidden className="hidden" />
       <DrawerContent className="space-y-4 screen-padding">
         <DrawerTitle className="font-black text-xl text-center">
