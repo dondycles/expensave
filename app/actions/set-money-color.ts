@@ -1,9 +1,14 @@
 "use server";
-import { MoneyColor } from "@/lib/constants";
 import { spServer } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-export const setMoneyColor = async (id: string, color: MoneyColor) => {
+export const setMoneyColor = async (
+  id: string,
+  color: {
+    opaque: string;
+    transparent: string;
+  }
+) => {
   const supabase = spServer(cookies());
   const { data: session } = await supabase.auth.getSession();
   if (!session.session) return redirect("/log-in");
