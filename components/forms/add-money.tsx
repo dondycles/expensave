@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { addmoney } from "@/app/actions/add-money";
 import { ReactNode } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useListState } from "@/store";
+import { useListPageState } from "@/store";
 
 const AddMoneySchema = z.object({
   name: z.string().min(1),
@@ -32,7 +32,7 @@ export function AddMoneyForm({
   mutated: () => void;
 }) {
   const queryClient = useQueryClient();
-  const listState = useListState();
+  const listPageState = useListPageState();
   const form = useForm<z.infer<typeof AddMoneySchema>>({
     resolver: zodResolver(AddMoneySchema),
     defaultValues: {
@@ -48,7 +48,7 @@ export function AddMoneyForm({
         return error;
       }
       queryClient.invalidateQueries({
-        queryKey: ["moneys", listState.sort.asc, listState.sort.by],
+        queryKey: ["moneys", listPageState.sort.asc, listPageState.sort.by],
       });
       queryClient.invalidateQueries({
         queryKey: ["total"],

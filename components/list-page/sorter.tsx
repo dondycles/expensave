@@ -7,15 +7,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { useListState } from "@/store";
+import { useListPageState } from "@/store";
 
 export default function ListSorter() {
-  const listState = useListState();
+  const listPageState = useListPageState();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="w-fit ml-auto mr-0 flex gap-1 items-center text-muted-foreground">
-        <p className="text-sm">sort by {listState.sort.by}</p>
-        {listState.sort.asc === "true" ? (
+        <p className="text-sm">sort by {listPageState.sort.by}</p>
+        {listPageState.sort.asc === "true" ? (
           <TbSortAscending />
         ) : (
           <TbSortDescending />
@@ -23,9 +23,9 @@ export default function ListSorter() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuRadioGroup
-          value={listState.sort.asc}
+          value={listPageState.sort.asc}
           onValueChange={(e) => {
-            listState.setSort(e, listState.sort.by);
+            listPageState.setSort(e, listPageState.sort.by);
           }}
         >
           <DropdownMenuRadioItem value="true">Ascending</DropdownMenuRadioItem>
@@ -35,11 +35,11 @@ export default function ListSorter() {
         </DropdownMenuRadioGroup>
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup
-          value={listState.sort.by}
+          value={listPageState.sort.by}
           onValueChange={(e) => {
-            listState.setSort(
-              listState.sort.asc,
-              e as typeof listState.sort.by
+            listPageState.setSort(
+              listPageState.sort.asc,
+              e as typeof listPageState.sort.by
             );
           }}
         >

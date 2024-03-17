@@ -4,7 +4,7 @@ import { Skeleton } from "../ui/skeleton";
 import AsteriskNumber from "../asterisk-value";
 import { UsePhpPeso } from "@/lib/php-formatter";
 import AddMoneyDrawer from "../drawers/addmoney-drawer";
-import { useListState } from "@/store";
+import { useListPageState } from "@/store";
 import { Eye, EyeOff } from "lucide-react";
 
 export default function ListTotalCard({
@@ -14,7 +14,7 @@ export default function ListTotalCard({
   fetching: boolean;
   total: number;
 }) {
-  const listState = useListState();
+  const listPageState = useListPageState();
   return (
     <Card className="bg-foreground  shadow-md">
       <CardHeader>
@@ -23,15 +23,15 @@ export default function ListTotalCard({
             <div className="text-muted-foreground text-sm w-fit flex gap-2 items-center ">
               <p className="line-clamp-1 w-fit">Total money</p>
               <button className="w-fit h-fit my-auto ml-auto mr-0">
-                {listState.hideValues ? (
+                {listPageState.hideValues ? (
                   <EyeOff
                     className="size-5"
-                    onClick={() => listState.setHideValues()}
+                    onClick={() => listPageState.setHideValues()}
                   />
                 ) : (
                   <Eye
                     className="size-5"
-                    onClick={() => listState.setHideValues()}
+                    onClick={() => listPageState.setHideValues()}
                   />
                 )}
               </button>
@@ -40,7 +40,7 @@ export default function ListTotalCard({
               <FaPesoSign className="text-2xl min-w-fit" />
               {fetching ? (
                 <Skeleton className="w-24 h-8 invert ml-1" />
-              ) : listState.hideValues ? (
+              ) : listPageState.hideValues ? (
                 <AsteriskNumber number={Number(total)} />
               ) : (
                 <p className="text-2xl max-w-full  truncate font-bold">

@@ -2,7 +2,7 @@
 import { spServer } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-export const getmoneys = async (sort: ListState["sort"]) => {
+export const getmoneys = async (sort: ListPageState["sort"]) => {
   const supabase = spServer(cookies());
   const by = sort.by;
   const asc = Boolean(sort.asc === "true");
