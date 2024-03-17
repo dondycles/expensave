@@ -21,10 +21,10 @@ import Link from "next/link";
 import { setMoneyColor } from "@/app/actions/set-money-color";
 interface MoneyCard extends React.HTMLAttributes<HTMLDivElement> {
   money: Database["public"]["Tables"]["moneys"]["Row"];
-  listState: ListState;
+  listPageState: ListPageState;
 }
 
-export default function MoneyCard({ money, listState }: MoneyCard) {
+export default function MoneyCard({ money, listPageState }: MoneyCard) {
   const queryClient = useQueryClient();
   const [onOpenChange, setOnOpenChange] = useState<boolean>(false);
   const editMoney = useEditMoney();
@@ -33,7 +33,7 @@ export default function MoneyCard({ money, listState }: MoneyCard) {
     mutationFn: async (id: string) => await delmoney(id, money),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["moneys", listState.sort.asc, listState.sort.by],
+        queryKey: ["moneys", listPageState.sort.asc, listPageState.sort.by],
       });
       queryClient.invalidateQueries({
         queryKey: ["total"],
@@ -46,7 +46,7 @@ export default function MoneyCard({ money, listState }: MoneyCard) {
       await setMoneyColor(money.id, money.color),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["moneys", listState.sort.asc, listState.sort.by],
+        queryKey: ["moneys", listPageState.sort.asc, listPageState.sort.by],
       });
     },
   });
@@ -71,7 +71,7 @@ export default function MoneyCard({ money, listState }: MoneyCard) {
         <p className=" truncate xs:col-span-2">{money.name}</p>
         <div className="flex items-center gap-1 truncate">
           <FaPesoSign className="text-base  min-w-fit" />
-          {listState.hideValues ? (
+          {listPageState.hideValues ? (
             <AsteriskNumber className="text-xs" number={Number(money.amount)} />
           ) : (
             <p className="truncate">{UsePhpPeso(Number(money.amount))}</p>

@@ -9,6 +9,16 @@ import {
 import { Card, CardContent, CardHeader } from "../ui/card";
 import { Database } from "@/database.types";
 import { UsePhpPesoWSign } from "@/lib/php-formatter";
+import { useActivityPageState } from "@/store";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+import { Button } from "../ui/button";
 
 type DailyTotalMoney = Database["public"]["Tables"]["daily_total_money"]["Row"];
 
@@ -17,12 +27,15 @@ interface Data extends DailyTotalMoney {
 }
 
 export default function DailyTotalBarChart({ data }: { data: Data[] }) {
+  const dailyTotalLimit = useActivityPageState();
   const finalizedDailyTotalData = () => {
     const modifiedDailyTotalData = [];
     const currentDate = new Date();
-    currentDate.setDate(currentDate.getDate() - 29);
+    currentDate.setDate(
+      currentDate.getDate() - (dailyTotalLimit.dailyTotalLimit - 1)
+    );
 
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < dailyTotalLimit.dailyTotalLimit; i++) {
       const date = currentDate.toISOString().split("T")[0];
 
       const existingData = data?.find((item) => item.date === date);
@@ -65,12 +78,25 @@ export default function DailyTotalBarChart({ data }: { data: Data[] }) {
   return (
     <div className="flex flex-col gap-4">
       <p className="text-2xl font-bold">Daily Total</p>
-      <Card className="shadow-none">
-        <CardHeader className="text-sm text-muted-foreground">
-          Last 30 days
-        </CardHeader>
+      <Select
+        defaultValue={dailyTotalLimit.dailyTotalLimit.toString()}
+        onValueChange={(value) =>
+          dailyTotalLimit.setDailyTotalLimit(Number(value))
+        }
+      >
+        <SelectTrigger className="w-fit">
+          Last {dailyTotalLimit.dailyTotalLimit} days
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value={"7"}>7</SelectItem>
+          <SelectItem value={"14"}>14</SelectItem>
+          <SelectItem value={"21"}>21</SelectItem>
+          <SelectItem value={"30"}>30</SelectItem>
+        </SelectContent>
+      </Select>
+      <Card className="shadow-none rounded-[--radius]">
         <CardContent
-          className={`w-full py-0 px-4 ${data.length && "h-[144px]"}`}
+          className={`w-full py-0 px-1 ${data.length && "h-[144px]"}`}
         >
           {data.length ? (
             <ResponsiveContainer width="100%" height="100%">

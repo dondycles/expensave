@@ -1,6 +1,6 @@
 "use client";
 import { getmoneys } from "@/app/actions/get-moneys";
-import { useListState } from "@/store";
+import { useListPageState } from "@/store";
 import { useQuery } from "@tanstack/react-query";
 import MoneyCard from "@/components/money-card/money";
 
@@ -10,7 +10,7 @@ import { getTotalMoney } from "@/app/actions/get-total-money";
 import ListTotalCard from "@/components/list-page/total-card";
 import ListSorter from "@/components/list-page/sorter";
 export default function List() {
-  const listState = useListState();
+  const listPageState = useListPageState();
 
   const { data: totalMoney, isLoading: totalLoading } = useQuery({
     queryKey: ["total"],
@@ -22,9 +22,9 @@ export default function List() {
     isLoading: moneysLoading,
     error: moneysError,
   } = useQuery({
-    queryFn: async () => await getmoneys(listState.sort),
+    queryFn: async () => await getmoneys(listPageState.sort),
     refetchOnWindowFocus: false,
-    queryKey: ["moneys", listState.sort.asc, listState.sort.by],
+    queryKey: ["moneys", listPageState.sort.asc, listPageState.sort.by],
   });
 
   const moneys = moneysData?.success?.flatMap((money) => money);
@@ -50,7 +50,11 @@ export default function List() {
           })
         : moneys?.map((money) => {
             return (
-              <MoneyCard key={money.id} money={money} listState={listState} />
+              <MoneyCard
+                key={money.id}
+                money={money}
+                listPageState={listPageState}
+              />
             );
           })}
       <br />

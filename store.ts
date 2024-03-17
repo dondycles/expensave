@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { Database } from "./database.types";
 
-export const useListState = create<ListState>()(
+export const useListPageState = create<ListPageState>()(
   persist(
     (set, get) => ({
       hideValues: false,
@@ -14,8 +14,18 @@ export const useListState = create<ListState>()(
       setSort: (asc, by) => set(() => ({ sort: { asc: asc, by: by } })),
     }),
     {
-      name: "list-state",
+      name: "list-page-state",
     }
+  )
+);
+
+export const useActivityPageState = create<ActivityPageState>()(
+  persist(
+    (set) => ({
+      dailyTotalLimit: 30,
+      setDailyTotalLimit: (limit) => set(() => ({ dailyTotalLimit: limit })),
+    }),
+    { name: "activity-page-state" }
   )
 );
 
@@ -44,7 +54,7 @@ export const useGlobalMoneysListContext = create<GlobalMoneysListContext>()(
 );
 
 declare global {
-  type ListState = {
+  type ListPageState = {
     hideValues: boolean;
     sort: {
       asc: string;
@@ -52,6 +62,10 @@ declare global {
     };
     setHideValues: () => void;
     setSort: (asc: string, by: "created_at" | "amount") => void;
+  };
+  type ActivityPageState = {
+    dailyTotalLimit: number;
+    setDailyTotalLimit: (limit: number) => void;
   };
   type EditMoney = {
     money: EditMoneyTypes;

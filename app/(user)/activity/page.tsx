@@ -6,53 +6,61 @@ import { getmoneys } from "@/app/actions/get-moneys";
 import { logsDataColumns } from "@/components/activity-page/logs-table-data-column";
 import LogTableSkeleton from "@/components/activity-page/logs-table-skeleton";
 import { LogDataTable } from "@/components/activity-page/logs-table";
-import { useListState } from "@/store";
-import { useQuery } from "@tanstack/react-query";
+import { useActivityPageState, useListPageState } from "@/store";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import TotalMoneyBreakdownPieChart from "@/components/activity-page/total-money-breakdown-pie-chart";
 import TotalMoneyBreakdownPieChartSkeleton from "@/components/activity-page/total-money-breakdown-pie-chart-skeleton";
 import { getDailyTotal } from "@/app/actions/get-daily-total";
 import DailyTotalBarChart from "@/components/activity-page/daily-total-bar-chart";
+import DailyTotalBarChartSkeleton from "@/components/activity-page/daily-total-bar-chart-skeleton";
 
 export default function Activity() {
-  const listState = useListState();
+  const listPageState = useListPageState();
+  const activityPageState = useActivityPageState();
+  const results = useQueries({
+    queries: [
+      {
+        queryFn: async () => {
+          const { success, error } = await getlogs();
+          if (error) return [];
 
-  const { data: logsData, isLoading: logsDataLoading } = useQuery({
-    queryFn: async () => {
-      const { success, error } = await getlogs();
-      if (error) return [];
-
-      return success;
-    },
-    queryKey: ["logs"],
+          return success;
+        },
+        queryKey: ["logs"],
+      },
+      {
+        queryFn: async () => await getmoneys(listPageState.sort),
+        queryKey: ["moneys", listPageState.sort.asc, listPageState.sort.by],
+      },
+      {
+        queryKey: ["daily-total", activityPageState.dailyTotalLimit],
+        queryFn: async () => {
+          const { success, error } = await getDailyTotal(
+            activityPageState.dailyTotalLimit
+          );
+          if (error) return [];
+          const newData = success.map((item) => ({
+            ...item,
+            isNoData: false,
+          }));
+          return newData;
+        },
+      },
+    ],
   });
 
-  const { data: moneysData, isLoading: moneysLoading } = useQuery({
-    queryFn: async () => await getmoneys(listState.sort),
-    refetchOnWindowFocus: false,
-    queryKey: ["moneys", listState.sort.asc, listState.sort.by],
-  });
+  const logsData = results[0].data ?? [];
+  const moneysData = results[1].data?.success?.flatMap((money) => money) ?? [];
+  const dailyTotalData = results[2].data ?? [];
 
-  const { data: dailyTotalData, isLoading: dailyTotalLoading } = useQuery({
-    queryKey: ["daily-total"],
-    queryFn: async () => {
-      const { success, error } = await getDailyTotal();
-      if (error) return [];
-      const newData = success.map((item) => ({
-        ...item,
-        isNoData: false,
-      }));
-      return newData;
-    },
-  });
-
-  const moneys = moneysData?.success?.flatMap((money) => money);
-
-  const fetching = logsDataLoading || moneysLoading || dailyTotalLoading;
+  const moneys = moneysData?.flatMap((money) => money);
+  const isLoading = results.some((result) => result.isLoading);
 
   return (
     <div className="w-full h-full screen-padding space-y-8">
-      {fetching ? (
+      {isLoading ? (
         <>
+          <DailyTotalBarChartSkeleton />
           <TotalMoneyBreakdownPieChartSkeleton />
           <LogTableSkeleton />
         </>
@@ -61,10 +69,10 @@ export default function Activity() {
           <DailyTotalBarChart data={dailyTotalData ?? []} />
           <TotalMoneyBreakdownPieChart data={moneys ?? []} />
           <LogDataTable data={logsData ?? []} columns={logsDataColumns} />
-          <br />
-          <br />
         </>
       )}
+      <br />
+      <br />
     </div>
   );
 }
