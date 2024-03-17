@@ -120,7 +120,11 @@ export default function ColorPickerDrawer() {
                   }}
                   key={color.color?.opaque}
                   className="text-xs w-fit h-fit p-2 rounded-[--radius]"
-                  style={{ backgroundColor: color.color?.opaque }}
+                  style={{
+                    color: color.color?.opaque,
+                    backgroundColor: `${color.color?.opaque}20`,
+                    border: `1px solid ${color.color?.opaque}`,
+                  }}
                 >
                   {color.names.concat().join(", ")}
                 </Button>
