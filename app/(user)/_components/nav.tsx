@@ -1,6 +1,6 @@
 "use client";
 import { LogOut, Moon, Settings2, Sun } from "lucide-react";
-import { Button } from "../../components/ui/button";
+import { Button } from "../../../components/ui/button";
 import { logout } from "@/actions/auth/log-out";
 import { pathnames } from "@/lib/pathnames";
 import {
@@ -8,7 +8,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../../components/ui/dropdown-menu";
+} from "../../../components/ui/dropdown-menu";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -18,6 +18,13 @@ export default function Nav() {
   const queryClient = useQueryClient();
   const { setTheme, theme } = useTheme();
   const pathname = usePathname();
+
+  const handleLogout = async () => {
+    queryClient.clear();
+    await logout();
+    location.reload();
+  };
+
   return (
     <nav
       className="sm:hidden grid grid-cols-3 fixed bottom-0 left-0 w-full nav-padding bg-background/70 backdrop-blur h-fit
@@ -55,12 +62,7 @@ export default function Nav() {
           </DropdownMenuTrigger>
         </Button>
         <DropdownMenuContent>
-          <DropdownMenuItem
-            onClick={() => {
-              queryClient.clear();
-              logout();
-            }}
-          >
+          <DropdownMenuItem onClick={handleLogout}>
             <LogOut className="size-4 mr-2" />
             <span>Log Out</span>
           </DropdownMenuItem>

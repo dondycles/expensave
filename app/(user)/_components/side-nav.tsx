@@ -1,8 +1,8 @@
 "use client";
 import { logout } from "@/actions/auth/log-out";
-import { Button } from "../../components/ui/button";
+import { Button } from "../../../components/ui/button";
 import { LogOut } from "lucide-react";
-import ModeToggle from "../../components/theme-btn";
+import ModeToggle from "../../../components/theme-btn";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { pathnames } from "@/lib/pathnames";
@@ -11,7 +11,11 @@ import { useQueryClient } from "@tanstack/react-query";
 export default function SideNav() {
   const queryClient = useQueryClient();
   const pathname = usePathname();
-
+  const handleLogout = async () => {
+    queryClient.clear();
+    await logout();
+    location.reload();
+  };
   return (
     <aside className="p-4 hidden sm:flex flex-col w-fit border-r-border border-r-[1px]">
       {pathnames.map((path) => {
@@ -35,11 +39,7 @@ export default function SideNav() {
       })}
 
       <Button
-        onClick={() => {
-          queryClient.clear();
-
-          logout();
-        }}
+        onClick={handleLogout}
         variant={"ghost"}
         className="flex flex-col justify-center gap-1 size-16"
       >

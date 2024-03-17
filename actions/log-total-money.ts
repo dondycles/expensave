@@ -17,5 +17,6 @@ export const logTotalMoney = async () => {
     { onConflict: "date_and_user" }
   );
   if (error) return { error: error };
+
   return { sucess: "ok" };
 };

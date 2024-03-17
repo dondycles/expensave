@@ -1,16 +1,12 @@
-import Nav from "@/app/(user)/nav";
+import Nav from "@/app/(user)/_components/nav";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import SideNav from "@/app/(user)/side-nav";
-import { getsession } from "@/actions/auth/get-session";
-import { redirect } from "next/navigation";
+import SideNav from "@/app/(user)/_components/side-nav";
 
 export default async function UserLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { success: session } = await getsession();
-  if (!session) return redirect("/log-in");
   return (
     <main className="w-full h-full sm:flex flex-row">
       <SideNav />

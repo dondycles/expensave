@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { Database } from "./database.types";
 
 export const useListPageState = create<ListPageState>()(
   persist(
@@ -53,5 +52,15 @@ export const useGlobalMoneysListContext = create<GlobalMoneysListContext>()(
       setMoney: (moneys) => set(() => ({ moneys: moneys })),
     }),
     { name: "global-moneys-list-context" }
+  )
+);
+
+export const useAvailableMoneyColors = create<AvailableMoneyColors>()(
+  persist(
+    (set) => ({
+      colors: [],
+      setColors: (colors) => set(() => ({ colors: colors })),
+    }),
+    { name: "available-money-colors" }
   )
 );

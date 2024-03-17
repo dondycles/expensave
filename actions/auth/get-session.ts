@@ -8,5 +8,6 @@ export const getsession = async () => {
 
   const { data, error } = await supabase.auth.getSession();
   if (error) redirect("/log-in");
+
   return { success: data.session?.user };
 };

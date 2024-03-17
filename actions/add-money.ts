@@ -1,17 +1,13 @@
 "use server";
-import { AddMoneyTypes } from "@/app/(user)/list/components/add-money-form";
+import { AddMoneyTypes } from "@/app/(user)/list/_components/add-money-form";
 import { spServer } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { logTotalMoney } from "./log-total-money";
 
 export const addmoney = async (data: AddMoneyTypes) => {
   const supabase = spServer(cookies());
   const name = data.name;
   const amount = Number(data.amount);
-
-  const { data: session } = await supabase.auth.getSession();
-  if (!session.session) return redirect("/log-in");
 
   const { error: moneyError, data: moneyData } = await supabase
     .from("moneys")

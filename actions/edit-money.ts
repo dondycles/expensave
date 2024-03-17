@@ -1,7 +1,6 @@
 "use server";
 import { spServer } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { logTotalMoney } from "./log-total-money";
 
 export const editMoney = async (
@@ -9,9 +8,6 @@ export const editMoney = async (
   lastValues: { amount: number; name: string; id: string }
 ) => {
   const supabase = spServer(cookies());
-
-  const { data: session } = await supabase.auth.getSession();
-  if (!session.session) return redirect("/log-in");
 
   const { error: moneyError, data: moneyData } = await supabase
     .from("moneys")

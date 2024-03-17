@@ -8,7 +8,11 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "../../../../components/ui/button";
 import { useEffect, useState } from "react";
-import { useEditMoney, useListPageState } from "@/store";
+import {
+  useAvailableMoneyColors,
+  useEditMoney,
+  useListPageState,
+} from "@/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { setMoneyColor } from "@/actions/set-money-color";
 import { useDebounce } from "@/lib/useDebouce";
@@ -18,6 +22,7 @@ import { UsePhpPeso } from "@/lib/php-formatter";
 
 export default function ColorPickerDrawer() {
   const listPageState = useListPageState();
+  const availableMoneyColors = useAvailableMoneyColors();
   const editMoney = useEditMoney();
   const [selectedColor, setSelectedColor] = useState<Color>({
     opaque: "",
@@ -88,7 +93,7 @@ export default function ColorPickerDrawer() {
             </p>
           </div>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center flex-col gap-4">
           <HexColorPicker
             color={selectedColor.opaque}
             onChange={(color) => {
@@ -99,26 +104,47 @@ export default function ColorPickerDrawer() {
             }}
             style={{ width: "100%" }}
           />
+          <div className="flex gap-1 flex-wrap">
+            {availableMoneyColors.colors.map((color) => {
+              return (
+                <Button
+                  onClick={() => {
+                    setSelectedColor({
+                      transparent: `${color.color?.opaque}20`,
+                      opaque: color.color?.opaque,
+                    });
+                  }}
+                  key={color.color?.opaque}
+                  className="text-xs w-fit h-fit p-2 rounded-[--radius]"
+                  style={{ backgroundColor: color.color?.opaque }}
+                >
+                  {color.names.concat().join(", ")}
+                </Button>
+              );
+            })}
+          </div>
         </div>
-        <Button
-          onClick={() => {
-            setSelectedColor({
-              opaque: "",
-              transparent: "",
-            });
-          }}
-          type="button"
-          variant="outline"
-          className="w-full"
-        >
-          Clear color
-        </Button>
-        <Button
-          onClick={() => editMoney.setOpenColorPicker(false)}
-          className="w-full"
-        >
-          Close
-        </Button>
+        <div className="flex gap-4">
+          <Button
+            onClick={() => {
+              setSelectedColor({
+                opaque: "",
+                transparent: "",
+              });
+            }}
+            type="button"
+            variant="outline"
+            className="flex-1"
+          >
+            Clear color
+          </Button>
+          <Button
+            onClick={() => editMoney.setOpenColorPicker(false)}
+            className="flex-1"
+          >
+            Close
+          </Button>
+        </div>
       </DrawerContent>
     </Drawer>
   );

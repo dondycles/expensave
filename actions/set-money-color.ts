@@ -1,7 +1,6 @@
 "use server";
 import { spServer } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 export const setMoneyColor = async (
   id: string,
   color: {
@@ -10,8 +9,6 @@ export const setMoneyColor = async (
   }
 ) => {
   const supabase = spServer(cookies());
-  const { data: session } = await supabase.auth.getSession();
-  if (!session.session) return redirect("/log-in");
 
   const { error } = await supabase
     .from("moneys")

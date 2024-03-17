@@ -11,20 +11,27 @@ export async function middleware(req: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (user && req.nextUrl.pathname === "/log-in") {
-    return NextResponse.redirect(new URL("/list", req.url));
-  }
-
-  if (user && req.nextUrl.pathname === "/sign-up") {
-    return NextResponse.redirect(new URL("/list", req.url));
-  }
-
-  if (user && req.nextUrl.pathname === "/") {
-    return NextResponse.redirect(new URL("/list", req.url));
-  }
-
-  if (!user && req.nextUrl.pathname === "/list") {
-    return NextResponse.redirect(new URL("/log-in", req.url));
+  switch (req.nextUrl.pathname) {
+    case "/log-in":
+      if (user) {
+        return NextResponse.redirect(new URL("/list", req.url));
+      }
+      break;
+    case "/sign-up":
+      if (user) {
+        return NextResponse.redirect(new URL("/list", req.url));
+      }
+      break;
+    case "/":
+      if (user) {
+        return NextResponse.redirect(new URL("/list", req.url));
+      }
+      break;
+    case "/list":
+      if (!user) {
+        return NextResponse.redirect(new URL("/log-in", req.url));
+      }
+      break;
   }
 
   return res;
