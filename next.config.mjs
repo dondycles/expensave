@@ -15,4 +15,4 @@ const millionConfig = {
     rsc: true,
   }, // if you're using RSC: auto: { rsc: true },
 };
-export default million.next(withSerwist(nextConfig), millionConfig);
+export default million.next(withSerwist(nextConfig, millionConfig));

@@ -32,11 +32,16 @@ export async function middleware(req: NextRequest) {
         return NextResponse.redirect(new URL("/log-in", req.url));
       }
       break;
+    case "/activity":
+      if (!user) {
+        return NextResponse.redirect(new URL("/log-in", req.url));
+      }
+      break;
   }
 
   return res;
 }
 
 export const config = {
-  matcher: ["/", "/list", "/sign-up", "/log-in"],
+  matcher: ["/", "/list", "/sign-up", "/log-in", "/activity"],
 };
