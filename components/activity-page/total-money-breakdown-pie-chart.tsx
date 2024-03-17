@@ -2,7 +2,7 @@ import { Database } from "@/database.types";
 import { UsePhpPesoWSign } from "@/lib/php-formatter";
 import { useState } from "react";
 import { Cell, Pie, ResponsiveContainer, Sector, PieChart } from "recharts";
-import { MoneyColor } from "../money-card/money";
+import { Color } from "../drawers/color-picker-drawer";
 
 export default function TotalMoneyBreakdownPieChart({
   data,
@@ -107,8 +107,7 @@ export default function TotalMoneyBreakdownPieChart({
                   <Cell
                     key={money.id}
                     fill={
-                      (money.color as MoneyColor)?.opaque ??
-                      "hsl(var(--foreground))"
+                      (money.color as Color)?.opaque ?? "hsl(var(--foreground))"
                     }
                     stroke="hsl(var(--background))"
                     strokeWidth={4}

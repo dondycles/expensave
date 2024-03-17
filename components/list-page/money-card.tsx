@@ -15,7 +15,6 @@ import { useEditMoney } from "@/store";
 import { Database } from "@/database.types";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
-import { setMoneyColor } from "@/app/actions/set-money-color";
 import { Color } from "../drawers/color-picker-drawer";
 interface MoneyCard extends React.HTMLAttributes<HTMLDivElement> {
   money: Database["public"]["Tables"]["moneys"]["Row"];
@@ -35,18 +34,6 @@ export default function MoneyCard({ money, listPageState }: MoneyCard) {
       });
       queryClient.invalidateQueries({
         queryKey: ["total"],
-      });
-    },
-  });
-
-  const { mutate: setColor } = useMutation({
-    mutationFn: async (money: {
-      id: string;
-      color: { opaque: string; transparent: string };
-    }) => await setMoneyColor(money.id, money.color),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["moneys", listPageState.sort.asc, listPageState.sort.by],
       });
     },
   });

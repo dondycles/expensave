@@ -57,6 +57,10 @@ export const useGlobalMoneysListContext = create<GlobalMoneysListContext>()(
 );
 
 declare global {
+  type Color = {
+    opaque: string;
+    transparent: string;
+  };
   type Money = Database["public"]["Tables"]["moneys"]["Row"];
   type ListPageState = {
     hideValues: boolean;

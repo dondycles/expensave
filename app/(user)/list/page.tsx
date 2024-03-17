@@ -2,7 +2,7 @@
 import { getmoneys } from "@/app/actions/get-moneys";
 import { useListPageState } from "@/store";
 import { useQuery } from "@tanstack/react-query";
-import MoneyCard from "@/components/money-card/money";
+import MoneyCard from "@/components/list-page/money-card";
 
 import EditMoneyDrawer from "@/components/drawers/editmoney-drawer";
 import { Skeleton } from "@/components/ui/skeleton";

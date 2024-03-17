@@ -16,10 +16,7 @@ import { useDebounce } from "@/lib/useDebouce";
 import { HexColorPicker } from "react-colorful";
 import { FaPesoSign } from "react-icons/fa6";
 import { UsePhpPeso } from "@/lib/php-formatter";
-export type Color = {
-  opaque: string;
-  transparent: string;
-};
+
 export default function ColorPickerDrawer() {
   const listPageState = useListPageState();
   const editMoney = useEditMoney();
