@@ -18,7 +18,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { Button } from "../ui/button";
+import { getTotalMoney } from "@/app/actions/get-total-money";
+import { useQuery } from "@tanstack/react-query";
 
 type DailyTotalMoney = Database["public"]["Tables"]["daily_total_money"]["Row"];
 
@@ -28,26 +29,72 @@ interface Data extends DailyTotalMoney {
 
 export default function DailyTotalBarChart({ data }: { data: Data[] }) {
   const dailyTotalLimit = useActivityPageState();
+
+  const { data: totalMoney, isLoading: totalLoading } = useQuery({
+    queryKey: ["total"],
+    queryFn: async () => await getTotalMoney(),
+  });
+
   const finalizedDailyTotalData = () => {
-    const modifiedDailyTotalData = [];
+    const modifiedDailyTotalData: Data[] = [];
     const currentDate = new Date();
+
+    //? Set the date to the last day of the limit
     currentDate.setDate(
       currentDate.getDate() - (dailyTotalLimit.dailyTotalLimit - 1)
     );
 
     for (let i = 0; i < dailyTotalLimit.dailyTotalLimit; i++) {
+      //? gets the date in ISO format and splits it to get the date only
       const date = currentDate.toISOString().split("T")[0];
 
+      //? gets the existing data if there is any
       const existingData = data?.find((item) => item.date === date);
 
-      if (existingData) {
-        modifiedDailyTotalData.push(existingData);
-      } else {
-        modifiedDailyTotalData.push({
-          total: Math.max(...data?.map((item) => item.total as number)),
-          date: date,
-          isNoData: true,
-        });
+      //? gets the data for today if there is any
+      const todaysData = data?.some(
+        (item) => item.date === new Date().toISOString()
+      );
+
+      //? if there is an existing data, push it to the modifiedDailyTotalData
+      if (existingData) modifiedDailyTotalData.push(existingData);
+      else {
+        //? if there is no data for today, push a new data to the modifiedDailyTotalData
+        if (!todaysData && i === dailyTotalLimit.dailyTotalLimit - 1)
+          modifiedDailyTotalData.push({
+            total: Number(totalMoney),
+            date: date,
+            isNoData: false,
+            created_at: "",
+            date_and_user: "",
+            id: 0,
+            user: "",
+          });
+        else {
+          // ? checks if the previous index has data, if it does, push the same data to the modifiedDailyTotalData
+          if (modifiedDailyTotalData[i - 1]?.isNoData === false) {
+            modifiedDailyTotalData.push({
+              total: modifiedDailyTotalData[i - 1]?.total,
+              date: date,
+              isNoData: false,
+              created_at: "",
+              date_and_user: "",
+              id: 0,
+              user: "",
+            });
+          } else {
+            // ? if the previous index has no data, push a new data to the modifiedDailyTotalData with a total of what is the greatest total in the data but isNoData is true to indicate that there is no data for that day and make it a different color in the bar chart
+            modifiedDailyTotalData.push({
+              total: Math.max(...data?.map((item) => item.total as number)),
+              date: date,
+              isNoData: true,
+              created_at: "",
+              date_and_user: "",
+              id: 0,
+              user: "",
+            });
+          }
+        }
       }
 
       currentDate.setDate(currentDate.getDate() + 1);
@@ -59,13 +106,13 @@ export default function DailyTotalBarChart({ data }: { data: Data[] }) {
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="rounded-[--radius]  p-2  text-sm backdrop-blur">
-          {payload[0].payload.isNoData ? (
+        <div className="rounded-[--radius]  p-2  text-sm backdrop-blur bg-foreground/75 text-background">
+          {payload[0]?.payload.isNoData ? (
             <p>No data available.</p>
           ) : (
             <>
               <p>{new Date(label).toDateString()}</p>
-              <p>{UsePhpPesoWSign(payload[0].value)}</p>
+              <p>{UsePhpPesoWSign(payload[0]?.value)}</p>
             </>
           )}
         </div>

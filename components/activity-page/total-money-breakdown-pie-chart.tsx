@@ -42,7 +42,7 @@ export default function TotalMoneyBreakdownPieChart({
           y={cy}
           dy={0}
           textAnchor="middle"
-          fill="#333"
+          fill={fill}
           style={{ fontSize: "0.8rem" }}
         >
           {UsePhpPesoWSign(value)}
@@ -52,7 +52,7 @@ export default function TotalMoneyBreakdownPieChart({
           y={cy}
           dy={16}
           textAnchor="middle"
-          fill="#999"
+          fill={fill}
           style={{ fontSize: "0.8rem" }}
         >
           {`(${(percent * 100).toFixed(2)}%)`}
@@ -108,14 +108,10 @@ export default function TotalMoneyBreakdownPieChart({
                     key={money.id}
                     fill={
                       (money.color as MoneyColor)?.opaque ??
-                      "hsl(var(--muted-foreground))"
+                      "hsl(var(--foreground))"
                     }
-                    style={{
-                      outlineColor:
-                        (money.color as MoneyColor)?.opaque ??
-                        "hsl(var(--muted-foreground))",
-                      outlineWidth: "1px",
-                    }}
+                    stroke="hsl(var(--background))"
+                    strokeWidth={4}
                   />
                 ))}
               </Pie>
