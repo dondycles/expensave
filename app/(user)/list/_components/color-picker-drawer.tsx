@@ -123,7 +123,7 @@ export default function ColorPickerDrawer() {
                     });
                   }}
                   key={color.opaque_color}
-                  className="text-xs w-fit h-fit p-2 rounded-[--radius]"
+                  className="text-xs w-fit h-fit p-2 rounded-[--radius] line-clamp-1"
                   style={{
                     color: color.opaque_color,
                     backgroundColor: color.trans_color,
