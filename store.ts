@@ -31,16 +31,19 @@ export const useActivityPageState = create<ActivityPageState>()(
 
 export const useEditMoney = create<EditMoney>()((set) => ({
   money: {
+    amount: 0,
+    color: { opaque: "", transparent: "", id: "" },
     id: "",
     name: "",
-    amount: 0,
   },
-  openModal: false,
-  setOpenModal: (status) => set(() => ({ openModal: status })),
+  openEditModal: false,
+  setOpenEditModal: (status) => set(() => ({ openEditModal: status })),
   setMoney: (money) =>
     set(() => ({
       money: money,
     })),
+  openColorPicker: false,
+  setOpenColorPicker: (status) => set(() => ({ openColorPicker: status })),
 }));
 
 export const useGlobalMoneysListContext = create<GlobalMoneysListContext>()(
@@ -54,6 +57,7 @@ export const useGlobalMoneysListContext = create<GlobalMoneysListContext>()(
 );
 
 declare global {
+  type Money = Database["public"]["Tables"]["moneys"]["Row"];
   type ListPageState = {
     hideValues: boolean;
     sort: {
@@ -68,10 +72,12 @@ declare global {
     setDailyTotalLimit: (limit: number) => void;
   };
   type EditMoney = {
-    money: EditMoneyTypes;
-    setMoney: (money: EditMoneyTypes) => void;
-    openModal: boolean;
-    setOpenModal: (status: boolean) => void;
+    money: Omit<Money, "created_at" | "user">;
+    setMoney: (money: Omit<Money, "created_at" | "user">) => void;
+    openEditModal: boolean;
+    setOpenEditModal: (status: boolean) => void;
+    openColorPicker: boolean;
+    setOpenColorPicker: (status: boolean) => void;
   };
   type GlobalMoneysListContext = {
     moneys: Database["public"]["Tables"]["moneys"]["Row"][];

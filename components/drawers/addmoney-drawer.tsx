@@ -31,7 +31,7 @@ export default function AddMoneyDrawer() {
         <AddMoneyForm mutated={() => setOnOpenChange(false)}>
           <DrawerClose className="flex-1">
             <Button type="button" variant="outline" className="w-full">
-              Cancel.
+              Cancel
             </Button>
           </DrawerClose>
         </AddMoneyForm>

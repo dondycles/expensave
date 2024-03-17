@@ -16,13 +16,18 @@ export default function EditMoneyDrawer() {
   const editMoney = useEditMoney();
 
   useEffect(() => {
-    setOnOpenChange(editMoney.openModal);
-  }, [editMoney.money, editMoney.openModal]);
+    setOnOpenChange(editMoney.openEditModal);
+  }, [editMoney.money, editMoney.openEditModal]);
 
   useEffect(() => {
     if (!onOpenChange) {
-      editMoney.setOpenModal(false);
-      editMoney.setMoney({ id: "", name: "", amount: 0 });
+      editMoney.setOpenEditModal(false);
+      editMoney.setMoney({
+        id: "",
+        name: "",
+        amount: 0,
+        color: { opaque: "", transparent: "" },
+      });
     }
   }, [onOpenChange]);
 
@@ -39,7 +44,7 @@ export default function EditMoneyDrawer() {
         >
           <DrawerClose className="flex-1">
             <Button type="button" variant="ghost" className="w-full">
-              Cancel.
+              Cancel
             </Button>
           </DrawerClose>
         </EditMoneyForm>

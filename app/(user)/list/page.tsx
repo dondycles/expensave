@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { getTotalMoney } from "@/app/actions/get-total-money";
 import ListTotalCard from "@/components/list-page/total-card";
 import ListSorter from "@/components/list-page/sorter";
+import ColorPickerDrawer from "@/components/drawers/color-picker-drawer";
 export default function List() {
   const listPageState = useListPageState();
 
@@ -60,6 +61,7 @@ export default function List() {
       <br />
       <br />
       <EditMoneyDrawer />
+      <ColorPickerDrawer />
     </div>
   );
 }

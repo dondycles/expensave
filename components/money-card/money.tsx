@@ -4,12 +4,9 @@ import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
-  ContextMenuSub,
-  ContextMenuSubContent,
-  ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AsteriskNumber from "../asterisk-value";
 import { FaPesoSign } from "react-icons/fa6";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -19,21 +16,13 @@ import { Database } from "@/database.types";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { setMoneyColor } from "@/app/actions/set-money-color";
-import { HexColorPicker } from "react-colorful";
-import { useDebounce } from "@/lib/useDebouce";
+import { Color } from "../drawers/color-picker-drawer";
 interface MoneyCard extends React.HTMLAttributes<HTMLDivElement> {
   money: Database["public"]["Tables"]["moneys"]["Row"];
   listPageState: ListPageState;
 }
-export type MoneyColor = {
-  opaque: string;
-  transparent: string;
-  id: string;
-};
+
 export default function MoneyCard({ money, listPageState }: MoneyCard) {
-  const [selectedColor, setSelectedColor] = useState<MoneyColor>(
-    money.color as MoneyColor
-  );
   const queryClient = useQueryClient();
   const [onOpenChange, setOnOpenChange] = useState<boolean>(false);
   const editMoney = useEditMoney();
@@ -63,27 +52,16 @@ export default function MoneyCard({ money, listPageState }: MoneyCard) {
   });
 
   const focusMoney = Boolean(editMoney.money?.id === money.id || onOpenChange);
-  const debouncedSelectedColor = useDebounce(selectedColor);
-
-  useEffect(() => {
-    setColor({
-      color: {
-        opaque: selectedColor.opaque,
-        transparent: selectedColor.transparent,
-      },
-      id: selectedColor.id,
-    });
-  }, [debouncedSelectedColor]);
 
   return (
     <ContextMenu onOpenChange={setOnOpenChange}>
       <ContextMenuTrigger
         style={{
-          backgroundColor: (money?.color as MoneyColor)?.transparent,
+          backgroundColor: (money?.color as Color)?.transparent,
           borderColor:
             (deletePending && "hsl(var(--destructive))") ||
-            (money?.color as MoneyColor)?.opaque,
-          color: (money?.color as MoneyColor)?.opaque,
+            (money?.color as Color)?.opaque,
+          color: (money?.color as Color)?.opaque,
         }}
         className={`rounded-[0.5rem] border p-2 scale-100 duration-150 grid grid-cols-2 xs:grid-cols-3  font-bold 
           ${focusMoney && "shadow-lg scale-[99%] border-[3px]"}
@@ -104,7 +82,7 @@ export default function MoneyCard({ money, listPageState }: MoneyCard) {
         <ContextMenuItem
           onClick={() => {
             editMoney.setMoney(money);
-            editMoney.setOpenModal(true);
+            editMoney.setOpenEditModal(true);
           }}
         >
           Edit
@@ -112,21 +90,15 @@ export default function MoneyCard({ money, listPageState }: MoneyCard) {
         <ContextMenuItem onClick={() => deleteMoney(money.id)}>
           Delete
         </ContextMenuItem>
-        <ContextMenuSub>
-          <ContextMenuSubTrigger>Set color</ContextMenuSubTrigger>
-          <ContextMenuSubContent className="w-fit">
-            <HexColorPicker
-              color={(selectedColor as MoneyColor)?.opaque}
-              onChange={(color) => {
-                setSelectedColor({
-                  transparent: `${color}20`,
-                  opaque: color,
-                  id: money.id,
-                });
-              }}
-            />
-          </ContextMenuSubContent>
-        </ContextMenuSub>
+        <ContextMenuItem
+          onClick={() => {
+            editMoney.setMoney(money);
+            editMoney.setOpenColorPicker(true);
+          }}
+        >
+          Set color
+        </ContextMenuItem>
+
         <ContextMenuItem disabled asChild>
           <Link
             href={"/money/" + money.id}
