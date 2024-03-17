@@ -30,26 +30,24 @@ export default function List() {
   });
 
   const moneys = moneysData?.success?.flatMap((money) => money);
-  const colors = moneys?.flatMap(
-    (money) => (money.color as { opaque: string }).opaque
-  );
+
   const uniqueColorsAvailable = () => {
     const groupedMoneys: {
-      [key: string]: { color: any; names: string[] };
+      [key: string]: { color: string; names: string[] };
     }[] = [];
 
     // Iterate through the original array
     moneys?.forEach((money) => {
       // Check if the color already exists in the groupedMoneys array
       const index = groupedMoneys.findIndex(
-        (item) =>
-          item[(money?.color as { opaque: string })?.opaque] != undefined
+        (item) => item[money.opaque_color ?? ""] != undefined
       );
       if (index === -1) {
         // If not, create a new entry for the color
-        const newEntry: { [key: string]: { color: any; names: string[] } } = {};
-        newEntry[(money?.color as { opaque: string })?.opaque] = {
-          color: money.color,
+        const newEntry: { [key: string]: { color: string; names: string[] } } =
+          {};
+        newEntry[money.opaque_color ?? ""] = {
+          color: money.opaque_color ?? "",
           names: [money.name],
         };
         groupedMoneys.push(newEntry);

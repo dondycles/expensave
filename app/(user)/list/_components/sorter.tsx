@@ -47,6 +47,9 @@ export default function ListSorter() {
             Date Created
           </DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="amount">Amount</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="opaque_color">
+            Color
+          </DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>

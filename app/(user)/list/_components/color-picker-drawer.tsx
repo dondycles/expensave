@@ -45,7 +45,10 @@ export default function ColorPickerDrawer() {
 
   const handleOnOpenChange = (status: boolean) => {
     // sets selected color based from the selected money's color
-    setSelectedColor(editMoney.money.color as Color);
+    setSelectedColor({
+      opaque: editMoney.money.opaque_color ?? "",
+      transparent: editMoney.money.trans_color ?? "",
+    });
 
     // sets the drawer's open status
     editMoney.setOpenColorPicker(status);
@@ -56,7 +59,8 @@ export default function ColorPickerDrawer() {
         id: "",
         name: "",
         amount: 0,
-        color: { opaque: "", transparent: "" },
+        opaque_color: null,
+        trans_color: null,
       });
     }
   };
@@ -114,16 +118,16 @@ export default function ColorPickerDrawer() {
                 <Button
                   onClick={() => {
                     setSelectedColor({
-                      transparent: `${color.color?.opaque}20`,
-                      opaque: color.color?.opaque,
+                      transparent: `${color.color}20`,
+                      opaque: color.color,
                     });
                   }}
-                  key={color.color?.opaque}
+                  key={color.color}
                   className="text-xs w-fit h-fit p-2 rounded-[--radius]"
                   style={{
-                    color: color.color?.opaque,
-                    backgroundColor: `${color.color?.opaque}20`,
-                    border: `1px solid ${color.color?.opaque}`,
+                    color: color.color,
+                    backgroundColor: `${color.color}20`,
+                    border: `1px solid ${color.color}`,
                   }}
                 >
                   {color.names.concat().join(", ")}
@@ -137,7 +141,7 @@ export default function ColorPickerDrawer() {
             onClick={() => {
               setSelectedColor({
                 opaque: "",
-                transparent: "",
+                transparent: "#00000000",
               });
             }}
             type="button"

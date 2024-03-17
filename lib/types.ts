@@ -10,10 +10,10 @@ declare global {
     hideValues: boolean;
     sort: {
       asc: string;
-      by: "created_at" | "amount";
+      by: "created_at" | "amount" | "color";
     };
     setHideValues: () => void;
-    setSort: (asc: string, by: "created_at" | "amount") => void;
+    setSort: (asc: string, by: "created_at" | "amount" | "color") => void;
   };
   type ActivityPageState = {
     dailyTotalLimit: number;

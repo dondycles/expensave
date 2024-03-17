@@ -95,26 +95,29 @@ export type Database = {
       moneys: {
         Row: {
           amount: number
-          color: Json | null
           created_at: string
           id: string
           name: string
+          opaque_color: string | null
+          trans_color: string | null
           user: string
         }
         Insert: {
           amount: number
-          color?: Json | null
           created_at?: string
           id?: string
           name: string
+          opaque_color?: string | null
+          trans_color?: string | null
           user?: string
         }
         Update: {
           amount?: number
-          color?: Json | null
           created_at?: string
           id?: string
           name?: string
+          opaque_color?: string | null
+          trans_color?: string | null
           user?: string
         }
         Relationships: [

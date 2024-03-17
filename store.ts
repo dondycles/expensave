@@ -31,9 +31,10 @@ export const useActivityPageState = create<ActivityPageState>()(
 export const useEditMoney = create<EditMoney>()((set) => ({
   money: {
     amount: 0,
-    color: { opaque: "", transparent: "", id: "" },
     id: "",
     name: "",
+    opaque_color: null,
+    trans_color: null,
   },
   openEditModal: false,
   setOpenEditModal: (status) => set(() => ({ openEditModal: status })),

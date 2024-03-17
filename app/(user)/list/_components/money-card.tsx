@@ -43,11 +43,12 @@ export default function MoneyCard({ money, listPageState }: MoneyCard) {
     <ContextMenu onOpenChange={setOnOpenChange}>
       <ContextMenuTrigger
         style={{
-          backgroundColor: (money?.color as Color)?.transparent,
+          backgroundColor: money?.trans_color ?? "",
           borderColor:
-            (deletePending && "hsl(var(--destructive))") ||
-            (money?.color as Color)?.opaque,
-          color: (money?.color as Color)?.opaque,
+            ((deletePending && "hsl(var(--destructive))") ||
+              money.opaque_color) ??
+            "",
+          color: money.opaque_color ?? "",
         }}
         className={`rounded-[0.5rem] border p-2 scale-100 duration-150 grid grid-cols-2 xs:grid-cols-3  font-bold 
           ${focusMoney && "shadow-lg scale-[99%] border-[3px]"}

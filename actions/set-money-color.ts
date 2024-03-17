@@ -13,7 +13,8 @@ export const setMoneyColor = async (
   const { error } = await supabase
     .from("moneys")
     .update({
-      color: color,
+      opaque_color: color.opaque,
+      trans_color: color.transparent,
     })
     .eq("id", id);
 
