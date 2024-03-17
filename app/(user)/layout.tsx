@@ -1,7 +1,7 @@
 import Nav from "@/components/nav";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import SideNav from "@/components/side-nav";
-import { getsession } from "../actions/get-session";
+import { getsession } from "../actions/auth/get-session";
 import { redirect } from "next/navigation";
 
 export default async function UserLayout({

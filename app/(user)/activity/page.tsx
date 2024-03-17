@@ -19,11 +19,23 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { Card } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
 import { UsePhpPesoWSign } from "@/lib/php-formatter";
+import { getsession } from "@/app/actions/auth/get-session";
 
 export default function Activity() {
   const listState = useListState();
+
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => await getsession(),
+  });
+
   const { data: logsData, isLoading: logsDataLoading } = useQuery({
     queryFn: async () => {
       const { success, error } = await getlogs();
@@ -31,22 +43,30 @@ export default function Activity() {
 
       return success;
     },
-    queryKey: ["logs"],
+    queryKey: ["logs", user?.success?.id],
+    enabled: !!user,
   });
 
   const { data: moneysData, isLoading: moneysLoading } = useQuery({
     queryFn: async () => await getmoneys(listState.sort),
     refetchOnWindowFocus: false,
-    queryKey: ["moneys", listState.sort.asc, listState.sort.by],
+    queryKey: [
+      "moneys",
+      listState.sort.asc,
+      listState.sort.by,
+      user?.success?.id,
+    ],
+    enabled: !!user,
   });
 
   const { data: dailyTotalData, isLoading: dailyTotalLoading } = useQuery({
-    queryKey: ["daily-total"],
+    queryKey: ["daily-total", user?.success?.id],
     queryFn: async () => {
       const { success, error } = await getDailyTotal();
       if (error) return [];
       return success;
     },
+    enabled: !!user,
   });
 
   const moneys = moneysData?.success?.flatMap((money) => money);
@@ -77,40 +97,38 @@ export default function Activity() {
         </>
       ) : (
         <>
-          <LogDataTable data={logsData ?? []} columns={logsDataColumns} />
-          <TotalMoneyBreakdownPieChart moneys={moneys ?? []} />
           <div className="flex flex-col gap-4">
             <p className="text-2xl font-bold">Daily Total</p>
-            <Card className="p-4 w-full h-[500px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  width={150}
-                  height={40}
-                  data={finalizedDailyTotalData()}
-                >
-                  <XAxis
-                    dataKey="date"
-                    tickFormatter={(value) =>
-                      value ? new Date(value).toLocaleDateString() : ""
-                    }
-                    style={{
-                      fontSize: "0.75rem",
-                      fill: "hsl(var(--muted-foreground))",
-                    }}
-                  />
-                  <YAxis
-                    style={{
-                      fontSize: "0.75rem",
-                      fill: "hsl(var(--muted-foreground))",
-                    }}
-                    tickFormatter={(value) => UsePhpPesoWSign(value)}
-                  />
-                  <Tooltip />
-                  <Bar dataKey="total" fill="hsl(var(--muted-foreground))" />
-                </BarChart>
-              </ResponsiveContainer>
+            <Card className="shadow-none">
+              <CardHeader className="text-sm text-muted-foreground">
+                Last 30 days
+              </CardHeader>
+              <CardContent className="w-full h-[144px] py-0 px-4">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    width={150}
+                    height={40}
+                    data={finalizedDailyTotalData()}
+                  >
+                    <XAxis
+                      dataKey="date"
+                      tickFormatter={(value) =>
+                        value ? new Date(value).toLocaleDateString() : ""
+                      }
+                      style={{
+                        fontSize: "0.75rem",
+                        fill: "hsl(var(--muted-foreground))",
+                      }}
+                    />
+                    <Tooltip />
+                    <Bar dataKey="total" fill="hsl(var(--muted-foreground))" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </CardContent>
             </Card>
           </div>
+          <TotalMoneyBreakdownPieChart moneys={moneys ?? []} />
+          <LogDataTable data={logsData ?? []} columns={logsDataColumns} />
           <br />
           <br />
         </>

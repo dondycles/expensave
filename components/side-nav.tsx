@@ -6,8 +6,10 @@ import ModeToggle from "./theme-btn";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { pathnames } from "@/lib/constants";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function SideNav() {
+  const queryClient = useQueryClient();
   const pathname = usePathname();
 
   return (
@@ -33,7 +35,11 @@ export default function SideNav() {
       })}
 
       <Button
-        onClick={() => logout()}
+        onClick={() => {
+          queryClient.clear();
+
+          logout();
+        }}
         variant={"ghost"}
         className="flex flex-col justify-center gap-1 size-16"
       >

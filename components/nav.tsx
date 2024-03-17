@@ -12,8 +12,10 @@ import {
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function Nav() {
+  const queryClient = useQueryClient();
   const { setTheme, theme } = useTheme();
   const pathname = usePathname();
   return (
@@ -53,7 +55,12 @@ export default function Nav() {
           </DropdownMenuTrigger>
         </Button>
         <DropdownMenuContent>
-          <DropdownMenuItem onClick={() => logout()}>
+          <DropdownMenuItem
+            onClick={() => {
+              queryClient.clear();
+              logout();
+            }}
+          >
             <LogOut className="size-4 mr-2" />
             <span>Log Out</span>
           </DropdownMenuItem>

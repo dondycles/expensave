@@ -9,11 +9,19 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { getTotalMoney } from "@/app/actions/get-total-money";
 import ListTotalCard from "@/components/list-page/total-card";
 import ListSorter from "@/components/list-page/sorter";
+import { getsession } from "@/app/actions/auth/get-session";
 export default function List() {
   const listState = useListState();
+
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => await getsession(),
+  });
+
   const { data: totalMoney, isLoading: totalLoading } = useQuery({
-    queryKey: ["total"],
+    queryKey: ["total", user?.success?.id],
     queryFn: async () => await getTotalMoney(),
+    enabled: !!user,
   });
 
   const {
@@ -23,7 +31,13 @@ export default function List() {
   } = useQuery({
     queryFn: async () => await getmoneys(listState.sort),
     refetchOnWindowFocus: false,
-    queryKey: ["moneys", listState.sort.asc, listState.sort.by],
+    queryKey: [
+      "moneys",
+      listState.sort.asc,
+      listState.sort.by,
+      user?.success?.id,
+    ],
+    enabled: !!user,
   });
 
   const moneys = moneysData?.success?.flatMap((money) => money);
