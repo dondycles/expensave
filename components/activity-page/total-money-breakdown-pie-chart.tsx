@@ -5,13 +5,12 @@ import { useState } from "react";
 import { Cell, Pie, ResponsiveContainer, Sector, PieChart } from "recharts";
 
 export default function TotalMoneyBreakdownPieChart({
-  moneys,
+  data,
 }: {
-  moneys: Database["public"]["Tables"]["moneys"]["Row"][];
+  data: Database["public"]["Tables"]["moneys"]["Row"][];
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const renderActiveShape = (props: any) => {
     const {
       cx,
@@ -83,14 +82,18 @@ export default function TotalMoneyBreakdownPieChart({
   return (
     <div className="flex flex-col gap-4">
       <p className="font-bold text-2xl">Total Money Breakdown</p>
-      <div className="rounded-[--radius] w-full aspect-square max-h-[500px]">
-        {moneys?.length ? (
+      <div
+        className={`rounded-[--radius] w-full  max-h-[500px] ${
+          data.length && "aspect-square"
+        }`}
+      >
+        {data?.length ? (
           <ResponsiveContainer width="100%" height={"100%"}>
             <PieChart>
               <Pie
                 activeIndex={activeIndex}
                 activeShape={renderActiveShape}
-                data={moneys}
+                data={data}
                 cx="50%"
                 cy="50%"
                 innerRadius="60%"
@@ -100,7 +103,7 @@ export default function TotalMoneyBreakdownPieChart({
                   setActiveIndex(i);
                 }}
               >
-                {moneys?.map((money) => (
+                {data?.map((money) => (
                   <Cell
                     key={money.id}
                     fill={
