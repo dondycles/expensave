@@ -105,9 +105,7 @@ export default function TotalMoneyBreakdownPieChart({
                 {data?.map((money) => (
                   <Cell
                     key={money.id}
-                    fill={
-                      (money.color as Color)?.opaque ?? "hsl(var(--foreground))"
-                    }
+                    fill={money.opaque_color ?? "hsl(var(--foreground))"}
                     stroke="hsl(var(--background))"
                     strokeWidth={4}
                   />
