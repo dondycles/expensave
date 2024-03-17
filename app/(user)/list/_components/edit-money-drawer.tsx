@@ -26,7 +26,8 @@ export default function EditMoneyDrawer() {
         id: "",
         name: "",
         amount: 0,
-        color: { opaque: "", transparent: "" },
+        opaque_color: "",
+        trans_color: "",
       });
     }
   }, [onOpenChange]);

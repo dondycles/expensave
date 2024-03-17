@@ -1,10 +1,6 @@
 import { Database } from "@/database.types";
 
 declare global {
-  type Color = {
-    opaque: string;
-    transparent: string;
-  };
   type Money = Database["public"]["Tables"]["moneys"]["Row"];
   type ListPageState = {
     hideValues: boolean;
