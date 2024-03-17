@@ -20,6 +20,7 @@ import {
 
 import { getTotalMoney } from "@/actions/get-total-money";
 import { useQuery } from "@tanstack/react-query";
+import { getDailyTotal } from "@/actions/get-daily-total";
 
 type DailyTotalMoney = Database["public"]["Tables"]["daily_total_money"]["Row"];
 
@@ -28,7 +29,7 @@ interface Data extends DailyTotalMoney {
 }
 
 export default function DailyTotalBarChart({ data }: { data: Data[] }) {
-  const dailyTotalLimit = useActivityPageState();
+  const activityPageState = useActivityPageState();
 
   const { data: totalMoney, isLoading: totalLoading } = useQuery({
     queryKey: ["total"],
@@ -41,10 +42,10 @@ export default function DailyTotalBarChart({ data }: { data: Data[] }) {
 
     //? Set the date to the last day of the limit
     currentDate.setDate(
-      currentDate.getDate() - (dailyTotalLimit.dailyTotalLimit - 1)
+      currentDate.getDate() - (activityPageState.dailyTotalLimit - 1)
     );
 
-    for (let i = 0; i < dailyTotalLimit.dailyTotalLimit; i++) {
+    for (let i = 0; i < activityPageState.dailyTotalLimit; i++) {
       //? gets the date in ISO format and splits it to get the date only
       const date = currentDate.toLocaleDateString();
 
@@ -60,7 +61,7 @@ export default function DailyTotalBarChart({ data }: { data: Data[] }) {
       if (existingData) modifiedDailyTotalData.push(existingData);
       else {
         //? if there is no data for today, push a new data to the modifiedDailyTotalData
-        if (!todaysData && i === dailyTotalLimit.dailyTotalLimit - 1)
+        if (!todaysData && i === activityPageState.dailyTotalLimit - 1)
           modifiedDailyTotalData.push({
             total: Number(totalMoney),
             date: date,
@@ -126,13 +127,13 @@ export default function DailyTotalBarChart({ data }: { data: Data[] }) {
     <div className="flex flex-col gap-4">
       <p className="text-2xl font-bold">Daily Total</p>
       <Select
-        defaultValue={dailyTotalLimit.dailyTotalLimit.toString()}
+        defaultValue={activityPageState.dailyTotalLimit.toString()}
         onValueChange={(value) =>
-          dailyTotalLimit.setDailyTotalLimit(Number(value))
+          activityPageState.setDailyTotalLimit(Number(value))
         }
       >
         <SelectTrigger className="w-fit">
-          Last {dailyTotalLimit.dailyTotalLimit} days
+          Last {activityPageState.dailyTotalLimit} days
         </SelectTrigger>
         <SelectContent>
           <SelectItem value={"7"}>7</SelectItem>
