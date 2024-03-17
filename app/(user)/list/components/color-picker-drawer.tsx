@@ -7,11 +7,10 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "../../../../components/ui/button";
-import { EditMoneyForm } from "./edit-money-form";
 import { useEffect, useState } from "react";
 import { useEditMoney, useListPageState } from "@/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { setMoneyColor } from "@/app/actions/set-money-color";
+import { setMoneyColor } from "@/actions/set-money-color";
 import { useDebounce } from "@/lib/useDebouce";
 import { HexColorPicker } from "react-colorful";
 import { FaPesoSign } from "react-icons/fa6";

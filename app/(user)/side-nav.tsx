@@ -1,5 +1,5 @@
 "use client";
-import { logout } from "@/app/actions/auth/log-out";
+import { logout } from "@/actions/auth/log-out";
 import { Button } from "../../components/ui/button";
 import { LogOut } from "lucide-react";
 import ModeToggle from "../../components/theme-btn";

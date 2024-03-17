@@ -1,5 +1,5 @@
 import AuthPage from "@/app/(auth)/components/auth-page";
-import { getsession } from "../actions/auth/get-session";
+import { getsession } from "@/actions/auth/get-session";
 import { redirect } from "next/navigation";
 
 export default async function AuthLayout({

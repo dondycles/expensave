@@ -1,12 +1,12 @@
 "use client";
-import { getmoneys } from "@/app/actions/get-moneys";
+import { getmoneys } from "@/actions/get-moneys";
 import { useListPageState } from "@/store";
 import { useQuery } from "@tanstack/react-query";
 import MoneyCard from "@/app/(user)/list/components/money-card";
 
 import EditMoneyDrawer from "@/app/(user)/list/components/edit-money-drawer";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getTotalMoney } from "@/app/actions/get-total-money";
+import { getTotalMoney } from "@/actions/get-total-money";
 import ListTotalCard from "@/app/(user)/list/components/total-card";
 import ListSorter from "@/app/(user)/list/components/sorter";
 import ColorPickerDrawer from "@/app/(user)/list/components/color-picker-drawer";

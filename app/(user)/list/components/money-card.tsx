@@ -10,7 +10,7 @@ import { useState } from "react";
 import AsteriskNumber from "../../../../lib/asterisk-value";
 import { FaPesoSign } from "react-icons/fa6";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { delmoney } from "@/app/actions/delete-money";
+import { delmoney } from "@/actions/delete-money";
 import { useEditMoney } from "@/store";
 import { Database } from "@/database.types";
 import { ExternalLink } from "lucide-react";

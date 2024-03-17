@@ -1,7 +1,7 @@
 "use client";
 import { LogOut, Moon, Settings2, Sun } from "lucide-react";
 import { Button } from "../../components/ui/button";
-import { logout } from "@/app/actions/auth/log-out";
+import { logout } from "@/actions/auth/log-out";
 import { pathnames } from "@/lib/pathnames";
 import {
   DropdownMenu,

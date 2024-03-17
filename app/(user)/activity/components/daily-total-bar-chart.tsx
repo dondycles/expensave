@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { getTotalMoney } from "@/app/actions/get-total-money";
+import { getTotalMoney } from "@/actions/get-total-money";
 import { useQuery } from "@tanstack/react-query";
 
 type DailyTotalMoney = Database["public"]["Tables"]["daily_total_money"]["Row"];

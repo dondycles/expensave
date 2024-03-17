@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { ReactNode } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { editMoney } from "@/app/actions/edit-money";
+import { editMoney } from "@/actions/edit-money";
 import { useListPageState } from "@/store";
 
 const EditMoneySchema = z.object({

@@ -1,5 +1,5 @@
 "use server";
-import { SignUpFormTypes } from "../../(auth)/components/sign-up-form";
+import { SignUpFormTypes } from "@/app/(auth)/components/sign-up-form";
 import { spServer } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";

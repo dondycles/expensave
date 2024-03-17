@@ -12,7 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { login } from "@/app/actions/auth/login";
+import { login } from "@/actions/auth/login";
 
 const LogInSchema = z.object({
   username: z.string().min(2).max(50),

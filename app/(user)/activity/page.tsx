@@ -1,16 +1,16 @@
 "use client";
 
-import { getlogs } from "@/app/actions/get-logs";
-import { getmoneys } from "@/app/actions/get-moneys";
+import { getlogs } from "@/actions/get-logs";
+import { getmoneys } from "@/actions/get-moneys";
 
 import { logsDataColumns } from "@/app/(user)/activity/components/logs-table-data-column";
 import LogTableSkeleton from "@/app/(user)/activity/components/logs-table-skeleton";
 import { LogDataTable } from "@/app/(user)/activity/components/logs-table";
 import { useActivityPageState, useListPageState } from "@/store";
 import { useQueries, useQuery } from "@tanstack/react-query";
-import TotalMoneyBreakdownPieChart from "@/components/activity-page/total-money-breakdown-pie-chart";
+import TotalMoneyBreakdownPieChart from "./components/total-money-breakdown-pie-chart";
 import TotalMoneyBreakdownPieChartSkeleton from "@/app/(user)/activity/components/total-money-breakdown-pie-chart-skeleton";
-import { getDailyTotal } from "@/app/actions/get-daily-total";
+import { getDailyTotal } from "@/actions/get-daily-total";
 import DailyTotalBarChart from "@/app/(user)/activity/components/daily-total-bar-chart";
 import DailyTotalBarChartSkeleton from "@/app/(user)/activity/components/daily-total-bar-chart-skeleton";
 

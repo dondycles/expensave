@@ -12,7 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { addmoney } from "@/app/actions/add-money";
+import { addmoney } from "@/actions/add-money";
 import { ReactNode } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useListPageState } from "@/store";
