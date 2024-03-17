@@ -118,16 +118,16 @@ export default function ColorPickerDrawer() {
                 <Button
                   onClick={() => {
                     setSelectedColor({
-                      transparent: `${color.color}20`,
-                      opaque: color.color,
+                      transparent: color.trans_color,
+                      opaque: color.opaque_color,
                     });
                   }}
-                  key={color.color}
+                  key={color.opaque_color}
                   className="text-xs w-fit h-fit p-2 rounded-[--radius]"
                   style={{
-                    color: color.color,
-                    backgroundColor: `${color.color}20`,
-                    border: `1px solid ${color.color}`,
+                    color: color.opaque_color,
+                    backgroundColor: color.trans_color,
+                    border: `1px solid ${color.opaque_color}`,
                   }}
                 >
                   {color.names.concat().join(", ")}

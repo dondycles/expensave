@@ -33,7 +33,11 @@ export default function List() {
 
   const uniqueColorsAvailable = () => {
     const groupedMoneys: {
-      [key: string]: { color: string; names: string[] };
+      [key: string]: {
+        opaque_color: string;
+        trans_color: string;
+        names: string[];
+      };
     }[] = [];
 
     // Iterate through the original array
@@ -44,10 +48,16 @@ export default function List() {
       );
       if (index === -1) {
         // If not, create a new entry for the color
-        const newEntry: { [key: string]: { color: string; names: string[] } } =
-          {};
+        const newEntry: {
+          [key: string]: {
+            opaque_color: string;
+            trans_color: string;
+            names: string[];
+          };
+        } = {};
         newEntry[money.opaque_color ?? ""] = {
-          color: money.opaque_color ?? "",
+          opaque_color: money.opaque_color ?? "",
+          trans_color: money.trans_color ?? "",
           names: [money.name],
         };
         groupedMoneys.push(newEntry);

@@ -37,7 +37,17 @@ declare global {
     id: string;
   };
   type AvailableMoneyColors = {
-    colors: { color: any; names: string[] }[];
-    setColors: (colors: { color: any; names: string[] }[]) => void;
+    colors: {
+      opaque_color: string;
+      trans_color: string;
+      names: string[];
+    }[];
+    setColors: (
+      colors: {
+        opaque_color: string;
+        trans_color: string;
+        names: string[];
+      }[]
+    ) => void;
   };
 }
