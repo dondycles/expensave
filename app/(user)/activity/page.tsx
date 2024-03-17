@@ -54,8 +54,7 @@ export default function Activity() {
   const dailyTotalData = results[2].data ?? [];
 
   const moneys = moneysData?.flatMap((money) => money);
-  const isLoading = results.some((result) => result.isLoading);
-
+  const isLoading = results.some((result) => result.isFetching);
   return (
     <div className="w-full h-full screen-padding space-y-8">
       {isLoading ? (
@@ -66,9 +65,9 @@ export default function Activity() {
         </>
       ) : (
         <>
-          <DailyTotalBarChart data={dailyTotalData ?? []} />
-          <TotalMoneyBreakdownPieChart data={moneys ?? []} />
-          <LogDataTable data={logsData ?? []} columns={logsDataColumns} />
+          <DailyTotalBarChart data={dailyTotalData} />
+          <TotalMoneyBreakdownPieChart data={moneys} />
+          <LogDataTable data={logsData} columns={logsDataColumns} />
         </>
       )}
       <br />

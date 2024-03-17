@@ -46,7 +46,7 @@ export default function DailyTotalBarChart({ data }: { data: Data[] }) {
 
     for (let i = 0; i < dailyTotalLimit.dailyTotalLimit; i++) {
       //? gets the date in ISO format and splits it to get the date only
-      const date = currentDate.toISOString().split("T")[0];
+      const date = currentDate.toLocaleDateString();
 
       //? gets the existing data if there is any
       const existingData = data?.find((item) => item.date === date);
