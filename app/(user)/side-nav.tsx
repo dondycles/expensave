@@ -1,11 +1,11 @@
 "use client";
 import { logout } from "@/app/actions/auth/log-out";
-import { Button } from "./ui/button";
+import { Button } from "../../components/ui/button";
 import { LogOut } from "lucide-react";
-import ModeToggle from "./theme-btn";
+import ModeToggle from "../../components/theme-btn";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { pathnames } from "@/lib/constants";
+import { pathnames } from "@/lib/pathnames";
 import { useQueryClient } from "@tanstack/react-query";
 
 export default function SideNav() {

@@ -1,5 +1,5 @@
 "use server";
-import { LogInFormTypes } from "@/components/forms/log-in";
+import { LogInFormTypes } from "@/app/(auth)/components/log-in-form";
 import { spServer } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";

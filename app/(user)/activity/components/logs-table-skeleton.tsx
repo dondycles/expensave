@@ -1,6 +1,6 @@
 import { FaSpinner } from "react-icons/fa6";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+import { Button } from "../../../../components/ui/button";
+import { Input } from "../../../../components/ui/input";
 
 export default function LogTableSkeleton() {
   return (

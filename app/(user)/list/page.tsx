@@ -2,14 +2,14 @@
 import { getmoneys } from "@/app/actions/get-moneys";
 import { useListPageState } from "@/store";
 import { useQuery } from "@tanstack/react-query";
-import MoneyCard from "@/components/list-page/money-card";
+import MoneyCard from "@/app/(user)/list/components/money-card";
 
-import EditMoneyDrawer from "@/components/drawers/editmoney-drawer";
+import EditMoneyDrawer from "@/app/(user)/list/components/edit-money-drawer";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getTotalMoney } from "@/app/actions/get-total-money";
-import ListTotalCard from "@/components/list-page/total-card";
-import ListSorter from "@/components/list-page/sorter";
-import ColorPickerDrawer from "@/components/drawers/color-picker-drawer";
+import ListTotalCard from "@/app/(user)/list/components/total-card";
+import ListSorter from "@/app/(user)/list/components/sorter";
+import ColorPickerDrawer from "@/app/(user)/list/components/color-picker-drawer";
 export default function List() {
   const listPageState = useListPageState();
 

@@ -3,16 +3,16 @@
 import { getlogs } from "@/app/actions/get-logs";
 import { getmoneys } from "@/app/actions/get-moneys";
 
-import { logsDataColumns } from "@/components/activity-page/logs-table-data-column";
-import LogTableSkeleton from "@/components/activity-page/logs-table-skeleton";
-import { LogDataTable } from "@/components/activity-page/logs-table";
+import { logsDataColumns } from "@/app/(user)/activity/components/logs-table-data-column";
+import LogTableSkeleton from "@/app/(user)/activity/components/logs-table-skeleton";
+import { LogDataTable } from "@/app/(user)/activity/components/logs-table";
 import { useActivityPageState, useListPageState } from "@/store";
 import { useQueries, useQuery } from "@tanstack/react-query";
 import TotalMoneyBreakdownPieChart from "@/components/activity-page/total-money-breakdown-pie-chart";
-import TotalMoneyBreakdownPieChartSkeleton from "@/components/activity-page/total-money-breakdown-pie-chart-skeleton";
+import TotalMoneyBreakdownPieChartSkeleton from "@/app/(user)/activity/components/total-money-breakdown-pie-chart-skeleton";
 import { getDailyTotal } from "@/app/actions/get-daily-total";
-import DailyTotalBarChart from "@/components/activity-page/daily-total-bar-chart";
-import DailyTotalBarChartSkeleton from "@/components/activity-page/daily-total-bar-chart-skeleton";
+import DailyTotalBarChart from "@/app/(user)/activity/components/daily-total-bar-chart";
+import DailyTotalBarChartSkeleton from "@/app/(user)/activity/components/daily-total-bar-chart-skeleton";
 
 export default function Activity() {
   const listPageState = useListPageState();

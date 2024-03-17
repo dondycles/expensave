@@ -7,7 +7,7 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { useState } from "react";
-import AsteriskNumber from "../asterisk-value";
+import AsteriskNumber from "../../../../lib/asterisk-value";
 import { FaPesoSign } from "react-icons/fa6";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { delmoney } from "@/app/actions/delete-money";
@@ -15,7 +15,6 @@ import { useEditMoney } from "@/store";
 import { Database } from "@/database.types";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
-import { Color } from "../drawers/color-picker-drawer";
 interface MoneyCard extends React.HTMLAttributes<HTMLDivElement> {
   money: Database["public"]["Tables"]["moneys"]["Row"];
   listPageState: ListPageState;

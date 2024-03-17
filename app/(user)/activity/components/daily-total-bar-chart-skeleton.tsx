@@ -1,5 +1,5 @@
 import { useActivityPageState } from "@/store";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "../../../../components/ui/skeleton";
 
 export default function DailyTotalBarChartSkeleton() {
   const activityPageState = useActivityPageState();

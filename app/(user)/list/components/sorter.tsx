@@ -6,7 +6,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+} from "../../../../components/ui/dropdown-menu";
 import { useListPageState } from "@/store";
 
 export default function ListSorter() {

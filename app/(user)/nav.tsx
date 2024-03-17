@@ -1,14 +1,14 @@
 "use client";
 import { LogOut, Moon, Settings2, Sun } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "../../components/ui/button";
 import { logout } from "@/app/actions/auth/log-out";
-import { pathnames } from "@/lib/constants";
+import { pathnames } from "@/lib/pathnames";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../../components/ui/dropdown-menu";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

@@ -1,5 +1,5 @@
 "use server";
-import { AddMoneyTypes } from "@/components/forms/add-money";
+import { AddMoneyTypes } from "@/app/(user)/list/components/add-money-form";
 import { spServer } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";

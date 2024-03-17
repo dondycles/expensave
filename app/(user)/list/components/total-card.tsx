@@ -1,9 +1,9 @@
 import { FaPesoSign } from "react-icons/fa6";
-import { Card, CardHeader } from "../ui/card";
-import { Skeleton } from "../ui/skeleton";
-import AsteriskNumber from "../asterisk-value";
+import { Card, CardHeader } from "../../../../components/ui/card";
+import { Skeleton } from "../../../../components/ui/skeleton";
+import AsteriskNumber from "../../../../lib/asterisk-value";
 import { UsePhpPeso } from "@/lib/php-formatter";
-import AddMoneyDrawer from "../drawers/addmoney-drawer";
+import AddMoneyDrawer from "./add-money-drawer";
 import { useListPageState } from "@/store";
 import { Eye, EyeOff } from "lucide-react";
 

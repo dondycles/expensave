@@ -1,6 +1,6 @@
-import Nav from "@/components/nav";
+import Nav from "@/app/(user)/nav";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import SideNav from "@/components/side-nav";
+import SideNav from "@/app/(user)/side-nav";
 import { getsession } from "../actions/auth/get-session";
 import { redirect } from "next/navigation";
 

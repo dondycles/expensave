@@ -6,8 +6,8 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Button } from "../ui/button";
-import { EditMoneyForm } from "../forms/edit-money";
+import { Button } from "../../../../components/ui/button";
+import { EditMoneyForm } from "./edit-money-form";
 import { useEffect, useState } from "react";
 import { useEditMoney } from "@/store";
 

@@ -4,14 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Database } from "@/database.types";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowBigDown, ArrowBigUp } from "lucide-react";
-import { Badge } from "../ui/badge";
+import { Badge } from "../../../../components/ui/badge";
 import { UsePhpPesoWSign } from "@/lib/php-formatter";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+} from "../../../../components/ui/dropdown-menu";
 
 const getAction = (action: string) => {
   let modifiedActon;

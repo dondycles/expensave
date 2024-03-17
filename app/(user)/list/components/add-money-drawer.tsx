@@ -5,9 +5,9 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Button } from "../ui/button";
+import { Button } from "../../../../components/ui/button";
 import { Plus } from "lucide-react";
-import { AddMoneyForm } from "../forms/add-money";
+import { AddMoneyForm } from "./add-money-form";
 import { useState } from "react";
 
 export default function AddMoneyDrawer() {

@@ -2,7 +2,6 @@ import { Database } from "@/database.types";
 import { UsePhpPesoWSign } from "@/lib/php-formatter";
 import { useState } from "react";
 import { Cell, Pie, ResponsiveContainer, Sector, PieChart } from "recharts";
-import { Color } from "../drawers/color-picker-drawer";
 
 export default function TotalMoneyBreakdownPieChart({
   data,

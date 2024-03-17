@@ -6,7 +6,7 @@ import {
   Tooltip,
   XAxis,
 } from "recharts";
-import { Card, CardContent, CardHeader } from "../ui/card";
+import { Card, CardContent, CardHeader } from "../../../../components/ui/card";
 import { Database } from "@/database.types";
 import { UsePhpPesoWSign } from "@/lib/php-formatter";
 import { useActivityPageState } from "@/store";

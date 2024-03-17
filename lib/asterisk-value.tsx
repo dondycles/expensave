@@ -1,5 +1,3 @@
-// components/AsteriskNumber.js
-
 import { cn } from "@/lib/utils";
 import React from "react";
 
