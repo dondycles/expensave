@@ -1,3 +1,4 @@
+"use client";
 import { UsePhpPeso } from "@/lib/php-formatter";
 import {
   ContextMenu,
@@ -24,7 +25,7 @@ interface MoneyCard extends React.HTMLAttributes<HTMLDivElement> {
   money: Database["public"]["Tables"]["moneys"]["Row"];
   listPageState: ListPageState;
 }
-type MoneyColor = {
+export type MoneyColor = {
   opaque: string;
   transparent: string;
   id: string;

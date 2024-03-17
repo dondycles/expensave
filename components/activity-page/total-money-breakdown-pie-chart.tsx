@@ -1,8 +1,8 @@
 import { Database } from "@/database.types";
-import { MoneyColor } from "@/lib/constants";
 import { UsePhpPesoWSign } from "@/lib/php-formatter";
 import { useState } from "react";
 import { Cell, Pie, ResponsiveContainer, Sector, PieChart } from "recharts";
+import { MoneyColor } from "../money-card/money";
 
 export default function TotalMoneyBreakdownPieChart({
   data,
