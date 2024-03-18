@@ -10,7 +10,7 @@ export const logTotalMoney = async () => {
 
   const { error } = await supabase.from("daily_total_money").upsert(
     {
-      date: date.toLocaleString(),
+      date: date.toLocaleDateString(),
       total: total,
       date_and_user: `${date.toLocaleDateString()}-${authUID}`,
     },

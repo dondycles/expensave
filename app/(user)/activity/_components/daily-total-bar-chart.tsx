@@ -6,7 +6,7 @@ import {
   Tooltip,
   XAxis,
 } from "recharts";
-import { Card, CardContent, CardHeader } from "../../../../components/ui/card";
+import { Card, CardContent } from "../../../../components/ui/card";
 import { Database } from "@/database.types";
 import { UsePhpPesoWSign } from "@/lib/php-formatter";
 import { useActivityPageState } from "@/store";
@@ -15,12 +15,11 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
 } from "@/components/ui/select";
 
-import { getTotalMoney } from "@/actions/get-total-money";
-import { useQuery } from "@tanstack/react-query";
-import { getDailyTotal } from "@/actions/get-daily-total";
+// import { getTotalMoney } from "@/actions/get-total-money";
+// import { useQuery } from "@tanstack/react-query";
+// import { getDailyTotal } from "@/actions/get-daily-total";
 
 type DailyTotalMoney = Database["public"]["Tables"]["daily_total_money"]["Row"];
 
@@ -31,39 +30,45 @@ interface Data extends DailyTotalMoney {
 export default function DailyTotalBarChart({ data }: { data: Data[] }) {
   const activityPageState = useActivityPageState();
 
-  const { data: totalMoney, isLoading: totalLoading } = useQuery({
-    queryKey: ["total"],
-    queryFn: async () => await getTotalMoney(),
-  });
+  // const { data: totalMoney, isLoading: totalLoading } = useQuery({
+  //   queryKey: ["total"],
+  //   queryFn: async () => await getTotalMoney(),
+  // });
 
   const finalizedDailyTotalData = () => {
     const modifiedDailyTotalData: Data[] = [];
     const currentDate = new Date();
 
-    //? Set the date to the last day of the limit
     currentDate.setDate(
       currentDate.getDate() - (activityPageState.dailyTotalLimit - 1)
     );
 
     for (let i = 0; i < activityPageState.dailyTotalLimit; i++) {
-      //? gets the date in ISO format and splits it to get the date only
-      const date = currentDate.toLocaleDateString();
+      const date = currentDate.toISOString().split("T")[0];
+      console.log("🚀 ~ finalizedDailyTotalData ~ date:", date);
 
-      //? gets the existing data if there is any
       const existingData = data?.find((item) => item.date === date);
 
-      //? gets the data for today if there is any
-      const todaysData = data?.some(
-        (item) => item.date === new Date().toISOString()
-      );
+      // const todaysData = data?.some(
+      //   (item) => item.date === new Date().toISOString().split("T")[0]
+      // );
 
-      //? if there is an existing data, push it to the modifiedDailyTotalData
       if (existingData) modifiedDailyTotalData.push(existingData);
       else {
-        //? if there is no data for today, push a new data to the modifiedDailyTotalData
-        if (!todaysData && i === activityPageState.dailyTotalLimit - 1)
+        // if (!todaysData && i === activityPageState.dailyTotalLimit - 1)
+        //   modifiedDailyTotalData.push({
+        //     total: Number(totalMoney),
+        //     date: date,
+        //     isNoData: false,
+        //     created_at: "",
+        //     date_and_user: "",
+        //     id: 0,
+        //     user: "",
+        //   });
+        // else {
+        if (modifiedDailyTotalData[i - 1]?.isNoData === false) {
           modifiedDailyTotalData.push({
-            total: Number(totalMoney),
+            total: modifiedDailyTotalData[i - 1]?.total,
             date: date,
             isNoData: false,
             created_at: "",
@@ -71,31 +76,18 @@ export default function DailyTotalBarChart({ data }: { data: Data[] }) {
             id: 0,
             user: "",
           });
-        else {
-          // ? checks if the previous index has data, if it does, push the same data to the modifiedDailyTotalData
-          if (modifiedDailyTotalData[i - 1]?.isNoData === false) {
-            modifiedDailyTotalData.push({
-              total: modifiedDailyTotalData[i - 1]?.total,
-              date: date,
-              isNoData: false,
-              created_at: "",
-              date_and_user: "",
-              id: 0,
-              user: "",
-            });
-          } else {
-            // ? if the previous index has no data, push a new data to the modifiedDailyTotalData with a total of what is the greatest total in the data but isNoData is true to indicate that there is no data for that day and make it a different color in the bar chart
-            modifiedDailyTotalData.push({
-              total: Math.max(...data?.map((item) => item.total as number)),
-              date: date,
-              isNoData: true,
-              created_at: "",
-              date_and_user: "",
-              id: 0,
-              user: "",
-            });
-          }
+        } else {
+          modifiedDailyTotalData.push({
+            total: Math.max(...data?.map((item) => item.total as number)),
+            date: date,
+            isNoData: true,
+            created_at: "",
+            date_and_user: "",
+            id: 0,
+            user: "",
+          });
         }
+        // }
       }
 
       currentDate.setDate(currentDate.getDate() + 1);
