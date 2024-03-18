@@ -16,6 +16,8 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
+import { useQuery } from "@tanstack/react-query";
+import { getTotalMoney } from "@/actions/get-total-money";
 
 // import { getTotalMoney } from "@/actions/get-total-money";
 // import { useQuery } from "@tanstack/react-query";
@@ -30,10 +32,10 @@ interface Data extends DailyTotalMoney {
 export default function DailyTotalBarChart({ data }: { data: Data[] }) {
   const activityPageState = useActivityPageState();
 
-  // const { data: totalMoney, isLoading: totalLoading } = useQuery({
-  //   queryKey: ["total"],
-  //   queryFn: async () => await getTotalMoney(),
-  // });
+  const { data: totalMoney } = useQuery({
+    queryKey: ["total"],
+    queryFn: async () => await getTotalMoney(),
+  });
 
   const finalizedDailyTotalData = () => {
     const modifiedDailyTotalData: Data[] = [];
@@ -50,26 +52,17 @@ export default function DailyTotalBarChart({ data }: { data: Data[] }) {
         (item) => new Date(item.updated_at).toLocaleDateString() === date
       );
 
-      // const todaysData = data?.some(
-      //   (item) => item.date === new Date().toISOString().split("T")[0]
-      // );
+      const todaysData = data?.some(
+        (item) =>
+          new Date(item.updated_at).toLocaleDateString() ===
+          new Date().toLocaleDateString()
+      );
 
       if (existingData) modifiedDailyTotalData.push(existingData);
       else {
-        // if (!todaysData && i === activityPageState.dailyTotalLimit - 1)
-        //   modifiedDailyTotalData.push({
-        //     total: Number(totalMoney),
-        //     date: date,
-        //     isNoData: false,
-        //     created_at: "",
-        //     date_and_user: "",
-        //     id: 0,
-        //     user: "",
-        //   });
-        // else {
-        if (modifiedDailyTotalData[i - 1]?.isNoData === false) {
+        if (!todaysData && i === activityPageState.dailyTotalLimit - 1)
           modifiedDailyTotalData.push({
-            total: modifiedDailyTotalData[i - 1]?.total,
+            total: Number(totalMoney),
             updated_at: date,
             isNoData: false,
             created_at: "",
@@ -77,18 +70,29 @@ export default function DailyTotalBarChart({ data }: { data: Data[] }) {
             id: 0,
             user: "",
           });
-        } else {
-          modifiedDailyTotalData.push({
-            total: Math.max(...data?.map((item) => item.total as number)),
-            updated_at: date,
-            isNoData: true,
-            created_at: "",
-            date_and_user: "",
-            id: 0,
-            user: "",
-          });
+        else {
+          if (modifiedDailyTotalData[i - 1]?.isNoData === false) {
+            modifiedDailyTotalData.push({
+              total: modifiedDailyTotalData[i - 1]?.total,
+              updated_at: date,
+              isNoData: false,
+              created_at: "",
+              date_and_user: "",
+              id: 0,
+              user: "",
+            });
+          } else {
+            modifiedDailyTotalData.push({
+              total: Math.max(...data?.map((item) => item.total as number)),
+              updated_at: date,
+              isNoData: true,
+              created_at: "",
+              date_and_user: "",
+              id: 0,
+              user: "",
+            });
+          }
         }
-        // }
       }
 
       currentDate.setDate(currentDate.getDate() + 1);
