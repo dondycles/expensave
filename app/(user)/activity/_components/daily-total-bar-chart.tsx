@@ -105,7 +105,7 @@ export default function DailyTotalBarChart({ data }: { data: Data[] }) {
             <p>No data available.</p>
           ) : (
             <>
-              <p>{new Date(label).toDateString()}</p>
+              <p>{new Date(label).toLocaleDateString()}</p>
               <p>{UsePhpPesoWSign(payload[0]?.value)}</p>
             </>
           )}
@@ -151,7 +151,7 @@ export default function DailyTotalBarChart({ data }: { data: Data[] }) {
                   fontSize={12}
                   tickLine={false}
                   axisLine={false}
-                  dataKey="date"
+                  dataKey="updated_at"
                   tickFormatter={(value) =>
                     value ? new Date(value).toLocaleDateString() : ""
                   }
