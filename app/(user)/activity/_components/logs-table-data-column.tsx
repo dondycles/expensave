@@ -12,6 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../../../../components/ui/dropdown-menu";
+import { getLocaleTime } from "@/lib/get-locale-date";
 
 const getAction = (action: string) => {
   let modifiedActon;
@@ -171,7 +172,7 @@ export const logsDataColumns: ColumnDef<
     cell: ({ row }) => {
       return (
         <div className="pl-4">
-          {new Date(row.getValue("created_at")).toLocaleString()}
+          {new Date(row.getValue("created_at")).toLocaleDateString()}
         </div>
       );
     },

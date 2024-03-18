@@ -16,6 +16,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
+import { getLocaleTime } from "@/lib/get-locale-date";
 
 // import { getTotalMoney } from "@/actions/get-total-money";
 // import { useQuery } from "@tanstack/react-query";
@@ -44,10 +45,11 @@ export default function DailyTotalBarChart({ data }: { data: Data[] }) {
     );
 
     for (let i = 0; i < activityPageState.dailyTotalLimit; i++) {
-      const date = currentDate.toISOString().split("T")[0];
-      console.log("🚀 ~ finalizedDailyTotalData ~ date:", date);
+      const date = currentDate.toLocaleDateString();
 
-      const existingData = data?.find((item) => item.date === date);
+      const existingData = data?.find(
+        (item) => new Date(item.updated_at).toLocaleDateString() === date
+      );
 
       // const todaysData = data?.some(
       //   (item) => item.date === new Date().toISOString().split("T")[0]
@@ -69,7 +71,7 @@ export default function DailyTotalBarChart({ data }: { data: Data[] }) {
         if (modifiedDailyTotalData[i - 1]?.isNoData === false) {
           modifiedDailyTotalData.push({
             total: modifiedDailyTotalData[i - 1]?.total,
-            date: date,
+            updated_at: date,
             isNoData: false,
             created_at: "",
             date_and_user: "",
@@ -79,7 +81,7 @@ export default function DailyTotalBarChart({ data }: { data: Data[] }) {
         } else {
           modifiedDailyTotalData.push({
             total: Math.max(...data?.map((item) => item.total as number)),
-            date: date,
+            updated_at: date,
             isNoData: true,
             created_at: "",
             date_and_user: "",
@@ -159,7 +161,7 @@ export default function DailyTotalBarChart({ data }: { data: Data[] }) {
                 <Bar dataKey="total" radius={[4, 4, 0, 0]}>
                   {finalizedDailyTotalData().map((e) => (
                     <Cell
-                      key={e.date}
+                      key={e.updated_at}
                       style={
                         !e.isNoData
                           ? {

@@ -7,7 +7,7 @@ export const getDailyTotal = async (limit: number) => {
   const { data, error } = await supabase
     .from("daily_total_money")
     .select("*")
-    .order("date", { ascending: true })
+    .order("updated_at", { ascending: true })
     .limit(limit);
 
   if (error) return { error: error };

@@ -12,26 +12,26 @@ export type Database = {
       daily_total_money: {
         Row: {
           created_at: string
-          date: string
           date_and_user: string
           id: number
           total: number | null
+          updated_at: string
           user: string | null
         }
         Insert: {
           created_at?: string
-          date: string
           date_and_user: string
           id?: number
           total?: number | null
+          updated_at?: string
           user?: string | null
         }
         Update: {
           created_at?: string
-          date?: string
           date_and_user?: string
           id?: number
           total?: number | null
+          updated_at?: string
           user?: string | null
         }
         Relationships: [
