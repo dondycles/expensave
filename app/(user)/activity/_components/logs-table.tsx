@@ -143,7 +143,7 @@ export function LogDataTable<TData, TValue>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="text-center text-sm text-muted-foreground"
+                  className="text-center text-sm text-muted-foreground pt-4"
                 >
                   No results.
                 </TableCell>

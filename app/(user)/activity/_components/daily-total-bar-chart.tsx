@@ -173,7 +173,7 @@ export default function DailyTotalBarChart({ data }: { data: Data[] }) {
               </BarChart>
             </ResponsiveContainer>
           ) : (
-            <p className="text-muted-foreground text-sm text-center pb-4">
+            <p className="text-muted-foreground text-sm text-center py-4">
               No results.
             </p>
           )}
